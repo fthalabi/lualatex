@@ -1,0 +1,82 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Evaluación Formativa}
+\def\subtitulo{Proporción directa}
+\def\curso{Séptimo Básico}
+\def\puntaje{20}
+
+\documentclass[sin curso]{plantilla-guia-v1}
+
+\usepackage{adjustbox}
+\usepackage{paracol}
+
+
+
+\begin{document}
+
+
+\begin{ejercicios}
+  %% minipages
+  \ejercicio \\
+  \begin{minipage}[b][3cm][t]{0.5\linewidth}
+    ¿Son directamente\\proporcionales?
+    \begin{enumerate}
+      \item Verdadero
+      \item Falso
+    \end{enumerate}
+  \end{minipage}%
+  \begin{minipage}[b][3cm][t]{0.3\linewidth}
+    \centering
+    \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,cells={mode=math}}
+      a & b \\
+      6 & 8 \\
+      12 & 4 \\
+      18 & 2 \\
+    \end{tblr}
+  \end{minipage}
+  
+  %adjustbox
+  \ejercicio
+  \begin{adjustbox}{minipage=0.5\linewidth,valign=t,raise=-3pt}
+    ¿Son directamente\\proporcionales?
+    \begin{enumerate}
+      \item Verdadero
+      \item Falso
+    \end{enumerate}
+  \end{adjustbox}
+  \begin{adjustbox}{minipage=0.48\linewidth,valign=t,raise=-3pt}
+    \centering
+    \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,cells={mode=math}}
+      a & b \\
+      6 & 8 \\
+      12 & 4 \\
+      18 & 2 \\
+    \end{tblr}
+  \end{adjustbox}
+
+  %tcolorbox
+  \ejercicio \begin{tcolorbox}[blankest, sidebyside, sidebyside align=top, box align=bottom]
+    ¿Son directamente\\proporcionales?
+    \begin{enumerate}
+      \item Verdadero
+      \item Falso
+    \end{enumerate}
+    \tcblower
+    \centering
+    \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,cells={mode=math}}
+      a & b \\
+      6 & 8 \\
+      12 & 4 \\
+      18 & 2 \\
+    \end{tblr}
+  \end{tcolorbox}
+
+  \ejercicio hola
+
+
+\end{ejercicios}
+
+
+
+
+
+\end{document}

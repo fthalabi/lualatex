@@ -1,0 +1,176 @@
+\documentclass{ceas2}
+%\usepackage{lua-visual-debug}
+
+\begin{document}
+\datos
+\section{Introducción}
+
+En esta guía veremos como la función afín (ecuación de la recta) se puede usar para 
+modelar (representar) situaciones de la vida real, y como este proceso nos permite
+obtener nueva información sobre nuestro objeto de estudio.\par
+
+Más adelante veremos herramientas matemáticas más sofisticadas, que nos permitirán crear
+modelos más apegados a la realidad, pero de momento, supongamos que la función afín 
+es suficiente para solucionar los problemas que se encuentran a continuación.
+
+\section{Problemas resueltos}
+
+\e Cinco metros de tela tienen un costo de \$300, encuentra un modelo
+lineal para el costo y determina ¿Cuánto cuestan 25 metros? y ¿Cuántos metros
+de tela se pueden comprar con \$18000? 
+
+{\bfseries Solución:} Nuestro primer paso será reconocer los 
+datos que entrega el enunciado como una tabla de puntos. En la siguiente 
+tabla, $x$ representa la cantidad de tela en metros e $\boldsymbol y$ 
+el costo de la tela.
+
+\def\tabla{%
+\begin{mtabla}{}
+    x & y \\
+    5 & 300 \\
+    0 & 0 
+\end{mtabla}
+}
+
+\begin{center}    
+\begin{tikzpicture}[line width=1pt]
+    \tikzset{msg/.style={draw, dashed,line width = 1pt, text width=11cm,inner sep=10pt, rounded corners=5pt}}
+    \node (t) {\tabla};
+    \node[right=2cm of t,yshift=1cm,msg] (p1) {Este punto representa que 5 metros de tela cuestan 300 pesos};
+    \node[right=2cm of t,yshift=-1cm,msg] (p2) {Si no se compra tela (la cantidad es igual a 0 metros) el \mbox{precio} a pagar es 0 pesos. Esto no lo dice explicitamente el enunciado, pero, se entiende como algo logico y \mbox{esperable}};
+    \draw[->,dashed] (p1.west) to[bend right=15] (t.east);
+    \draw[->,dashed] (p2.west) to[bend left=15] ($(t.south east) + (0,15pt)$);
+\end{tikzpicture}
+\end{center}
+Con los datos de la tabla, se puede calcular la pendiente de la forma
+\begin{equation*}
+    m = \dfrac{\text{largo lado vertical}}{\text{largo lado horizontal}} = \dfrac{300 - 0}{5 - 0} = \dfrac{300}{5} = 60.
+\end{equation*}
+Por otro lado, 
+el coeficiente de posición en este caso no es necesario calcularlo, ya que, se
+encuentra en la tabla, y es 0. Así, la ecuación de la recta que
+representa el precio a pagar por la tela es 
+\begin{equation}\label{eq:1}
+    y = 60\cdot x.
+\end{equation}
+
+Con el modelo ya echo, nos preguntamos: 
+¿Cuánto cuestan 25 metros de tela? Para responder esto, basta reemplazar $x=25$ en la
+ecuación \mref{eq:1} y despejar el valor de la incógnita $y$
+\begin{equation*}
+    y = 60\cdot x = 60\cdot 25 = 1625.
+\end{equation*} 
+Así, comprar 25 metros de tela cuesta 1625 pesos. Para la segunda pregunta, ¿Cuántos
+metros de tela se pueden comprar con 18000 pesos? Basta reemplazar $y=18000$
+en la ecuación \mref{eq:1} y despejar el valor de $x$
+\begin{equation*}
+    60\cdot x = y \quad\Rightarrow\quad 60\cdot x = 18000 \quad\Rightarrow\quad x =\dfrac{18000}{60} = 300.
+\end{equation*}
+Lo cual nos dice que con 1800 pesos se puede comprar 300 metros de tela.
+
+\e Un delfín mular mide 1.5 metros al nacer y pesa alrededor de 30 kilogramos. Los 
+defines jóvenes son amamantados durante 15 meses, al final de dicho periodo 
+estos cetáceos miden 2.7 metros y pesan 375 kilogramos. Con estos datos, 
+¿Cuál es el aumento 
+diario de la longitud para un delfín joven? ¿Cuál es el peso de un delfín de 
+cinco meses de edad?
+
+{\bfseries Solución:} Son necesarias dos ecuaciones para solucionar este problema,
+una para representar el largo de un delfín mular en el tiempo y otra para su peso en 
+el tiempo. Así, moviendo los datos de enunciado a una tabla se obtiene:
+
+\def\tabla{%
+\begin{mtabla}{}
+    t & L \\
+    0 & 1.5 \\
+    15 & 2.7
+\end{mtabla}
+}
+
+\begin{center}    
+\begin{tikzpicture}[line width=1pt]
+    \tikzset{msg/.style={draw, dashed,line width = 1pt, text width=8cm,inner sep=10pt, rounded corners=5pt}}
+    \node (t) {\tabla};
+    \node[right=-1cm of t,yshift=2.5cm,msg, text width=14cm] (p3) {Como son dos las ecuaciones que necesitamos y para no confundirlas, en lugar de usar $y$, se uso $L$ para denotar el largo en metros y $t$ el tiempo en meses};
+    \node[right=2cm of t,yshift=0.5cm,msg] (p1) {A los 0 meses el delfín mide 1.5 metros};
+    \node[right=2cm of t,yshift=-1cm,msg] (p2) {Para los 15 meses el delfín mide 2.7 metros};
+    \draw[->,dashed] (p1.west) to[bend right=15] (t.east);
+    \draw[->,dashed] (p2.west) to[bend left=15] ($(t.south east) + (0,15pt)$);
+    \draw[->,dashed] (p3.west) to[bend right=40] (t.north);
+\end{tikzpicture}
+\end{center}
+
+\def\tabla{%
+\begin{mtabla}{}
+    t & P \\
+    0 & 30 \\
+    15 & 375
+\end{mtabla}
+}
+
+\begin{center}    
+\begin{tikzpicture}[line width=1pt]
+    \tikzset{msg/.style={draw, dashed,line width = 1pt, text width=9cm,inner sep=10pt, rounded corners=5pt}}
+    \node (t) {\tabla};
+    \node[right=0cm of t,yshift=2cm,msg, text width=11cm] (p3) {$P$ denota el peso en kilogramos del delfín y $t$ el tiempo en meses};
+    \node[right=2cm of t,yshift=0.5cm,msg] (p1) {Al nacer (0 meses) el delfín pesa 30 kilogramos};
+    \node[right=2cm of t,yshift=-1cm,msg] (p2) {Con 15 meses el delfín pesa 375 kilogramos};
+    \draw[->,dashed] (p1.west) to[bend right=15] (t.east);
+    \draw[->,dashed] (p2.west) to[bend left=15] ($(t.south east) + (0,15pt)$);
+    \draw[->,dashed] (p3.west) to[bend right=25] (t.north);
+\end{tikzpicture}
+\end{center}
+
+
+Usando los datos que se encuentran en estas tablas, las ecuaciones para el largo y peso 
+del delfín son:
+
+\begin{multicols}{2}\setlength{\columnseprule}{0.4pt}
+    \noindent
+        \begin{equation*}
+            m = \dfrac{2.7 - 1.5}{15 - 0} = \dfrac{1.2}{15} = \dfrac{2}{25}
+        \end{equation*}
+        \begin{equation}\label{eq:l}
+            L = \dfrac{2}{25}\cdot t + \dfrac{3}{2}
+        \end{equation}
+        \begin{equation*}
+            m = \dfrac{375 - 30}{15 - 0} = \dfrac{345}{15} = 23
+        \end{equation*}
+        \begin{equation}\label{eq:p}
+            P = 23\cdot t + 30
+        \end{equation}
+\end{multicols}
+
+Entonces, con las ecuaciones para el largo ($L$) y el peso ($P$) ya calculadas, ¿Cuál 
+es el aumento diario de longitud para un delfín? Este dato se puede calcular usando la
+pendiente para la longitud, ya que $m=\frac{2}{25}=0.08$ representa lo que un delfín
+crece en 1 mes. Así, lo que crece un delfín en un día es $0.08/30=0.00267$ metros.
+
+Por último, para encontrar el peso de un delfín a los 5 meses de haber nacido,
+basta reemplazar $t=5$ en la ecuación \mref{eq:p}, para obtener que 
+$P=25\cdot 5 + 30 = 145$, y así la cantidad buscada es 145 kilogramos.
+
+\section{Problemas propuestos}
+
+\begin{enumerate}[label=(\arabic*)]
+    \item Un hombre recibe \$120 por 3 horas de trabajo. Expresa el sueldo $S$ en (pesos)
+    en términos del tiempo $t$ (horas).
+    \desarrollo
+    \item Un bebé pesa 3.5 kg al nacer y 3 años después alcanza 10.5 kg. Suponiendo 
+    que el peso $P$ (en kg) en la infancia puede representarse con una recta,
+    ¿Cuánto pesará el niño cuando cumpla 9 años? ¿A qué edad pesará 28 kg?
+    \desarrollo[5cm]
+    \item La cantidad de calor $C$ (en calorías), requerida para convertir un gramo de 
+    agua en vapor, se relaciona linealmente con la temperatura $T$ (en °$F$) de la 
+    atmósfera. A 50°$F$ esta conversión requiere 592 calorías y cada aumento de 
+    $15°F$ aumenta 9.5 calorías la cantidad de calor. Expresa $C$ en términos de $T$.
+    \desarrollo[5cm]
+    \item \lipsum[1]
+\end{enumerate}
+
+\e 
+
+\e Un bebe 
+\e asdasd
+
+\end{document}

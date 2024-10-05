@@ -1,0 +1,213 @@
+\providecommand{\curso}{Primero Medio}
+\providecommand{\colegio}{Colegio Divina Pastora}
+\providecommand{\tituloDocumento}{Tarea 1}
+\providecommand{\subtituloDocumento}{Homotecia y semejanza}
+
+\documentclass{cdplf-prueba}
+
+\begin{document}
+%
+\begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,raster column skip=3pt,raster force size=false]
+    \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=30pt,add to width=4cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=30pt,add to width=-2cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=30pt,add to width=-2cm]
+    \end{caja}                    
+\end{tcbraster}
+
+\subsection*{Objetivos de la evaluación}
+\begin{itemize}[]
+    \item Aplican propiedades de la homotecia y semejanza para solucionar una \mbox{problemática}.
+    \item Realizan homotecias en el plano cartesiano, conjeturan sobre el factor de la homotecia y las 
+    \\\mbox{propiedades} de la imagen resultante.
+    \item Explicar y fundamentar: 
+    \begin{itemize}[]
+        \item   Soluciones propias y los procedimientos utilizados.
+        \item   Resultados mediante definiciones, axiomas, propiedades y teoremas.
+    \end{itemize}
+    %\item Explica soluciones propias y los procedimientos utilizados.
+    %\item Elegir o elaborar representaciones de acuerdo a las necesidades de la actividad, identificando sus limitaciones y validez de éstas.
+\end{itemize}
+
+\subsection*{Instrucciones generales}
+
+Esta tarea, abarca los contenidos trabajados en clases, en preparación para la 
+evaluación sumativa de cierre de unidad. Esta es individual y con nota al libro.
+
+La entrega de la tarea es para el día 14 de octubre, al comienzo de la clase de matemáticas.
+Atrasos en la entrega deben ser debidamente justificados.
+
+\subsection*{Pauta de cotejo}
+
+En la corrección de la tarea, se le asignará puntaje a cada respuesta según
+los criterios que se encuentran detallados en la tabla a continuación.
+
+\begin{center}
+    \begin{tblr}{width=\linewidth,colspec={X[1,c]|X[6]}, hline{1,Z} = {1}{-}{}, hline{1,Z} = {2}{-}{}, 
+        hlines, cells={valign=m}, row{1} = {bg=black!15}}
+        Puntaje asignado & \SetCell{c} Criterios o indicadores \\
+        +50\% & Señala clara y correctamente cuál es la solución o el resultado de la pregunta hecha
+        en el enunciado. \\ 
+        +50\% & Incluye un desarrollo que relata de manera clara y ordenada los procedimientos 
+         \mbox{necesarios} para solucionar la problemática. En caso de estar incompleto o con 
+         \mbox{errores} el desarrollo, se asignará puntaje parcial si se muestra dominio de los 
+         con\-tenidos y conceptos involucrados. \\
+        0\% &  La respuesta es incorrecta. De haber desarrollo, este tiene errores conceptuales.\\
+    \end{tblr}    
+\end{center}
+    
+\vspace*{\fill}
+\begin{center}
+    \begin{tikzpicture}[ampersand replacement=\&,]
+        %\node (A) [opacity=0.4] {\includegraphics[width=2cm]{../flork3.jpg}};
+        \node (B) [font=\slshape,text width=12cm]
+        {``Cree en ti mismo y en lo que eres. Sé consciente de que hay algo en tu interior %
+        que es más grande que cualquier obstáculo''};
+        \node [left=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{37}};
+        \node [right=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{38}};
+    \end{tikzpicture}
+\end{center}
+\vspace*{\fill}
+\newpage
+
+%\parte 
+\begin{tcolorbox}[boxrule=1pt,colback=white,leftrule=3mm]
+    \raggedright Resuelva los problemas que se encuentran a continuación. Para esto, no olvide 
+    incluir un desarrollo pertinente y la respuesta al enunciado en los espacios señalizados.        
+\end{tcolorbox}
+
+\subsection{} Calcular los valores de $a$, $b$ y $c$ [1 punto c/u], si las rectas $L_1$, $L_2$, $L_3$ y $L_4$ son paralelas.
+
+\begin{center}
+\begin{tikzpicture}[line width=1pt,y=1cm]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (5,6);
+    \coordinate (C) at (6,0);
+
+    \draw [<->,shorten >=-1cm, shorten <=-1cm, name path=A--B] (A) -- (B);
+    \draw [<->,shorten <=-1cm, shorten >=-1cm, name path=B--C] (B) -- (C);
+    \draw [<->] ($(B) - (1cm,0)$) -- ($(B)+ (1cm,0)$) node[pos=-0.2] {$L_1$};
+    \path [name path=path1] ($(B)!0.3!(C)$) --+(-180:5cm);
+    \draw [<->,name intersections={of=path1 and A--B, by=x},
+        shorten <=-1cm, shorten >=-1cm,
+    ] ($(B)!0.3!(C)$) -- (x) node[pos=1.2,xshift=-1cm] {$L_2$};
+    \path [name path=path2] ($(B)!0.7!(C)$) -- +(-180:6cm);
+    \draw [<->,name intersections={of=path2 and A--B, by=y},
+        shorten <=-1cm, shorten >=-1cm
+    ]
+        ($(B)!0.7!(C)$) -- (y) node[pos=1.2,xshift=-0.6cm] {$L_3$};
+    \path [name path=path3] ($(B)!0.9!(C)$) -- +(-180:6cm);
+    \draw [<->,name intersections={of=path3 and A--B, by=z},
+        shorten <=-1cm, shorten >=-1cm
+    ]
+        ($(B)!0.9!(C)$) -- (z) node[pos=1.2,xshift=-0.5cm] {$L_4$};
+    
+    \node [right=10pt] at ($(B)!0.15!(C)$) {8};
+    \node [right=10pt] at ($(B)!0.5!(C)$) {12};
+    \node [right=10pt] at ($(B)!0.8!(C)$) {$c$};
+    \node [left=10pt] at ($(B)!0.5!(x)$) {$a$};
+    \node [left=10pt] at ($(x)!0.5!(y)$) {15};
+    \node [left=10pt] at ($(y)!0.5!(z)$) {8};
+    \node [below=6pt] at ($(B)!0.9!(C)!0.5!(z)$) {20};
+    \node [below=6pt] at ($(B)!0.3!(C)!0.5!(x)$) {$b$};
+    
+    % \draw[line width=0.4pt,decorate, decoration={brace,raise=0pt,amplitude=10pt}]
+    %     (B) -- ($(B)!0.3!(C)$) node[midway,right=15pt] {8};
+\end{tikzpicture}
+\end{center}
+
+\begin{desarrollo}[height=9cm]
+\end{desarrollo}
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+
+\subsection{} 
+Ubica en el plano el trapecio de coordenadas $A(0,2)$, $B(4,0)$, $C(4,1)$ y
+$D(1,3)$, y dibuja su imagen homotética con centro en el origen y razón
+de homotecia $k=2.5$ [2 puntos]. Por último, determina como cambia el perímetro 
+y área del trapecio resultante con respecto al original [2 puntos]. 
+
+\begin{center}
+    \plano[15][10][0][0][0.8cm]    
+\end{center}
+\begin{desarrollo}[height=8cm]
+\end{desarrollo}
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+
+\subsection{} En la figura a continuación, determine usando homotecia el largo de los lados 
+$\overline{AB}$ y $\overline{DE}$ [1 punto c/u] si se sabe que: 
+$\overline{AB} = x - 1$, $\overline{BC} = 12$, $\overline{DE} = x$, $\overline{CE} = 15$, y 
+$L_1 \parallel L_2 \parallel L_3$. Además, justifique por qué se puede usar homotecia para 
+resolver este problema [1 punto].
+
+\begin{center}
+    \begin{tikzpicture}[
+        x=0.6cm,y=0.6cm,
+        rotate=20, line width=1pt,
+        extended line/.style={shorten >=-#1,shorten <=-#1},
+        extended line/.default=1cm,
+    ]
+        \coordinate (A) at (0,0);
+        \coordinate (C) at (10,0);
+        \coordinate (B) at ($(A)!0.3!(C)$);
+        \coordinate (D) at (0,-5);
+        \coordinate (E) at ($(D)!0.3!(C)$);
+    
+        \draw [<->,extended line=1cm] (A) -- (C);
+        \draw [<->,extended line=1cm] (D) -- (C);
+        \draw [<->,extended line=1cm] (A) -- (D) node [pos=-0.5] {$L_1$};
+        \draw [<->,extended line=1cm] (B) -- (E) node [pos=-0.67] {$L_2$};
+        \draw [<->,shorten <=-1cm, shorten >=1cm] (C) -- (C |- E) node [pos=-0.67] {$L_3$};
+    
+        \fill (A) circle [radius=3pt] node [below left,yshift=-3mm,xshift=0mm] {$A$}; 
+        \fill (B) circle [radius=3pt] node [below left,yshift=-3mm,xshift=0mm] {$B$}; 
+        \fill (C) circle [radius=3pt] node [below left,yshift=-3mm,xshift=1mm] {$C$}; 
+        \fill (D) circle [radius=3pt] node [below left,yshift=-3mm,xshift=1mm] {$D$}; 
+        \fill (E) circle [radius=3pt] node [below left,yshift=-3mm,xshift=1mm] {$E$}; 
+    \end{tikzpicture}
+\end{center}
+\begin{desarrollo}[height=9cm]
+\end{desarrollo}
+\begin{respuesta}[height=3cm]
+\end{respuesta}
+
+\subsection{} 
+Calcule la medida de los segmentos $\overline{AD}$, $\overline{BD}$ y $\overline{CD}$ 
+[1 punto c/u]
+
+\begin{center}
+\begin{tikzpicture}[ampersand replacement=\&]
+    \draw[->,line width=1pt,shorten >=-1cm] (0,0) -- (9,0);
+    \draw[->,line width=1pt,shorten >=-1cm] (0,0) -- (0,7);
+    \foreach \x in {0,1,...,9} {
+        \draw (\x,5pt) -- (\x,-5pt) node [below] {$\x$};
+    }
+    \foreach \y in {1,2,...,7} {
+        \draw (5pt,\y) -- (-5pt,\y) node [left] {$\y$};
+    }
+    \draw[help lines] (0,0) grid (9,7);
+    \draw[line width=1pt] (8,6) node [circle,inner sep=2pt,fill=black,label=above:$A$] {} -- (1,0) node [circle,inner sep=2pt,fill=black,label=above:$B$] {}-- (8,0) node [circle,inner sep=2pt,fill=black,label=above right:$C$] {} -- cycle;
+    \draw[line width=1pt] (8,0) -- ($(1,0)!(8,0)!(8,6)$) node [circle,inner sep=2pt,fill=black,label=above left:$D$] {};
+    \draw[line width=1pt] ($(1,0)!(8,0)!(8,6)$) -- ($(1,0)!(8,0)!(8,6)!10pt!(8,6)$) -- ([turn]-90:10pt) -- ([turn]-90:10pt) -- ([turn]-90:10pt);
+\end{tikzpicture}
+\end{center}
+\begin{desarrollo}[height=10cm]
+\end{desarrollo}
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+
+\newpage
+\renewcommand{\hrulefill}{%
+  \leavevmode\leaders\hrule height 1pt\hfill\kern0pt }
+
+\begin{itemize}
+    \item hola \hrulefill \\ .\hrulefill
+    \item hola
+    \item hola
+    \item hola
+    \item hola
+\end{itemize}
+
+\end{document}

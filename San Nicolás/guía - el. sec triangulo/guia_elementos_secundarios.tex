@@ -1,0 +1,77 @@
+\providecommand{\tituloDocumento}{Guía}
+\providecommand{\subtituloDocumento}{Elementos secundarios del triángulo}
+\documentclass{sn-guia}
+
+\begin{document}
+ 
+\raggedright
+\begin{tcbraster}[enhanced,raster columns=2,raster width=\linewidth,raster column skip=3pt,raster force size=false]
+    \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=30pt,add to width=4cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Curso},height=30pt,add to width=-4cm]
+    \end{caja}    
+    \begin{caja}[title={\sffamily\scshape\bfseries Fecha},height=30pt]
+    \end{caja}                
+    \begin{caja}[title={\sffamily\scshape\bfseries Profesor},height=30pt]
+    \end{caja}
+\end{tcbraster}
+\vspace*{5mm}
+
+
+\section*{Transversal de gravedad}
+Es la recta que une un vértice con el punto medio del lado opuesto. Se denomina ta, tb y tc, donde el
+subíndice indica el vértice por el cual pasa. Las tres transversales de gravedad se interceptan en un
+mismo punto llamado Centro de Gravedad (o Baricentro).
+
+
+\begin{tcolorbox}[blanker,sidebyside]
+    \begin{center}
+        \begin{tikzpicture}[ampersand replacement=\&, line width=1pt]
+            \draw (0,0) coordinate[label=below:$A$] (A) -- (7,0) coordinate[label=below:$B$] (B) %
+            -- ([turn]150:6) coordinate[label=above:$C$] (C) -- cycle; 
+            \draw[name path=ta] (A) -- ($(B)!0.5!(C)$) node [above,pos=0.3] {$t_a$} node [right,yshift=3pt,pos=1] {$D$};
+            \draw[name path=tb] (B) -- ($(C)!0.5!(A)$) node [above,pos=0.3] {$t_b$} node [left,pos=1] {$E$}; 
+            \draw (C) -- ($(A)!0.5!(B)$) node [right,pos=0.3] {$t_c$} node [below,pos=1] {$F$};
+            \draw[name intersections={of=ta and tb, by=G},fill] (G) circle (1pt) node [below=3pt,xshift=-3pt] {$G$};
+        \end{tikzpicture}
+    \end{center}
+    \tcblower
+    \begin{itemize}
+        \item D, E, F: Puntos medios de los lados.
+        \item $\overline{AD} = t_a\;$; $\overline{BE} = t_b\;$; $\overline{CF} = t_c\,$.
+        \item $t_a \cap t_b \cap t_c = \left\{G\right\}$.
+        \item $G$: Centro de Gravedad (o Baricentro).
+    \end{itemize}
+\end{tcolorbox}
+
+\subsection*{Propiedad} 
+El baricentro divide cada transversal de gravedad en dos segmentos que están en la razón 2:1. El 
+segmento que va desde el centro al baricentro mide el doble que el segmento que va del baricentro 
+al lado.
+
+\section*{Altura}
+
+\begin{tcolorbox}[blanker,sidebyside]
+    \begin{center}
+        \begin{tikzpicture}[ampersand replacement=\&, line width=1pt]
+            \draw (0,0) coordinate[label=below:$A$] (A) -- (6,0) coordinate[label=below:$B$] (B) %
+            -- ([turn]120:7) coordinate[label=above:$C$] (C) -- cycle; 
+            \draw[name path=ha] (A) -- ($(B)!0.5!(C)$) node [above left,pos=0.4] {$h_a$} node [right,yshift=3pt,pos=1] {$D$};
+            \draw[name path=hb] (B) -- ($(C)!0.5!(A)$) node [above right,pos=0.4] {$h_b$} node [left,pos=1] {$E$}; 
+            \draw (C) -- ($(A)!0.5!(B)$) node [right,pos=0.4] {$h_c$} node [below,pos=1] {$F$};
+            \draw[name intersections={of=ha and hb, by=H},fill] (H) circle (1pt) node [below right=3pt,xshift=-4pt,yshift=-2pt] {$H$};
+        \end{tikzpicture}
+        \end{center}
+    \tcblower
+    \begin{itemize}
+        \item $\overline{AD} \perp \overline{BC}\;$ ; $\overline{BE} \perp \overline{CA}\;$ ; $\overline{CF} \perp \overline{AB}\,$.
+        \item $\overline{AD} = h_a\;$; $\overline{BE} = h_b\;$; $\overline{CF} = h_c$.
+        \item $h_a \cap h_b \cap h_c = \left\{H\right\}$.
+        \item $H$: Ortocentro.
+    \end{itemize}
+\end{tcolorbox}
+
+
+hola asdc oasdm awd
+
+\end{document}

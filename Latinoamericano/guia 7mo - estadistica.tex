@@ -1,0 +1,146 @@
+\documentclass[]{plantilla-material-v1}
+\usepackage{csvsimple-l3}
+\usepackage{xfp}
+\usetikzlibrary{cd}
+
+
+\begin{luacode*}
+  require('estadistica.lua')
+  repeat
+    lista = Generar_muestras(60,20,4)
+    v_unicos = Obtener_unicos(lista)
+  until Divisor_ideal(v_unicos) == 6 
+  conteo = Frecuencias(lista)
+  conteo_acumulativo = Suma_acumulativa(conteo)
+  prob = Probabilidades(lista)
+  prob_acumulativo = Suma_acumulativa(prob)
+
+  Csv('tabla.tmp',table.pack(v_unicos,conteo,conteo_acumulativo,prob,prob_acumulativo))
+\end{luacode*}
+
+\begin{document}
+Datos: \directlua{
+  tex.print(table.concat(lista, " • "))
+}
+
+Media: \pgfmathprintnumber{\directlua{
+  local suma = 0
+  local largo = 0
+  for i, v in pairs(lista) do
+    suma = suma + v
+    largo = i
+  end
+  tex.print(suma/largo)
+}}
+
+\begin{luacode}
+  require('estadistica.lua')
+  function lista_a_string(lista)
+    local str = ""
+    for _, v in pairs(lista) do
+      str = str .. string.format("%d \\\\ ", v)
+    end
+    return str
+  end
+  function a_puntos(x,y)
+    local str = ""
+    for i, vx in pairs(x) do
+      str = str ..string.format(" (%d,%d) ", vx, y[i])
+    end
+    return str
+  end
+\end{luacode}
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[line width=1pt,width=\linewidth,y=1cm,hide y axis,
+      axis lines*=middle,axis line shift=10pt,enlarge x limits=0.3]
+    \begingroup\edef\x{\endgroup
+    \noexpand\addplot+ [boxplot] table [row sep=\\,y index=0] 
+      {\directlua{tex.print(lista_a_string(lista))}};}\x
+    \end{axis}
+  \end{tikzpicture}
+\end{center}  
+
+\edef\nbarras{\directlua{tex.print(Divisor_ideal(v_unicos))}}
+
+divisor ideal: \nbarras
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[line width=1pt,width=\linewidth,
+      ybar interval,
+      grid=none,
+      xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+      x tick label style={rotate=45,anchor=east},
+      ]
+    \begingroup\edef\x{\endgroup
+    \noexpand\addplot [hist={bins=\nbarras},pattern={Lines[angle=-45,distance=5pt]}] 
+      table [row sep=\\,y index=0] 
+      {\directlua{tex.print(lista_a_string(lista))}};}\x
+    \end{axis}
+  \end{tikzpicture}
+\end{center}  
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[line width=1pt,width=\linewidth]
+    \begingroup\edef\x{\endgroup
+    \noexpand\addplot [ybar,pattern={Lines[angle=-45,distance=5pt]}] coordinates
+      {\directlua{tex.print(a_puntos(v_unicos,conteo))}};}\x
+    \end{axis}
+  \end{tikzpicture}
+\end{center}  
+
+
+
+
+
+\NewDocumentCommand{\porcentaje}{m}{\pgfmathtruncatemacro{\resultado}{\fpeval{#1*100}}\resultado}
+
+% \csvreader[no head,centered tabularray={
+%   cell{1}{4,6} = {r=1,c=2}{c},
+%   cell{1}{1-Z}={font=\bfseries\sffamily,cmd=\rotatebox{45}},
+%   colspec={Q[wd=1em]Q[wd=1em]Q[wd=1em]Q[wd=4em]Q[wd=2.5em]Q[wd=4em]Q[wd=2.5em]}
+% },
+%   table head={Datos & Frecuencia & F. Acumulada & Probabilidad & PP & P. Acumulada & PAP \\}
+% ]{tabla.tmp}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+% {\a & \b & \c & \tablenum{\d} & (\porcentaje{\d}\%) & \tablenum{\e} & (\porcentaje{\e}\%)}
+
+
+\csvreader[no head,
+  before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3},
+  centered tabularray={
+  cells={valign=m},
+  cell{1}{2,4} = {r=1,c=2}{c},
+  cell{1}{1-Z}={font=\bfseries\sffamily},
+  colspec={X[1,c]X[1,c]X[1,c]X[1,c]X[1,c]},
+  width=0.9\linewidth,
+  vline{1,2,4,6} = {1pt,solid},
+  hline{1,2,Z} = {1pt,solid},
+  % hline{2}={1}{-}{solid},
+  % hline{2}={2}{-}{solid},
+},
+  table head={Datos & {Frecuencia\\(Acumulada)} & FA & {Probabilidad\\(Acumulada)} & PA\\}
+]{tabla.tmp}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & (\c) & \pgfmathprintnumber{\d}  & (\pgfmathprintnumber{\e})}
+
+
+
+\begin{tikzcd}
+  A \arrow[rd] \arrow[r, "\phi"] & B \\
+    & C
+\end{tikzcd}
+
+\begin{tikzcd}[column sep=2cm]
+ &     &   D  \\[6mm]
+ & \text{Hombre} \arrow[ur, "1/2"]  &   E    \\
+ \arrow[ur, "1/2"] \arrow[dr, "1/2" below left] &      & \\
+ & \text{Mujer}   &   F   \\[6mm]
+ &     &   G   \\
+\end{tikzcd}
+
+\tikz \draw[pattern=north west lines] plot[xbar]
+coordinates{(1,0) (0.4,1) (1.7,2) (1.6,3)};
+
+\end{document}

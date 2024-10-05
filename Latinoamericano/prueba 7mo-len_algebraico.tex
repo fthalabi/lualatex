@@ -1,0 +1,132 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Evaluación}
+\def\subtitulo{Lenguaje Algebraico}
+\def\puntaje{20}
+
+\documentclass[sin curso]{plantilla-guia-v1}
+
+\NewDocumentCommand{\comparar}{mmm}{
+  \begin{tikzpicture}[line width=1pt,baseline=(X.base)]
+    \matrix[column sep={6pt},ampersand replacement=\&]{
+      \node (X) {#1}; \&[12pt]
+      \node {#2}; \& 
+      \node [draw,rounded corners,minimum height=30pt, minimum width=30pt] {}; \&
+      \node {#3}; \\
+    };
+  \end{tikzpicture}
+} 
+
+\begin{document} 
+
+\textbf{Objetivos}
+\begin{lista}
+  \item Transformar de lenguaje natural a algebraico.
+  \item Evaluar expresiones algebraicas.
+  \item Reducción de expresiones algebraicas.  
+\end{lista}
+
+% \begin{malla}[height=2cm,enlarge top by=10pt]
+% \end{malla}
+% \begin{respuesta}[height=1cm,enlarge top by=5pt]
+% \end{respuesta}
+
+\begin{enumerar}
+  \item Expresar en lenguaje algebraico y señalé que letra corresponde a cada objeto [2 puntos cada una].
+  \begin{ejercicios}(1)
+    \item Un pantalón tiene el mismo valor que dos poleras.
+    \begin{respuesta}[height=1.5cm]
+    \end{respuesta}
+    \item Una manzana vale 100 pesos más que una pera.
+    \begin{respuesta}[height=1.5cm]
+    \end{respuesta}
+  \end{ejercicios}
+
+  \item Analiza las situaciones y completa cada expresión con el signo \(>\), \(<\) o \(=\) según corresponda [1 punto cada una].
+  \begin{ejercicios}(2)
+    \item \comparar{Si $x=0.1$}{$\dfrac{2}{2x}$}{$\dfrac{1}{x}$}
+    \item \comparar{Si $x=0.01$}{$\dfrac{2}{x}$}{$\dfrac{3}{x}$}
+    \item \comparar{Si $x=0.1$}{$\dfrac{0.9+x}{0.1}$}{$\dfrac{0.1}{0.01}$}
+    \item \comparar{Si $x=2$}{$\dfrac{1}{x}$}{$\dfrac{1}{x^2}$}
+  \end{ejercicios}
+
+  \item Calcula el valor de las expresiones [1 punto cada una].
+  \begin{ejercicios}(2)
+    \item Si \quad $a=2$ \quad y \quad $b=3$ \\ 
+    $(a+b)-(a-b)$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item Si \quad $x=1$ \quad y \quad $y=-4$ \\ 
+    $(-y-x)+(2x+y)$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item Si \quad $g=5$ \\ 
+    $g^2-g+7$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item Si \quad $a=4$ \quad y \quad $b=-2$ \\ 
+    $a\cdot{b} +a^2 -(-b)$
+    \begin{malla}[height=3cm]
+    \end{malla}
+  \end{ejercicios}
+
+  \item Expresa en forma reducida el \textbf{área} y \textbf{perimetro} 
+  de la siguiente figura, considerando que la parte superior $A$ es un cuadrado y 
+  la parte inferior $B$ es un rectángulo [4 puntos]. 
+
+    \begin{tikzpicture}[line width=1pt]
+      \def\x{1.5}
+      \def\y{2}
+      \def\z{5}
+      \pgfmathsetmacro{\dif}{(\z-\x)/2}
+      \draw[solid] (0,0) --++(90:\x cm) coordinate (A1)
+        --++(0:\x cm) coordinate (A2) 
+        --++(-90:\x cm) coordinate (A3)
+        --++(0:\dif cm) coordinate (B1)
+        --++(-90:\y cm) coordinate (B2)
+        --++(-180:\z cm) coordinate (B3)
+        --++(90:\y cm) --++(0:\dif cm);
+      \draw[dashed] (0,0) --++(0:\x cm);
+      
+      \node at ($(A1)!0.5!(A3)$) {$A$};
+      \node at ($(B1)!0.5!(B3)$) {$B$};
+      \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}] %% mirror para invertir
+       (A2) -- (A3) node [midway,xshift=15pt] {$x$};
+      \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}] %% mirror para invertir
+       (B1) -- (B2) node [midway,xshift=18pt] {$y$};
+      \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}] %% mirror para invertir
+       (B2) -- (B3) node [midway,yshift=-18pt] {$z$};
+
+      % \node [draw, rectangle, inner sep=5mm] (A) {$A$};
+      % \node [draw, rectangle, inner xsep=20mm, inner ysep=7mm,anchor=north] (B) at (A.south) {$B$};
+      % \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}] %% mirror para invertir
+      % (A.north east) -- (A.south east) node [midway,xshift=15pt] {$x$};
+      % \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}] %% mirror para invertir
+      % (B.north east) -- (B.south east) node [midway,xshift=18pt] {$y$};
+      % \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt}] %% mirror para invertir
+      % (B.south west) -- (B.south east) node [midway,yshift=-18pt] {$z$};
+    \end{tikzpicture}    
+
+    \begin{respuesta}[height=3cm]
+    \end{respuesta}
+
+  \item Reduce las expresiones algebraicas [1 punto cada una].
+  \begin{ejercicios}(1)
+    \item $6x +4y -2z +5x -18y +9z$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item $15f -13g +5 -4f -8g +9$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item $7bc +15bd +4bc -12bd$
+    \begin{malla}[height=3cm]
+    \end{malla}
+    \item $14uv -5 -7v +13 -12uv + 5v -2uv -1$
+    \begin{malla}[height=3cm]
+    \end{malla}
+  \end{ejercicios}
+  
+\end{enumerar}
+
+
+
+\end{document}

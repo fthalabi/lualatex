@@ -1,0 +1,45 @@
+\providecommand{\curso}{Octavo Básico A}
+\providecommand{\colegio}{Colegio Divina Pastora}
+\providecommand{\tituloDocumento}{Control 2}
+\providecommand{\subtituloDocumento}{Percentiles y otras medidas}
+\documentclass{cdplf-prueba}
+
+\begin{document}
+%
+\begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,raster column skip=3pt,raster force size=false]
+    \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=30pt,add to width=4cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=30pt,add to width=-2cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=30pt,add to width=-2cm]
+    \end{caja}                    
+\end{tcbraster}
+%
+\vspace*{10pt}
+\underline{Datos:} \hspace{4pt} 13 \hspace{4pt}\textbullet\hspace{4pt} 6 \hspace{4pt}\textbullet\hspace{4pt} 4 \hspace{4pt}\textbullet\hspace{4pt} 21 \hspace{4pt}\textbullet\hspace{4pt} 8 \hspace{4pt}\textbullet\hspace{4pt} 7 \hspace{4pt}\textbullet\hspace{4pt} 11 \hspace{4pt}\textbullet\hspace{4pt} 11 \hspace{4pt}\textbullet\hspace{4pt} 8 \hspace{4pt}\textbullet\hspace{4pt} 5 \hspace{4pt}\textbullet\hspace{4pt} 10 \hspace{4pt}\textbullet\hspace{4pt} 11 \hspace{4pt}\textbullet\hspace{4pt} 8 \hspace{4pt}\textbullet\hspace{4pt} 8 \hspace{4pt}\textbullet\hspace{4pt} 7 \hspace{4pt}\textbullet\hspace{4pt} 14 \hspace{4pt}\textbullet\hspace{4pt} 10 \hspace{4pt}\textbullet\hspace{4pt} 10 \hspace{4pt}\textbullet\hspace{4pt} 3
+\begin{center}\begin{tblr}{colspec={ccccc},hlines,vlines,hline{2,Z} = {1}{-}{},hline{2,Z} = {2}{-}{},row{even}={black!10}}
+    .&Frecuencia&Probabilidad&Frecuencia Acumulada&Probabilidad Acumulada \\
+   3&1&0.053&1&0.053 \\
+   4&1&0.053&2&0.106 \\
+   5&1&0.053&3&0.159 \\
+   6&1&0.053&4&0.212 \\
+   7&2&0.105&6&0.317 \\
+   8&4&0.211&10&0.528 \\
+   10&3&0.158&13&0.686 \\
+   11&3&0.158&16&0.844 \\
+   13&1&0.053&17&0.897 \\
+   14&1&0.053&18&0.95 \\
+   21&1&0.053&19&1.003 \\
+\end{tblr}\end{center}
+
+Utilice los datos y la tabla anterior, para calcular cuanto vale cada una de las siguientes medidas.
+Además, para cada medida {\bfseries describa que significa cada uno de los valores obtenidos}.  
+\begin{ejercicios}
+    \task Media (Promedio) \vspace*{2pt}\begin{lineas}[height=2cm]\end{lineas}
+    \task Rango \vspace*{2pt}\begin{lineas}[height=2cm]\end{lineas}
+    \task Primer cuartil $\left(Q_1\right)$ \vspace*{2pt}\begin{lineas}[height=2cm]\end{lineas}
+    \task Mediana $\left(Q_2\right)$ \vspace*{2pt}\begin{lineas}[height=2cm]\end{lineas}
+    \task Tercer cuartil $\left(Q_3\right)$ \vspace*{2pt}\begin{lineas}[height=2cm]\end{lineas}
+\end{ejercicios}
+
+\end{document}

@@ -1,0 +1,8 @@
+for i in {001..026}
+do
+Rscript generador_guia_tabla.R --out guia_tabla --number $i
+lualatex -shell-escape "guia_tabla_$i.tex"
+lualatex -shell-escape "guia_tabla_$i.tex"
+done
+gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=guia_tabla_juntas.pdf guia_tabla_*.pdf
+

@@ -1,0 +1,125 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Control}
+\def\subtitulo{Operatoria algebraica}
+\def\curso{Octavo Básico}
+
+\documentclass[sin curso]{plantilla-evaluacion-v1}
+
+\begin{document}
+\begin{partes}
+  \parte Determina si las siguientes aseveraciones son verdaderas o falsas y marca 
+  la alternativa correspondiente en cada caso. \hfill[1p c/u]
+  \begin{ejercicios}(2)
+    \ejercicio $2a\cdot(3b+4c)=2a\cdot(3b)+4c$
+    \begin{vertical}
+      \alternativa Verdadero
+      \alternativa False
+    \end{vertical}
+    \ejercicio $-(-x-y)=x+y$
+    \begin{vertical}
+      \alternativa Verdadero
+      \alternativa False
+    \end{vertical}
+    \ejercicio! $(2x+y)\cdot(3v+5w)=2x\cdot(3v)+2x\cdot(5w)+y\cdot(3v)+y\cdot(5w)$
+    \begin{vertical}
+      \alternativa Verdadero
+      \alternativa False
+    \end{vertical}
+    \ejercicio! $2ab+2b-(-4ab+5b)=2ab+2b-4ab+5b$
+    \begin{vertical}
+      \alternativa Verdadero
+      \alternativa False
+    \end{vertical}
+    \ejercicio! Si \hspace{2pt}$A=m+n$,\hspace{5pt} $B=2m-n$.\hspace{3pt} Se cumple que:\hspace{10pt} $B-A=2m-n-m+n$
+    \begin{vertical}
+      \alternativa Verdadero
+      \alternativa False
+    \end{vertical}
+  \end{ejercicios}
+\parte Considera las siguientes igualdades y desarrolla cada expresión utilizando 
+la propiedad distributiva y/o de potencias. \hfill[1p c/u]
+\begin{tcolorbox}[hbox,center,borderline={1pt}{0pt}{black, dashed},colframe=white,colback=white]
+  $A = x+1 \hspace*{30pt} B=-2x+3$
+\end{tcolorbox}
+\begin{ejercicios}(2)
+  \ejercicio $2A+B$
+  \begin{malla}[height=2.5cm]
+  \end{malla}
+  \ejercicio $-3B$
+  \begin{malla}[height=2.5cm]
+  \end{malla}
+  \ejercicio $-A\cdot(A-1)+A$
+  \begin{malla}[height=3.5cm]
+  \end{malla}
+  \ejercicio $(A-B)\cdot(A+B)$
+  \begin{malla}[height=3.5cm]
+  \end{malla}
+\end{ejercicios}
+\parte Calcula el área y perímetro de las siguientes figuras. Asegúrate de reducir lo más 
+posible las expresiones haciendo uso de los términos semejantes. \hfill[1p c/u]
+\NewDocumentCommand{\rectangulo}{mmO{0}O{0}}{%
+\draw (#3,#4) --++(0:#1) -- ([turn]90:10pt) -- ([turn]90:10pt) -- ([turn]90:10pt)
+  -- ([turn]90:10pt) -- ([turn]90:#2)  -- ([turn]90:10pt)  -- ([turn]90:10pt) 
+  -- ([turn]90:10pt)  -- ([turn]90:10pt) -- ([turn]90:#1)  -- ([turn]90:10pt)
+  -- ([turn]90:10pt)  -- ([turn]90:10pt)  -- ([turn]90:10pt)  -- ([turn]90:#2)
+  -- ([turn]90:10pt)  -- ([turn]90:10pt)  -- ([turn]90:10pt)  -- ([turn]90:10pt);
+}
+\begin{ejercicios}(2)
+  \ejercicio
+  \begin{minipage}[t][3cm][t]{\linewidth}
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt]
+      \rectangulo{4}{2}
+      \node[below] at (current bounding box.south) {3x};
+      \node[right] at (current bounding box.east |- 0,1) {5};
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{tcbraster}[raster columns=2, raster column skip=4pt,raster width=1\linewidth]
+    \begin{caja}[height=35pt,title=Área]
+    \end{caja}
+    \begin{caja}[height=35pt,title=Perímetro]
+    \end{caja}
+  \end{tcbraster}
+  \ejercicio
+\begin{minipage}[t][3cm][t]{\linewidth}
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt]
+      \rectangulo{4}{1}
+      \node[below] at (current bounding box.south) {$2y$};
+      \node[right] at (current bounding box.east |- 0,0.5) {$x$};
+    \end{tikzpicture}
+\end{minipage}
+  \begin{tcbraster}[raster columns=2, raster column skip=4pt,raster width=1\linewidth]
+    \begin{caja}[height=35pt,title=Área]
+    \end{caja}
+    \begin{caja}[height=35pt,title=Perímetro]
+    \end{caja}
+  \end{tcbraster}
+  \ejercicio
+  \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt]
+    \rectangulo{4}{4}
+    \node[below] at (current bounding box.south) {$ab$};
+    \node[right] at (current bounding box.east |- 0,2) {$ab$};
+  \end{tikzpicture}
+  \begin{tcbraster}[raster columns=2, raster column skip=4pt,raster width=1\linewidth]
+    \begin{caja}[height=35pt,title=Área]
+    \end{caja}
+    \begin{caja}[height=35pt,title=Perímetro]
+    \end{caja}
+  \end{tcbraster}
+  \ejercicio
+  \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt]
+    \rectangulo{2}{4}
+    \rectangulo{2}{2}[2][0]
+    \node[below] at (1,0) {$y$};
+    \node[below] at (3,0) {$y$};
+    \node[right] at (4,1) {$y$};
+    \node[left] at (0,2) {$2y$};
+  \end{tikzpicture}
+  \begin{tcbraster}[raster columns=2, raster column skip=4pt,raster width=1\linewidth]
+    \begin{caja}[height=35pt,title=Área]
+    \end{caja}
+    \begin{caja}[height=35pt,title=Perímetro]
+    \end{caja}
+  \end{tcbraster}
+\end{ejercicios}
+\end{partes}
+\end{document}

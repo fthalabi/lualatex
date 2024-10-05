@@ -1,0 +1,93 @@
+\providecommand{\curso}{Séptimo Básico}
+\providecommand{\colegio}{Colegio Divina Pastora}
+\providecommand{\tituloDocumento}{Guía}
+\providecommand{\subtituloDocumento}{Medidas de centralidad}
+
+\documentclass{cdplf-prueba}
+
+\begin{document}
+%
+\def\respuestas{%
+\begin{tcbraster}[enhanced,raster columns=4,raster width=1\linewidth,raster column skip=20pt]
+    \begin{caja}[title={\sffamily\scshape\bfseries Moda},height=30pt]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Media},height=30pt]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Mediana},height=30pt]
+    \end{caja}  
+    \begin{caja}[title={\sffamily\scshape\bfseries Rango},height=30pt]
+    \end{caja}                    
+\end{tcbraster}}
+%
+Determine el valor de las siguientes expresiones en el espacio asignado.
+%
+%\settasks{debug}
+\begin{ejercicios}
+    \task!
+    % r$> dt <- c(6,4,4,5,7,2,6,3,7,6)
+    % r$> dt %>% tabyl %>% mutate(n_cum = cumsum(n), p_cum = cumsum(percent))
+    %  . n percent n_cum p_cum
+    %  2 1     0.1     1   0.1
+    %  3 1     0.1     2   0.2
+    %  4 2     0.2     4   0.4
+    %  5 1     0.1     5   0.5
+    %  6 3     0.3     8   0.8
+    %  7 2     0.2    10   1.0
+    % r$> sort(dt)
+    %  [1] 2 3 4 4 5 6 6 6 7 7
+    \underline{Datos:} 6 {\textbullet} 4 {\textbullet} 4 {\textbullet} 5 {\textbullet} 7 {\textbullet} 2 {\textbullet} 6 {\textbullet} 3 {\textbullet} 7 {\textbullet} 6%
+    \vspace{10pt}\begin{desarrollo}[height=3cm]\end{desarrollo}\vspace{10pt}
+    \respuestas
+%     dt %>% tabyl %>% mutate(n_cum = cumsum(n), p_cum = cumsum(percent))
+%     . n    percent n_cum      p_cum
+%     3 1 0.06666667     1 0.06666667
+%     4 1 0.06666667     2 0.13333333
+%     5 1 0.06666667     3 0.20000000
+%     9 2 0.13333333     5 0.33333333
+%    11 1 0.06666667     6 0.40000000
+%    12 1 0.06666667     7 0.46666667
+%    13 2 0.13333333     9 0.60000000
+%    14 3 0.20000000    12 0.80000000
+%    15 2 0.13333333    14 0.93333333
+%    19 1 0.06666667    15 1.00000000
+  
+%   r$> dt
+%    [1] 19 15 12  4 13 13  3 14 11  5  9 14 15 14  9
+  
+%   r$> sort(dt)
+%    [1]  3  4  5  9  9 11 12 13 13 14 14 14 15 15 19
+    \task!\underline{Datos:} 19 {\textbullet} 15 {\textbullet} 12 {\textbullet} 4 {\textbullet} 13 {\textbullet} 13 {\textbullet} 3 {\textbullet} 14 {\textbullet} 11 {\textbullet} 5 {\textbullet} 9 {\textbullet} 14 {\textbullet} 15 {\textbullet} 14 {\textbullet} 9
+    \vspace{10pt}
+    \begin{desarrollo}[height=3cm]
+    \end{desarrollo}
+    \vspace{10pt}
+    \respuestas
+%     r$> dt %>% tabyl %>% mutate(n_cum = cumsum(n), p_cum = cumsum(percent))
+%     . n    percent n_cum      p_cum
+%     8 1 0.03333333     1 0.03333333
+%     9 2 0.06666667     3 0.10000000
+%    10 3 0.10000000     6 0.20000000
+%    11 3 0.10000000     9 0.30000000
+%    12 2 0.06666667    11 0.36666667
+%    13 3 0.10000000    14 0.46666667
+%    14 5 0.16666667    19 0.63333333
+%    15 4 0.13333333    23 0.76666667
+%    16 2 0.06666667    25 0.83333333
+%    17 4 0.13333333    29 0.96666667
+%    22 1 0.03333333    30 1.00000000
+  
+%   r$> sort(dt)
+%    [1]  8  9  9 10 10 10 11 11 11 12 12 13 13 13 14 14 14 14 14 15 15 15 15 16 16 17 17 17 17 22
+  
+%   r$> dt
+%    [1] 14 17 14 14 13 12 14 12 17 14 11 16 15 15 15 13  9 10 17 22 13 11 11  8 17 15 10 10  9 16
+  
+\task!\underline{Datos:} 14 {\textbullet} 17 {\textbullet} 14 {\textbullet} 14 {\textbullet} 13 {\textbullet} 12 {\textbullet} 14 {\textbullet} 12 {\textbullet} 17 {\textbullet} 14 {\textbullet} 11 {\textbullet} 16 {\textbullet} 15 {\textbullet} 15 {\textbullet} 15 {\textbullet} 13 {\textbullet} 9 {\textbullet} 10 {\textbullet} 17 {\textbullet} 22 {\textbullet} 13 {\textbullet} 11 {\textbullet} 11 {\textbullet} 8 {\textbullet} 17 {\textbullet} 15 {\textbullet} 10 {\textbullet} 10 {\textbullet} 9 {\textbullet} 16
+\vspace{10pt}
+\begin{desarrollo}[height=3cm]
+\end{desarrollo}
+\vspace{10pt}
+\respuestas
+\end{ejercicios}
+
+\end{document}

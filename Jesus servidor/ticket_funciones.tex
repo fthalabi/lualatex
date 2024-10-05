@@ -1,0 +1,119 @@
+\def\name{Prof. Fernando Halabi}
+\def\mail{correo@caes.cl}
+\def\title{Material de Apoyo}
+\def\subtitle{Función afín}
+\def\colegio{Colegio Jesús Servidor}
+\def\asignatura{Matemática}
+\def\curso{Primero medio}
+
+\documentclass{caes}
+
+\begin{document}
+
+\titulo{Objetivos de la clase}
+\begin{itemize}
+    \item Ubicar puntos en el plano cartesiano.
+    \item Determinar la ecuación de la función que pasa por los puntos marcados en el
+    plano cartesiano
+\end{itemize}
+
+\titulo{Ticket de entrada}
+
+\pregunta Considere la tabla y el plano cartesiano que se encuentra 
+a continuación, marque los puntos que se encuentran en la tabla 
+en el plano cartesiano y dibuje la recta que pasa por ellos. 
+
+\def\tabla{%
+\begin{colortable}{colspec = {cc}}
+    $\boldsymbol x$ & $\boldsymbol y$\\
+    0 & 0 \\
+    1 & 2 \\
+    4 & 8 \\
+    5 & 10
+\end{colortable}
+}
+\def\grafica{%
+\begin{tikzpicture}[line width=1pt,x=0.6cm,y=0.6cm]
+    \draw[->] (0,0) -- (12.5,0) node[right] {$x$};
+    \foreach \x in {1,...,12} {
+        \draw[help lines] (\x,0) -- (\x,12);
+        \node[below] at (\x,0) {\x};
+    }
+    \draw[->] (0,0) -- (0,12.5) node[above] {$y$}; 
+    \foreach \y in {1,...,12} {
+        \draw[help lines] (0,\y) -- (12,\y);
+        \node[left] at (0,\y) {\y};
+    }
+    \node[below left] at (0,0) {0};
+\end{tikzpicture}
+}
+
+\begin{tikzpicture}
+    \node (tabla) {\tabla};
+    \node[left=2cm of tabla] (grafica) {\grafica}; 
+\end{tikzpicture}
+
+\pregunta Una vez dibujada la recta, encuentre la ecuación de dicha 
+recta. 
+
+\begin{center}
+    \begin{tikzpicture}
+        \node[text width=10cm,draw=primarycolor,dotted, line width=2pt, inner sep=5mm,rounded corners] {Recuerde que la ecuación de una recta es $y = m\cdot x + n$, 
+        donde $m$ es la pendiente y $n$ el coeficiente de posición.};
+    \end{tikzpicture}    
+\end{center}
+\desarrollo[3cm]
+
+\newpage
+
+\titulo{Procedimiento para encontrar la ecuación de la recta}
+\begin{enumerate}
+    \item Marcar los puntos en el plano cartesiano y trazar la 
+    recta que pasa por ellos.
+    \item Calcular la pendiente ($\boldsymbol m$) usando los triángulos que
+    se forman entre la recta y el plano cartesiano. {\bfseries La 
+    pendiente corresponde división entre el lado vertical y el
+    horizontal del triángulo}.
+    \item {\bfseries El coeficiente de posición ($\boldsymbol n$) corresponde a la posición
+    por donde la recta atraviesa el eje $\boldsymbol y$.}
+    \item Finalmente, la ecuación de la recta es $y = m\cdot x + n$
+\end{enumerate}
+
+\titulo{Ticket de salida}
+
+\pregunta Use el procedimiento visto en clases, para encontrar 
+la ecuación de la recta correspondiente a la \\siguiente tabla
+
+\def\tabla{%
+\begin{colortable}{colspec = {cc}}
+    $\boldsymbol x$ & $\boldsymbol y$\\
+    0 & 10 \\
+    1 & 7  \\
+    4 & -2 \\
+    5 & -5
+\end{colortable}
+}
+\def\grafica{%
+\begin{tikzpicture}[line width=1pt,x=0.6cm,y=0.6cm]
+    \draw[->] (0,0) -- (12.5,0) node[right] {$x$};
+    \foreach \x in {1,...,12} {
+        \draw[help lines] (\x,0) -- (\x,12);
+        \node[below] at (\x,0) {\x};
+    }
+    \draw[->] (0,0) -- (0,12.5) node[above] {$y$}; 
+    \foreach \y in {1,...,12} {
+        \draw[help lines] (0,\y) -- (12,\y);
+        \node[left] at (0,\y) {\y};
+    }
+    \node[below left] at (0,0) {0};
+\end{tikzpicture}
+}
+
+\begin{tikzpicture}
+    \node (tabla) {\tabla};
+    \node[left=2cm of tabla] (grafica) {\grafica}; 
+\end{tikzpicture}
+
+\desarrollo[3cm]
+
+\end{document}

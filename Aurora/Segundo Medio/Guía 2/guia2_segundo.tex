@@ -1,0 +1,117 @@
+\def\name{Prof. Fernando Halabi}
+\def\mail{fernando.halabi@colegionuevaaurora.cl}
+\def\title{Guía 2}
+\def\subtitle{Operatoria en $\mathbb{Q}$}
+\def\colegio{Liceo Bicentenario Nueva Aurora de Chile}
+\def\asignatura{Matemática}
+\def\curso{Segundo Medio}
+
+\documentclass{prueba}
+
+\begin{document}
+\titulo{Objetivo e instrucciones generales}
+
+El siguiente material corresponde a una evaluación con {\bfseries nota acumulativa}, que 
+tiene como intención preparar la próxima prueba de cierre de unidad. Específicamente,
+el alumno deberá: Convertir números racionales a fracción, y aplicar propiedades 
+de estas últimas para determinar el valor de una expresión aritmética.
+
+La evaluación es para completarla en la clase y es necesario {\bfseries contestar con lápiz pasta}
+para tener derecho a reclamo.
+
+\titulo{Resumen de contenidos claves}
+
+Convertir de decimal a fracción:
+\begin{tcenter}
+    \begin{tikzpicture}
+        \node (A) {$13,421 =\dfrac{13421}{1000}$};
+        \node (B) [above right=5mm of A,draw] {El número original sin coma};
+        \node (C) [below right=5mm of A,draw] {Un 1 y tantos 0s como decimales hayan};
+        \draw [->] (B.south west) -- (A.north east);
+        \draw [->] (C.north west) -- (A.south east);
+    \end{tikzpicture}    
+\end{tcenter}
+
+Convertir de periódico a fracción:
+\begin{tcenter}
+    \begin{tikzpicture}
+        \node (A) {$132,\overline{421} =\dfrac{132421-132}{999}$};
+        \node (B) [above right=5mm of A,draw,text width=6cm] {Al numero original sin %
+        coma se le resta lo que esta antes del periodo};
+        \node (C) [below right=5mm of A,draw] {Tantos 9s como números %
+        en el periodo};
+        \draw [->] (B.south west) -- (A.north east);
+        \draw [->] (C.north west) -- (A.south east);
+    \end{tikzpicture}
+\end{tcenter}
+
+Convertir de semi-periodo a fracción:
+\begin{tcenter}
+    \begin{tikzpicture}
+        \node (A) {$132,67\overline{421} =\dfrac{13267421-13267}{99900}$};
+        \node (B) [above right=5mm of A,draw,text width=6cm] {Al numero original sin %
+        coma se le resta lo que esta antes del periodo};
+        \node (C) [below right=5mm of A,draw,text width=7.5cm] {Tantos 9s como números %
+        en el periodo y tantos 0s como decimales antes del periodo};
+        \draw [->] (B.south west) -- (A.north east);
+        \draw [->] (C.north west) -- (A.south east);
+    \end{tikzpicture}
+\end{tcenter}
+
+Convertir de fracción mixta a fracción impropia\footnote{La fracción  es impropia cuando
+el numerador es más grande que el denominador.}:
+\begin{equation*}
+    4\dfrac{3}{5} = \dfrac{4\cdot 5 + 3}{5} = \dfrac{23}{5}
+\end{equation*}
+
+Para sumar y restar fracciones, es importante que primero todos los denominadores sean
+iguales, para lo cual se usa el mínimo común múltiplo (MCM). Una vez calculado el MCM, 
+las fracciones 
+se multiplican (arriba y abajo) de tal manera que el denominador toma el valor del MCM.
+Finalmente, los numeradores se operan normalmente para calcular el resultado final.
+\begin{equation*}
+    \dfrac{3}{4} + \dfrac{1}{2} - \dfrac{5}{8} = \dfrac{6}{8} + \dfrac{4}{8} - \dfrac{5}{8} = \dfrac{6+4-5}{8} = \dfrac{5}{8}
+\end{equation*}
+
+Notar que en el ejemplo anterior, las fracciones se multiplicaron por 2, 4 y 1 
+respectivamente para que los denominadores tomen el valor del MCM, que es 8 en este caso.  
+
+Para multiplicar fracciones, se multiplica hacia al lado:
+\begin{equation*}
+\dfrac{2}{3}\cdot\dfrac{5}{7} = \dfrac{2\cdot 5}{3 \cdot 7} = \dfrac{10}{35}    
+\end{equation*}
+
+Para dividir fracciones, se invierte la que está dividiendo para transformar la operación
+en una multiplicación, es decir:
+\begin{equation*}
+\dfrac{2}{3}\div \dfrac{5}{7} = \dfrac{2}{3}\cdot\dfrac{7}{5} = \dfrac{2\cdot 7}{3\cdot 5} = \dfrac{14}{15}
+\end{equation*} 
+\titulo{Pauta de cotejo}
+
+Para la corrección de la guía, se le asignará puntaje a cada respuesta según los criterios
+que se encuentran detallados en la tabla a continuación.
+
+\pauta
+\newpage
+
+\parte{} Reduzca o simplifique las siguientes expresiones lo más posible usando 
+las distintas propiedades de los números racionales.
+
+\pregunta{} $\dfrac{3}{4} + \dfrac{1}{6} - \dfrac{11}{12}$
+\desarrollo[6cm]
+
+\pregunta{} $1\dfrac{3}{5} \times 4\dfrac{5}{8}$
+\desarrollo[6cm]
+
+\pregunta{} $3,2\overline{46}\div 5,\overline{46}$
+\desarrollo[6cm]
+
+\pregunta{} $\left(1,2\overline{6}-3\dfrac{4}{5}\right)\div\left(\dfrac{1}{3}-\dfrac{8}{12}\right)$
+\desarrollo[8cm]
+
+\pregunta{} $1 - \dfrac{1}{1+\dfrac{2}{3-\dfrac{1}{2}}} + \dfrac{1}{1+\dfrac{1}{1+\dfrac{1}{4}}}$
+\desarrollo[10cm]
+
+
+
+\end{document}

@@ -1,0 +1,307 @@
+\providecommand{\tituloDocumento}{Homotecia y semejanza}
+\providecommand{\subtituloDocumento}{Unidad de geometría}
+\providecommand{\curso}{Curso}
+
+\documentclass[handout]{beamer}
+\usetheme{cdplf}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Homotecia}
+
+\begin{columns}[c]
+    \begin{column}{0.65\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \node [regular polygon, regular polygon sides=4,draw,line width=1pt,
+                inner sep=5mm,rotate=30] (preimagen) {};
+            \node [regular polygon, regular polygon sides=4,draw,line width=1pt, 
+                inner sep=10mm,rotate=210, below=6cm of preimagen,xshift=-4cm] (imagen) {};
+            \foreach \i/\p in {{north west/A},{north east/B},{south east/C},{south west/D}}
+                {
+                    \draw[name path global/.expanded=\p-\p'] (preimagen.\i) -- (imagen.\i);
+                    \node[below=1mm,xshift=-1mm,font=\footnotesize] at (preimagen.\i) {$\p$};
+                    \node[below=1mm,xshift=-1mm,font=\footnotesize] at (imagen.\i) {$\p'$};
+                }
+            \fill [name intersections={of=A-A' and B-B',by=O}] (O) circle (2pt) 
+                node[below left,font=\footnotesize] {$O$}; 
+            \node[draw,above right=1cm of O,rounded corners,dashed] {caso $k<0$}; 
+        \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.35\textwidth}
+        Se cumple que:
+        \begin{itemize}[topsep=3mm]
+            \item $\overline{OA}\cdot k = \overline{OA'}$
+            \item $\overline{OB}\cdot k = \overline{OB'}$
+            \item $\overline{OC}\cdot k = \overline{OC'}$
+            \item $\overline{OD}\cdot k = \overline{OD'}$
+            \item $\overline{AB}\cdot k = \overline{A'B'}$
+            \item $\overline{BC}\cdot k = \overline{B'C'}$
+            \item $\overline{CD}\cdot k = \overline{C'D'}$
+            \item $\overline{DA}\cdot k = \overline{D'A'}$
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\centering
+\begin{tikzpicture}[font=\footnotesize]
+    \node [fill,circle,inner sep=2pt,label=below:$O$] (O) {};
+    \node [regular polygon, regular polygon sides=4,draw,line width=1pt,
+        inner sep=5mm,rotate=30,below right=3cm of O] (preimagen) {};
+    \node [regular polygon, regular polygon sides=4,draw,line width=1pt, 
+        inner sep=10mm,rotate=30, below right=6cm of O] (imagen) {};
+    \foreach \i/\l in {north east/A, north west/B, south west/C, south east/D}
+        {
+            \draw (O) -- (imagen.\i);
+            \node [below=1mm,xshift=-1mm] at (preimagen.\i) {$\l$};
+            \node [below=1mm,xshift=-1mm] at (imagen.\i) {$\l'$};
+        }
+    \node [draw,rounded corners, dashed,above right=1cm of imagen.north east,
+        font=] {caso $k>0$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Rectas y ángulos}
+\begin{columns}[c]
+    \begin{column}[]{0.6\textwidth}
+        \centering
+        \begin{tikzpicture}[rotate=30]
+            \draw[<->,name path=A-B,line width=1pt] (0,0) coordinate (A) -- ++(5,0) coordinate (B) node[right] {$l_2$};
+            \draw[<->,name path=C-D,line width=1pt] (A) ++(0,2) coordinate (C) -- ++(5,0) coordinate (D) node[right] {$l_1$};
+            \draw[<->,name path=E-F,line width=1pt] ($(A)!0.3!(B)!1.5cm!250:(B)$) coordinate (E) -- ($(C)!0.7!(D)!1.5cm!70:(D)$) coordinate (F);
+            \draw[name intersections={of=C-D and E-F,by=vCD}] pic ["$\alpha$",draw,<->,angle eccentricity=1.2,angle radius=1cm] {angle = D--vCD--F};
+            \draw pic ["$\beta$",draw,<->,angle eccentricity=1.2,angle radius=0.8cm] {angle = F--vCD--C};
+            \draw pic ["$\alpha$",draw,<->,angle eccentricity=1.2,angle radius=1cm] {angle = C--vCD--E};
+            \draw pic ["$\beta$",draw,<->,angle eccentricity=1.2,angle radius=0.8cm] {angle = E--vCD--D};
+            \draw[name intersections={of=A-B and E-F,by=vAB}] pic ["$\gamma$",draw,<->,angle eccentricity=1.2,angle radius=0.8cm] {angle = B--vAB--F};
+            \draw pic ["$\delta$",draw,<->,angle eccentricity=1.2,angle radius=1cm] {angle = F--vAB--A};
+            \draw pic ["$\gamma$",draw,<->,angle eccentricity=1.2,angle radius=0.8cm] {angle = A--vAB--E};
+            \draw pic ["$\delta$",draw,<->,angle eccentricity=1.2,angle radius=1cm] {angle = E--vAB--B};
+        \end{tikzpicture}
+    \end{column}
+    \begin{column}[]{0.4\textwidth}
+        \begin{itemize}[topsep=3mm]
+            \item $\alpha + \beta = 180^{\circ}$
+            \item $\gamma + \delta = 180^{\circ}$
+
+        \end{itemize}
+        Si $l_1 \parallel l_2$, entonces:
+        \begin{itemize}[topsep=3mm]
+            \item $\alpha = \gamma$
+            \item $\beta = \delta$
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teorema de Tales}
+
+\centering
+\begin{tikzpicture}[ampersand replacement=\&]
+    \begin{scope}[line width=1pt]
+        \draw[<->] (70:0cm) -- ++(90:6cm) coordinate [pos=0.1] (A) coordinate[pos=0.35] (B) coordinate[pos=0.6] (C) coordinate [pos=1] (D) -- ++(-60:6cm) coordinate[pos=0.4] (C') coordinate[pos=0.65] (B') coordinate [pos=0.9](A');
+        \draw[<->,shorten <=-1cm] (A) -- (A') -- ($(A')!-1cm!(A)$) node[right] (l3) {$l_3$};
+        \draw[<->,shorten <=-1cm] (B) -- ($(B')!-1cm!(B)$) node[right] (l2) {$l_2$}; 
+        \draw[<->,shorten <=-1cm] (C) -- ($(C')!-1cm!(C)$) node[right] (l1) {$l_1$};        
+    \end{scope}
+    \node at ($(A)!0.5!(B)$) [left] {$c$};
+    \node at ($(B)!0.5!(C)$) [left] {$b$};
+    \node at ($(C)!0.5!(D)$) [left] {$a$};
+    \node at ($(D)!0.5!(C')$) [right=3pt] {$a'$};
+    \node at ($(C')!0.5!(B')$) [right=3pt] {$b'$};
+    \node at ($(B')!0.5!(A')$) [right=3pt] {$c'$};
+    \node at ($(A)!0.5!(A')$) [below] {$c''$};
+    \node at ($(B)!0.5!(B')$) [below] {$b''$};
+    \node at ($(C)!0.5!(C')$) [below] {$a''$};
+    
+    \matrix[matrix of math nodes,anchor=west,right=5mm of l3,
+            draw, rounded corners, dashed,line width=1pt] (n)
+            {\dfrac{a}{a''} \& = \& \dfrac{a+b}{b''} \& = \&\dfrac{a+b+c}{c''}\\};        
+    \matrix[matrix of math nodes,above=2.5cm of n.north west,anchor=west,
+            draw, rounded corners, dashed, line width=1pt] (m)
+        {\dfrac{a}{a'} \& = \& \dfrac{b}{b'} \& = \&\dfrac{c}{c'}\\};  
+
+    \node (message-1) at ($(m-1-2)!0.5!(n-1-2) -(5mm,0)$) {Si $l_1 \parallel l_2$};
+    \node[right=5mm of message-1] (message-2)  {Si $l_1\parallel l_2 \parallel l_3$};
+    \draw[->] (message-1) -- (m-1-2);
+    \draw[->] (message-1) -- (n-1-2);
+    \draw[->] (message-2) -- (m-1-4);
+    \draw[->] (message-2) -- (n-1-4);
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{}{}
+
+    {\bfseries Demostración:} Si $l_1\parallel l_2 \parallel l_3$, los triángulos involucrados 
+    comparten sus ángulos y son homotéticos.
+
+    \begin{center}
+        \begin{tikzpicture}[line width=1pt]
+            \node [regular polygon, regular polygon sides=3,draw,inner sep=2mm] (A) {};
+            \node [left] at (A.side 1) {$a$}; \node[below] at (A.side 2) {$a''$};
+            \node [right] at (A.side 3) {$a'$};
+            \node [regular polygon, regular polygon sides=3,draw,inner sep=3mm,right=2cm of A] (B) {};
+            \node [left] at (B.side 1) {$a+b$};
+            \node [below] at (B.side 2) {$b''$};
+            \node [right] at (B.side 3) {$a'+b'$};
+            \draw[->,shorten <=2mm,shorten >=2mm] (A.north) to[bend left=45] node [pos=.5,above] {$\times k$} (B.north);
+        \end{tikzpicture}        
+    \end{center}
+    Así,
+    \begin{center}
+        \begin{tikzpicture}[ampersand replacement=\&]
+            \matrix [matrix of math nodes] (m) {a\cdot k \&=\& a+b \\ a'\cdot k \&=\& a'+b'\\};
+            \draw [decorate, decoration={calligraphic brace,raise=0pt,amplitude=5pt},
+                line width=1pt] (m.north east) -- (m.south east) node [midway,right=6pt] {$\Longrightarrow$};
+            \node [right=1cm of m] {$\dfrac{a+b}{a'+b'}=\dfrac{a}{a'}=\dfrac{b}{b'}$};
+        \end{tikzpicture}
+    \end{center} 
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+    \begin{center}
+        \begin{tikzpicture}[line width=1pt]
+            \node [regular polygon, regular polygon sides=3,draw,inner sep=3mm] (A) {};
+            \node [left] at (A.side 1) {$a+b$}; \node[below] at (A.side 2) {$b''$};
+            \node [right] at (A.side 3) {$a'+b'$};
+            \node [regular polygon, regular polygon sides=3,draw,inner sep=4mm,right=3cm of A] (B) {};
+            \node [left] at (B.side 1) {$a+b+c$};
+            \node [below] at (B.side 2) {$c''$};
+            \node [right] at (B.side 3) {$a'+b'+c'$};
+            \draw[->,shorten <=2mm,shorten >=2mm] (A.north) to[bend left=45] node [pos=.5,above] {$\times k'$} (B.north);
+        \end{tikzpicture}        
+    \end{center}
+    Por lo tanto,
+    \begin{center}
+        \begin{tikzpicture}[ampersand replacement=\&,]
+            \matrix [matrix of math nodes] (m) {(a+b)\cdot k' \&=\& a+b+c \\ (a'+b')\cdot k' \&=\& a'+b'+c'\\};
+            \draw [decorate, decoration={calligraphic brace,raise=0pt,amplitude=5pt},
+                line width=1pt] (m.north east) -- (m.south east) node [midway,right=6pt] {$\Longrightarrow$};
+            \node [right=1cm of m] {$\dfrac{a+b}{a'+b'}=\dfrac{c}{c'}$};
+            \node at (current bounding box.south east) [xshift=3mm,yshift=2mm] {$\square$};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Semejanza}
+
+    Si dos figuras tienen la misma forma (ángulos), se dicen semejantes (proporcionales). Se denota como:
+
+\begin{center}
+\begin{tikzpicture}[ampersand replacement=\&,scale=1]
+    \draw[line width=1pt] ($(0,0) + (90:1cm)$) 
+        coordinate [label=above:$C$] (C) -- ($(0,0) + (210:1cm)$) 
+        coordinate [label=below:$A$] (A) -- ($(0,0) + (330:1cm)$) 
+        coordinate [label=below:$B$] (B) -- cycle;
+    \pic ["$\alpha$",draw,angle radius=7mm] {angle=B--A--C};
+    \pic ["$\gamma$",draw,angle radius=7mm] {angle=A--C--B};
+
+    \pgfmathsetmacro{\p}{3}
+    \draw[line width=1pt] ($(\p,0) + (90:1.3cm)$) 
+    coordinate [label=above:$C'$] (C') -- ($(\p,0) + (210:1.3cm)$) 
+    coordinate [label=below:$A'$] (A') -- ($(\p,0) + (330:1.3cm)$) 
+    coordinate [label=below:$B'$] (B') -- cycle;
+    \pic ["$\alpha$",draw,angle radius=7mm] {angle=B'--A'--C'};
+    \pic ["$\gamma$",draw,angle radius=7mm] {angle=A'--C'--B'};
+
+    \node[yshift=7mm] (S) at ($0.5*(B) + 0.5*(A')$) {\huge$\sim$};
+    \node[left=2cm of S] {$\triangle (ABC)\sim \triangle(A'B'C')\quad \Leftrightarrow$}; 
+\end{tikzpicture}
+\end{center}
+
+Para triángulos semejantes se cumple:
+\begin{equation*}
+    \dfrac{\;\overline{AB}\;}{\;\overline{A'B'}\;} =  \dfrac{\;\overline{BC}\;}{\;\overline{B'C'}\;} =  \dfrac{\;\overline{CA}\;}{\;\overline{C'A'}\;}
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}{Teorema de Euclides}
+    Para triángulos rectángulos con altura en la hipotenusa, se cumple que:
+    \begin{center}
+        \begin{tikzpicture}[ampersand replacement=\&,scale=0.5]
+            \coordinate (A) at (90:6cm);
+            \coordinate (B) at (210:6cm);
+            \coordinate (C) at (330:6cm);
+            \draw[line width=1pt] (B) -- ($(A)!0.5!(C)$) coordinate (A') -- (C) -- (B);
+            \draw[line width=1pt] (A') -- ($(B)!(A')!(C)$) coordinate (H);
+            \draw (A') -- ($(A')!8mm!(B)$) -- ([turn]90:8mm) -- ([turn]90:8mm) -- ([turn]90:8mm);
+            \draw (H) -- ($(H)!8mm!(B)$) -- ([turn]-90:8mm) -- ([turn]-90:8mm) -- ([turn]-90:8mm);
+            \draw [decorate, decoration={calligraphic brace,raise=5pt,amplitude=5pt}]
+                (A') -- (C) node [midway,xshift=20pt,yshift=8pt] {$a$};
+            \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt}]
+                (A') -- (B) node [midway,xshift=-13pt,yshift=17pt] {$b$};
+            \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt}]
+                (B) -- ($(H)-(1mm,0)$) node [midway,xshift=0pt,yshift=-20pt] {$q$};
+            \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt}]
+                ($(H)+(1mm,0)$) -- (C) node [midway,xshift=0pt,yshift=-20pt] {$p$};
+            \draw [decorate, decoration={calligraphic brace,mirror,raise=27pt,amplitude=5pt}]
+                (B) -- (C) node [midway,xshift=0pt,yshift=-40pt] {$c$};
+            \node[left] at ($(A')!0.6!(H)$) {$h$};
+            \node[below left] at (B) {$A$}; 
+            \node[above,yshift=2mm] at (A') {$C$}; 
+            \node[below right] at (C) {$B$}; 
+            \node[below,yshift=-2mm] at (H) {$D$};
+        \end{tikzpicture}
+    \end{center}
+\begin{center}
+\begin{tikzpicture}[ampersand replacement=\&,every node/.style=draw,rounded corners,dashed,
+    line width=1pt]
+    \node (A) {$a^2 = p\cdot c$};
+    \node (B) [right=of A] {$b^2 = q\cdot c$};
+    \node [right=of B] {$h^2 = p\cdot q$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+    {\bfseries Demostración:} Hay tres triángulos rectos que comparten sus ángulos internos,
+    por lo tanto, son semejantes entre ellos:
+    \begin{equation*}
+        %\triangle (ABC) \sim \triangle (ACD) \quad \Rightarrow \quad \dfrac{\;\overline{AB}\;}{\overline{AC}} = \dfrac{\;\overline{AC}\;}{\overline{AD}} \quad \Rightarrow \quad \dfrac{\;c\;}{b} = \dfrac{\;b\;}{q}
+        \triangle (ABC) \sim \triangle (CBD) \quad \Rightarrow \quad \dfrac{\;\overline{AB}\;}{\overline{CB}} = \dfrac{\;\overline{BC}\;}{\overline{BD}} \quad \Rightarrow \quad \dfrac{\;c\;}{a} = \dfrac{\;a\;}{p}
+    \end{equation*}
+    Así
+    \begin{equation*}
+        %b^2 = (b)\cdot (b) = \bigg(\dfrac{c\cdot h}{a}\bigg)\bigg(\dfrac{a\cdot q}{h}\bigg) = q\cdot c \quad \square
+        a^2 = p \cdot c \quad \square
+    \end{equation*}
+    Por otro lado
+    \begin{equation*}
+        %\triangle (ABC) \sim \triangle (CBD) \quad \Rightarrow \quad \dfrac{\;\overline{AB}\;}{\overline{CB}} = \dfrac{\;\overline{BC}\;}{\overline{BD}} \quad \Rightarrow \quad \dfrac{\;c\;}{a} = \dfrac{\;a\;}{p}
+        \triangle (ABC) \sim \triangle (ACD) \quad \Rightarrow \quad \dfrac{\;\overline{AB}\;}{\overline{AC}} = \dfrac{\;\overline{AC}\;}{\overline{AD}} \quad \Rightarrow \quad \dfrac{\;c\;}{b} = \dfrac{\;b\;}{q}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \begin{equation*}
+        b^2 = q \cdot c \quad \square
+    \end{equation*}
+
+    Finalmente
+    \begin{equation*}
+        \triangle (ABC) \sim \triangle (ACD) \quad \Rightarrow \quad \dfrac{\;\overline{BC}\;}{\overline{CD}} = \dfrac{\;\overline{AC}\;}{\overline{AD}} \quad \Rightarrow \quad \dfrac{\;a\;}{h} = \dfrac{\;b\;}{q}
+    \end{equation*}
+    \begin{equation*}
+        \triangle (ABC) \sim \triangle (CBD) \quad \Rightarrow \quad \dfrac{\;\overline{BC}\;}{\overline{BD}} = \dfrac{\;\overline{AC}\;}{\overline{CD}} \quad \Rightarrow \quad \dfrac{\;a\;}{p} = \dfrac{\;b\;}{h}
+    \end{equation*}
+    En conclusión
+    \begin{equation*}
+        h^2 = (h)\cdot (h) = \bigg(\dfrac{p\cdot b}{a}\bigg)\cdot\bigg(\dfrac{a\cdot q}{b}\bigg) = p\cdot q \quad \square
+    \end{equation*}
+
+\end{frame}
+
+\end{document}

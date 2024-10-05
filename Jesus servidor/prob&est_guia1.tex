@@ -1,0 +1,102 @@
+\def\name{Prof. Fernando Halabi}
+\def\mail{mail@caes.cl}
+\def\title{Guía 1}
+\def\subtitle{Introducción al análisis de datos}
+\def\colegio{Colegio Jesús Servidor}
+\def\asignatura{Matemática}
+\def\curso{Probabilidades y estadística descriptiva e inferencial}
+
+\documentclass{caes}
+
+\begin{python}
+    import pandas as pd
+    import numpy as np
+    
+    np.random.seed(123)
+    sample = np.round(np.random.normal(1.65, 0.1, 30),2)
+    pd.DataFrame(sample.reshape((3, 10))).to_csv(
+        "sample.csv",
+        index=False,
+        header=False
+    )
+    value, count = np.unique(sample, return_counts=True)
+    dt = pd.DataFrame({"Altura": value, "Frecuencia": count})
+    dt["Probabilidad"] = np.round(count/np.sum(count),3)
+    dt["Frecuencia Acumulada"] = np.cumsum(count)
+    dt["Probabilidad Acumulada"] = np.round(dt["Frecuencia Acumulada"]/np.sum(count),3)
+    dt.to_csv("tabla_resumen.csv", index=False)
+\end{python}
+
+\begin{document}
+
+\pregunta{} Considere las siguientes alturas para rellenar la tabla a continuación.
+
+\csvreader[
+    centered tabularray = {
+        vlines={wd=1pt,fg=primarycolor},
+        hlines={wd=1pt,fg=primarycolor},
+        hline{2} = {2}{-}{wd=1pt,fg=primarycolor},
+    }, 
+    table head = Altura & Frecuencia & Probabilidad & Frecuencia Acumulada & %
+        Probabilidad Acumulada\\,
+]{tabla_resumen.csv}{1=\alt, 2=\frec, 3=\prob, 4=\frecCum, 5=\probCum}%
+{\csvexpval\alt & \frec & {\prob} &\frecCum & \probCum}
+
+
+% \begin{center}
+%     \begin{tblr}{vlines={wd=1pt,fg=primarycolor},hlines={wd=1pt,fg=primarycolor}}
+%         1.68 & 1.65 & 1.55 & 1.68 & 1.56 & 1.72 & 1.60 & 1.52 & 1.68 & 1.45 \\
+%         1.56 & 1.64 & 1.70 & 1.60 & 1.53 & 1.90 & 1.62 & 1.43 & 1.43 & 1.82 \\
+%         1.56 & 1.50 & 1.57 & 1.75 & 1.58 & 1.61 & 1.46 & 1.66 & 1.56 & 1.58    
+%     \end{tblr}        
+% \end{center}
+
+% \begin{center}
+% \begin{tblr}{width = 0.4\linewidth, vlines={wd=1pt,fg=primarycolor},hlines={wd=1pt,fg=primarycolor},
+%     hline{2} = {1}{-}{wd=1pt,fg=primarycolor},hline{2} = {2}{-}{wd=1pt,fg=primarycolor}, colspec={cc}}
+%     Altura & Frecuencia & Probabilidad & Frecuencia Acumulada & Probabilidad Acumulada \\
+%     1.43 & 2 & & & \\
+%     1.45 & 1 & & & \\
+%     1.46 & 1 & & & \\
+%     1.50  & 1 & & & \\
+%     1.52 & 1 & & & \\
+%     1.53 & 1 & & & \\
+%     1.55 & 1 & & & \\
+%     1.56 & 4 & & & \\
+%     1.57 & 1 & & & \\
+%     1.58 & 2 & & & \\
+%     1.60  & 2 & & & \\
+%     1.61 & 1 & & & \\
+%     1.62 & 1 & & & \\
+%     1.64 & 1 & & & \\
+%     1.65 & 1 & & & \\
+%     1.66 & 1 & & & \\
+%     1.68 & 3 & & & \\
+%     1.70  & 1 & & & \\
+%     1.72 & 1 & & & \\
+%     1.75 & 1 & & & \\
+%     1.82 & 1 & & & \\
+%     1.90  & 1 & & &   
+% \end{tblr}
+% \end{center}
+
+\newpage
+
+\pregunta{} Use los datos de la tabla anterior, para dibujar un {\bfseries diagrama 
+de caja} que represente la distribución de las alturas entregadas al inicio.
+\desarrollo[8cm]
+
+\pregunta{} Por último, use los datos de la tabla para crear un 
+{\bfseries histograma} con las alturas. Denote en la gráfica donde 
+se encuentra la {\bfseries media} de los datos.
+\desarrollo[11cm]
+
+\begin{equation}
+    f(t \in {\mathbb R}) = \lim_{N\to\infty} f(0) \cdot \left(1 + \dfrac{r}{N} \right)^{N \cdot t} = f(0)\cdot {\mathrm e}^{r \cdot t}
+\end{equation}
+
+\begin{equation}
+    \int_0^\infty \mathrm{e}^{-x}\,\mathrm{d}x
+\end{equation}
+
+\end{document}

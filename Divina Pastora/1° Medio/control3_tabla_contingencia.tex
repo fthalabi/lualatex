@@ -1,0 +1,58 @@
+\providecommand{\curso}{Primero Medio}
+\providecommand{\colegio}{Colegio Divina Pastora}
+\providecommand{\tituloDocumento}{Control 3}
+\providecommand{\subtituloDocumento}{Tablas de contingencia}
+
+\documentclass{cdplf-prueba}
+
+\begin{document}
+%
+\begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,raster column skip=3pt,raster force size=false]
+    \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=30pt,add to width=4cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=30pt,add to width=-2cm]
+    \end{caja}
+    \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=30pt,add to width=-2cm]
+    \end{caja}                    
+\end{tcbraster}
+%
+ \vspace*{10pt}
+% \begin{tcolorbox}[boxrule=1pt,colback=white,leftrule=3mm]
+%     \raggedright Resuelva el problema que se encuentra a continuación. Para esto, no olvide 
+%     incluir un desarrollo pertinente y la respuesta al enunciado en los espacios señalizados.        
+% \end{tcolorbox}
+%
+%\settasks{debug}
+El siguiente cuadro contiene la clasificación de 321 obreros de un sindicato 
+respecto a dos características: El número de años de pertenencia al sindicato 
+y la respuesta a la pregunta ``¿Desea ud. ir a huelga para obtener un aumento de
+sueldo?'' 
+\begin{center}
+    \begin{tblr}{width=0.8\linewidth,colspec={ccccc},hlines,vlines,hline{3,Z} = {1}{-}{},hline{3,Z} = {2}{-}{},
+        row{1}={font=},rowsep=2pt,cells={valign=m}}
+            \SetCell[r=2]{c}    {Respuesta a\\la pregunta} & \SetCell[c=4]{c} Número de años en el sindicato \\
+                                       & Menos de 1 & de 1 a 3 & de 4 a 10 & más de 10 \\
+            Sí                         &       27     &     54     &    137       &     28      \\
+            No                         &       14     &     18     &    34       &      3     \\
+            No sé                      &       3     &      2    &      1     &       0    \\
+    \end{tblr}
+    \end{center}
+
+\begin{desarrollo}[height=6cm]
+\end{desarrollo}
+
+\begin{tasks}[label={\tcbox[colback=black!60, colframe=black!60, coltext=white, on line, boxsep=0pt, left=3pt, right=3pt, top=2pt, bottom=2pt]{\sffamily\bfseries\Alph*}},
+    item-indent=1.2cm,column-sep=20pt,label-offset=0.3cm,label-width=15pt,after-item-skip=10pt](2)
+    \task \raggedright ¿Cuál es la probabilidad de encontrar un obrero que haya contestado que sí o no sé, 
+    y tenga al menos 4 años en el sindicato?
+    \vspace{5pt}\begin{respuesta}[height=1.5cm]\end{respuesta}
+    \task \raggedright Si un obrero contesto que no, ¿Cuál es la probabilidad de que 
+    tenga menos de un año en el sindicato?
+    \vspace{5pt}\begin{respuesta}[height=1.5cm]\end{respuesta}
+    \task! ¿Son los años en el sindicato y la respuesta a la pregunta 
+    variables independientes? \mbox{[+2 décimas]} ¿Por qué? [+3 décimas] 
+    \vspace{5pt}\begin{respuesta}[height=2.5cm]\end{respuesta}
+    
+\end{tasks}
+
+\end{document}

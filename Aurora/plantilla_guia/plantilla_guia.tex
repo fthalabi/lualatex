@@ -1,0 +1,303 @@
+\def\name{Name Lastname}
+\def\mail{mail@provider.com}
+\def\title{Title}
+\def\subtitle{Subtitle}
+
+
+\documentclass[10pt,spanish]{article}
+\usepackage[spanish]{babel}
+\selectlanguage{spanish}
+\decimalpoint
+\renewcommand{\baselinestretch}{1.3}
+\setlength{\parskip}{1em}
+\usepackage{geometry}
+\geometry{letterpaper,margin=2cm}
+
+\usepackage{tikz}
+\usepackage{varwidth}
+\usetikzlibrary{positioning}
+
+\usepackage{pdfpages}
+\usepackage{lipsum}
+\usepackage{authblk}
+\usepackage{graphicx}
+
+\usepackage[explicit]{titlesec}	
+
+\usepackage{tabularray}
+\usepackage{array}
+\usepackage{environ}
+\usepackage{xcolor}
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{hooks,skins,breakable}
+
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+%%% REGULAR LATEX FONT
+%\usepackage{amsmath,mathtools,amssymb}
+%\usepackage{stix2}
+
+\definecolor{primarycolor}{rgb}{0.114, 0.412, 0.588}
+
+%% OTF
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{NotoSans-Regular}[
+  Path = /Users/fenho/Library/Fonts/,
+  Extension = .ttf,
+  Ligatures = TeX,
+  BoldFont = NotoSans-Bold,
+  ItalicFont = NotoSans-Italic,
+  BoldItalicFont = NotoSans-BoldItalic
+]
+\setsansfont{NotoSans-SemiCondensed}[
+  Path = /Users/fenho/Library/Fonts/,
+  Extension = .ttf,
+  Ligatures = TeX,
+  BoldFont = NotoSans-SemiCondensedBold,
+  ItalicFont = NotoSans-SemiCondensedItalic,
+  BoldItalicFont = NotoSans-SemiCondensedBoldItalic
+]
+\setmonofont{NotoMono-Regular}[
+  Path = /Users/fenho/Library/Fonts/,
+  Extension =  .ttf,
+  Ligatures = TeX,
+  Scale=MatchLowercase
+]
+\setmathfont{STIX Two Math}[Scale=MatchLowercase]
+\setmathfont{NotoSans-SemiCondensed.ttf}[range=\mathup/{num}]
+\setmathrm{STIX Two Math}
+\setmathsf{STIX Two Math}
+\newfontfamily\sanslight{Noto Sans SemiCondensed Light}[Fractions = On]
+\defaultfontfeatures{Ligatures={TeX}}
+%\renewcommand{\familydefault}{\sfdefault}
+%\DeclareSymbolFont{sfnumbers}{T1}{\sfdefault}{m}{n}
+%\SetSymbolFont{sfnumbers}{bold}{T1}{\sfdefault}{b}{n}
+%\DeclareMathSymbol{0}\mathalpha{sfnumbers}{"30}
+%\DeclareMathSymbol{1}\mathalpha{sfnumbers}{"31}
+%\DeclareMathSymbol{2}\mathalpha{sfnumbers}{"32}
+%\DeclareMathSymbol{3}\mathalpha{sfnumbers}{"33}
+%\DeclareMathSymbol{4}\mathalpha{sfnumbers}{"34}
+%\DeclareMathSymbol{5}\mathalpha{sfnumbers}{"35}
+%\DeclareMathSymbol{6}\mathalpha{sfnumbers}{"36}
+%\DeclareMathSymbol{7}\mathalpha{sfnumbers}{"37}
+%\DeclareMathSymbol{8}\mathalpha{sfnumbers}{"38}
+%\DeclareMathSymbol{9}\mathalpha{sfnumbers}{"39}
+
+%%% OLD FONT
+%\usepackage{mathpazo}
+%\usepackage{newpxmath}
+%\usepackage[nomath]{kpfonts}
+
+
+% \renewcommand{\thesection}{\Roman{section}}
+% \titleformat{\section}[block]
+% {\normalfont\color{primarycolor}}
+% {\filright
+% \Large\bfseries
+% \enspace Parte \thesection\enspace\normalfont}
+% {10pt}
+% {\color{black} #1 \underline{Instrucciones:}\quad\normalfont}
+
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}
+  {}{}{0pt}
+  {\begin{tikzpicture}
+    \node (A) at (frame.north west) %
+      {\Large\scshape\bfseries\color{primarycolor}Parte \thesection};
+    \node [right=of A,text width=0.75\textwidth] {#1};
+  \end{tikzpicture}}
+\titlespacing{\section}{0pt}{0pt}{0pt}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+% \titleformat{\subsection}
+%   {}{}{0pt}
+%   {\begin{tikzpicture}
+%     \node (A) at (frame.north west) %
+%       {\bfseries\color{primarycolor}\thesubsection\,-.};
+%     \node [right=of A,text width=0.85\textwidth] {#1};
+%   \end{tikzpicture}}
+% \titlespacing{\subsection}{0pt}{0pt}{0pt}
+\titleformat{\subsection}[block]
+{\normalfont\color{primarycolor}}
+{\filright\bfseries\enspace\thesubsection\,-.\enspace\normalfont}
+{10pt}
+{\color{black} #1 \quad\normalfont}
+
+% config list for the alternatives
+\newlist{alternatives}{enumerate}{1}
+\setlist[alternatives, 1]
+{label=\bfseries\color{primarycolor}(\,\alph{alternativesi}\,%
+  )\normalfont\color{black},
+leftmargin=2cm,
+rightmargin=1cm,
+nosep
+}
+
+\NewTblrEnviron{colortable}
+%\SetTblrOuter[mytable]{l}
+\SetTblrInner[colortable]{
+  colsep = 5pt,
+  row{odd} = {bg=primarycolor!20},
+  row{1} = {fg=white, bg=primarycolor, font=\bfseries},
+  hline{Z} = {primarycolor, 2pt}
+}
+
+
+\undef{\colorbox}
+\newtcolorbox{colorbox}[2][]{
+  enhanced, attach boxed title to top left={yshift=-3mm,yshifttext=-1mm, xshift=3mm},
+  colback=white, colframe=primarycolor, colbacktitle=primarycolor, title={#2}, 
+  fonttitle=\bfseries, #1
+}
+
+\definecolor{matrix}{RGB}{85, 255, 85}
+% \newtcblisting{myScilab}[1]{listing engine=minted, minted language=scilab,
+% minted options={fontsize=\small,linenos,numbersep=3mm},
+% minted style = rainbow_dash,colback=matrix!3!white,colframe=gray!75!black,
+% listing only,
+% sharp corners,
+% left=5mm,enhanced,
+% drop fuzzy shadow = gray,
+% overlay={\begin{tcbclipinterior}\fill[gray!20!white] (frame.south west)
+% rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}},
+% #1}
+
+%\setlist[itemize]{label={\color{primarycolor}\faIcon{chevron-right}}}
+\setlist[itemize]{
+  label={\raisebox{-2pt}{\tikz \draw[primarycolor,line width=2pt] (0,0) -- (4pt,5pt) -- (0,10pt);}}
+}
+
+\setlength{\headheight}{24pt}
+\pagestyle{fancy}
+
+%\def\logo{\tikz \node{\includegraphics[height=20pt]{example-image-a}} node[right,xshift=10pt] {ASDasdasd} ;}
+\fancyhead[C]{}
+\fancyhead[L]{\ifnum\thepage=1\else\footnotesize{\title} - {\subtitle}\fi}
+\fancyhead[R]{\ifnum\thepage=1\footnotesize\name\\\ttfamily\mail\fi}
+\fancyfoot[L,C]{}
+%\fancyfoot[L]{\ifnum\thepage=1\else \title - \subtitle \fi}
+\fancyfoot[R]{\Large\sanslight\thepage/\pageref{LastPage}}
+
+
+
+%%%%%%%%%%%%%%%%%
+%%%  Recordatio
+%% \sffamily sans
+%% \rmfamily serif
+%% \ttfamily mono
+%% \bfseries bold
+%% \itshape  italic
+%% \scshape  mayus
+%% \upshape  normal
+%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\begin{center}
+  \Large\bfseries\scshape\color{primarycolor}\title\;-\;\subtitle%
+  \normalfont\color{black}
+\end{center}
+
+ 1234567890  {\scshape Aasdasd} {\itshape Aasdasd} {\scshape \bfseries Aasdasd} {\ttfamily qweqweASsd}
+
+\begin{equation*}
+  \lim_{x \rightarrow 0} \dfrac{\mathrm{Seno}\,(x)}{x} = 1
+\end{equation*}
+
+hola hola
+
+\begin{colortable}{ccc}
+  one   & two   & three \\
+  four  & five  & six   \\
+  seven & eight & nine  \\
+\end{colortable}
+
+\begin{colorbox}[width=0.4\linewidth]{titulo}
+asd lalsdk alsdk ald klakdsal kdasd lkald
+\end{colorbox}
+
+
+
+
+\begin{center}
+\begin{tikzpicture}
+  \node (A) {\hbox{%
+    \begin{colortable}{ccc}
+      one   & two   & three \\
+      four  & five  & six   \\
+      seven & eight & nine  \\
+    \end{colortable}}
+  };
+  \node[right=of A] {\hbox{%
+    \begin{colorbox}[width=0.6\linewidth,height=6cm]{Desarrollo}
+      asd lalsdk alsdk ald klakdsal kdasd lkald
+    \end{colorbox}}
+  };
+  \node[below=of current bounding box,yshift=1cm] {%
+    \hbox{%
+    \begin{colorbox}[width=0.9\linewidth]{Respuesta}
+      asd lalsdk alsdk ald klakdsal kdasd lkald
+    \end{colorbox}}%
+  };
+\end{tikzpicture}
+\end{center}
+
+\includegraphics[width=2cm]{example-image-a}
+
+\begin{itemize}
+  \item Hola
+  \item chao
+\end{itemize}
+
+\newpage
+
+\section{Mi primera sección asdksd}
+
+\lipsum[1]
+
+\subsection{hola}
+
+\begin{alternatives}
+  \item ASDasdasd
+  \item qwrijqw ji qweqwei
+  \item qwxmc sdks jqjwe
+\end{alternatives}
+
+\lipsum[1]
+
+% \begin{minted}{java}
+% public class HelloWorld {
+%   // A `Hello World' in Java
+%   public static void main(String[] args) {
+%     System.out.println("Hello World!");
+%   }
+% }
+% \end{minted}
+
+% \begin{myScilab}{}
+% // say hello
+% disp("hello")
+% \end{myScilab}
+
+% \begin{myScilab}{hbox}
+% // say hello
+% disp("hello")
+% \end{myScilab}
+
+\section{Resuelva las siguientes expresiones en el espacio designado e %
+incluya todos los pasos necesarios para llegar al resultado}
+
+\lipsum[1]
+
+\section{}
+
+\lipsum[1]
+
+\end{document}
