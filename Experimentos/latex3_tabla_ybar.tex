@@ -1,0 +1,214 @@
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+\usepackage{expl3}
+
+\begin{document}
+  \tikzset{
+    mynode/.style={
+      minimum height=1cm,
+      minimum width=1cm,
+      draw,
+      anchor=north west
+    }
+  }
+  
+  \ExplSyntaxOn
+  \begin{tikzpicture}
+  \int_step_inline:nn {6} {
+    \int_step_inline:nn {8} {
+      \node[mynode] at (##1, -#1) {\tiny \int_eval:n {(#1 - 1) * 8 + ##1}};
+    }
+  }
+  \end{tikzpicture}
+  \ExplSyntaxOff
+
+  \ExplSyntaxOn
+  \NewExpandableDocumentCommand \randomint { m m }
+    { \int_rand:nn { #1 } { #2 } }
+  \ExplSyntaxOff
+
+  \randomint{8-8/4}{8+8/4}
+
+  \LaTeX{} can now compute: $ \frac{\sin (3.5)}{2} + 2\cdot 10^{-3}
+  = \ExplSyntaxOn \fp_to_decimal:n {sin(3.5)/2 + 2e-3} $.
+
+\ExplSyntaxOn
+
+\int_rand:nn {5} {20} \par
+\fp_eval:n { rand() } \par
+\cs_set:Npn \muestra:nn #1#2 {
+  \fp_to_int:n {#1 + sqrt(-2*ln(rand()))*cos(2*pi*rand())*#2}
+}
+\muestra:nn {20}{5} \par
+
+
+%% GENERAR LISTA
+\seq_clear_new:N \l_mi_lista
+\int_step_inline:nn {40} {
+    \seq_put_right:Nx \l_mi_lista {\muestra:nn {20}{5}}
+}
+\seq_use:Nn \l_mi_lista { ,~ } \par
+
+%% ORDENAR LISTA
+\seq_clear_new:N \l_lista_ordenada
+\seq_set_eq:NN \l_lista_ordenada \l_mi_lista
+\seq_sort:Nn \l_lista_ordenada {
+  \int_compare:nNnTF { #1 } > { #2 }
+  { \sort_return_swapped: }
+  { \sort_return_same: }
+}
+\seq_use:Nn \l_lista_ordenada { ,~} \par
+
+%% VALORES UNICOS
+\seq_clear_new:N \l_valores_unicos
+\seq_set_eq:NN \l_valores_unicos \l_lista_ordenada
+\seq_remove_duplicates:N \l_valores_unicos
+\seq_use:Nn \l_valores_unicos { ,~} \par
+
+
+\begingroup
+\pgfkeys{/pgf/number~format/.cd,fixed,fixed~zerofill,precision=3}
+\begin{tabular}{ccccc}
+  Datos & Cantidad & F.~Acumulada & Probabilidad & P.~Acumulada\\
+  \int_gzero_new:N \l_frecuencia_acumulada
+  \int_gzero_new:N \l_probabilidad_acumulada
+  \int_gzero_new:N \l_frecuencia
+  \fp_gzero:N \l_probabilidad
+  \fp_gzero:N \l_probabilidad_acumulada
+  \seq_map_inline:Nn \l_valores_unicos
+  {
+    #1 &
+    \int_gzero:N \l_frecuencia
+    \seq_map_inline:Nn \l_mi_lista {
+      \int_compare:nT {#1=##1} {\int_gincr:N \l_frecuencia}
+    }
+    \int_use:N \l_frecuencia & 
+    \int_gadd:Nn \l_frecuencia_acumulada {\int_use:N \l_frecuencia}
+    \int_use:N \l_frecuencia_acumulada &
+    \fp_gset:Nn \l_probabilidad {\int_use:N \l_frecuencia / \seq_count:N \l_mi_lista }
+    \pgfmathprintnumber{\fp_use:N \l_probabilidad} &
+    \fp_gadd:Nn \l_probabilidad_acumulada {\fp_use:N \l_probabilidad}
+    \pgfmathprintnumber{\fp_use:N \l_probabilidad_acumulada} \\
+  }
+\end{tabular} \par
+\endgroup
+%%%
+
+\seq_new:N \l_puntos
+\int_gzero_new:N \g_n
+\seq_map_inline:Nn \l_valores_unicos {
+  \int_gzero:N \g_n
+  \seq_map_inline:Nn \l_mi_lista {
+    \int_compare:nT {#1=##1} {\int_gincr:N \g_n}
+    }
+    \seq_put_right:Nx \l_puntos {(#1,~\int_use:N \g_n)}
+}
+
+lista:~\seq_use:Nn \l_puntos {~} \par
+\tl_new:N \l_datos_para_grafica
+\tl_set:Nx \l_datos_para_grafica { \seq_use:Nn \l_puntos {~} }
+
+\begin{tikzpicture}[baseline=(current~bounding~box.north)]
+  \begin{axis}[
+      ybar,
+      ylabel={Cantidad},
+      xlabel={Datos},
+      ymin=0,
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[ybar,bar~width=1,pattern={Lines[angle=-45,distance=5pt]}]
+      ~coordinates~{\l_datos_para_grafica};
+  \end{axis}
+\end{tikzpicture} 
+
+\iow_new:N \g_archivo
+\iow_open:Nn \g_archivo { datos_histograma.csv }
+\seq_map_inline:Nn \l_mi_lista
+  {
+    \iow_now:Nx \g_archivo { #1 }
+  }
+\iow_close:N \g_archivo
+
+\begin{tikzpicture}[baseline=(current~bounding~box.north)]
+  \begin{axis}[
+      ybar~interval,
+      ylabel={Cantidad},
+      xlabel={Datos},
+      ymin=0,
+      grid=none,
+      xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+      x~tick~label~style={rotate=45,anchor=east}
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[hist,pattern={Lines[angle=-45,distance=5pt]}]
+      ~table[y~index=0]~{datos_histograma.csv};
+  \end{axis}
+\end{tikzpicture} \par
+
+% Create a sequence to hold our data points
+\seq_new:N \l_data_seq
+% Function to generate random data points
+\cs_new_protected:Nn \generate_data:nn
+  {
+    \seq_clear:N \l_data_seq
+    \int_step_inline:nn {#1}
+      {
+        \seq_put_right:Nx \l_data_seq 
+          { 
+            (##1,~ \fp_eval:n { round(rand() * #2, 2) })
+          }
+      }
+  }
+% Generate 10 random data points with max value 100
+\generate_data:nn {10} {100}
+% Convert sequence to comma-separated list for pgfplots
+\tl_new:N \l_plot_data_tl
+\tl_set:Nx \l_plot_data_tl { \seq_use:Nn \l_data_seq {~} }
+
+% For debugging: print the generated data
+
+
+Generated~data:~\l_plot_data_tl \par
+
+\bigskip
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    ylabel={Value},
+    xlabel={Index},
+    ymin=0,
+    xtick=data,
+    nodes~near~coords,
+    nodes~near~coords~align={vertical},
+    ]
+    \addplot~coordinates~{\l_plot_data_tl};
+\end{axis}
+\end{tikzpicture} \par
+
+\begin{luacode}
+  require('estadistica.lua')
+  function obtener_lista()
+    repeat
+      lista = Generar_muestras(60,20,4)
+      v_unicos = Obtener_unicos(lista)
+    until Divisor_ideal(v_unicos) == 6
+    lista_str = table.concat(lista, ",")
+    tex.sprint(lista_str) 
+  end
+\end{luacode}
+
+
+\clist_new:N \l_lista_lua
+\clist_set:Nx \l_lista_lua {\directlua{obtener_lista()}}
+\seq_set_from_clist:NN \l_seq_lua \l_lista_lua 
+Lista~desde~lua:~\seq_use:Nn \l_seq_lua {|~}
+
+\ExplSyntaxOff
+
+
+
+\end{document}

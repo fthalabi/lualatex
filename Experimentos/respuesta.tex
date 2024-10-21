@@ -1,0 +1,98 @@
+
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\usepackage{setspace}
+
+\ExplSyntaxOn
+  %\dim_new:N \l_tamano_linea
+  %\dim_new:N \l_sep_linea
+  \dim_const:Nn \l_tamano_linea {7.7pt}
+  \dim_const:Nn \l_sep_linea {5pt}
+\NewDocumentEnvironment{respuesta*}{O{1}O{}+b}{
+  \dim_zero_new:N \l_alto
+  \dim_set:Nn \l_alto {19.7pt}
+  \int_compare:nT {#1 > 1} {
+    \int_step_inline:nnnn {1} {1} {#1} {
+      \dim_add:Nn \l_alto {\l_sep_linea}
+      \dim_add:Nn \l_alto {\l_tamano_linea}
+    }
+  }
+  \begin{tcolorbox}[enhanced,inherit~height,colback=white,colframe=black,
+    size=minimal,top=5pt, left=5pt, right=5pt, bottom=5pt, boxrule=1pt,
+    arc=1mm,outer~arc=1mm,height=\l_alto,
+    underlay={%
+    \begin{tcbclipinterior}
+      \draw[help~lines,yshift=-9pt] (interior.south~west) grid[ystep=5mm,xstep=0mm] (interior.north~east);
+    \end{tcbclipinterior}}]
+    \begin{spacing}{1.18}
+      #3      
+}{
+    \end{spacing}
+    \end{tcolorbox}
+}
+
+\ExplSyntaxOff
+
+\newsavebox{\cajarespuesta}
+\savebox{\cajarespuesta}{\begin{respuesta*}\end{respuesta*}}
+
+\newsavebox{\cajarespuestauno}
+\savebox{\cajarespuestauno}{\begin{respuesta*}
+  hola como estas
+\end{respuesta*}}
+
+\newsavebox{\cajarespuestaunalinea}
+\savebox{\cajarespuestaunalinea}{\begin{respuesta*}[1][height=19.7pt]\end{respuesta*}}
+
+\newsavebox{\cajarespuestalipsum}
+\savebox{\cajarespuestalipsum}{\begin{respuesta*}[9]\lipsum[1]\end{respuesta*}}
+
+\begin{document}
+  
+{\bfseries Caja vacia} \newline
+height = \the\ht\cajarespuesta\newline
+depth = \the\dp\cajarespuesta\newline
+total = \the\dimexpr \ht\cajarespuesta+\dp\cajarespuesta\relax\newline
+width = \the\wd\cajarespuesta \newline
+\usebox{\cajarespuesta}
+
+{\bfseries Caja con una linea} \newline
+height = \the\ht\cajarespuestauno\newline
+depth = \the\dp\cajarespuestauno\newline
+total = \the\dimexpr \ht\cajarespuestauno+\dp\cajarespuestauno\relax\newline
+width = \the\wd\cajarespuestauno \newline
+\usebox{\cajarespuestauno}
+
+{\bfseries Caja vacia con una linea} \newline
+height = \the\ht\cajarespuestaunalinea\newline
+depth = \the\dp\cajarespuestaunalinea\newline
+total = \the\dimexpr \ht\cajarespuestaunalinea+\dp\cajarespuestaunalinea\relax\newline
+width = \the\wd\cajarespuestaunalinea \newline
+\usebox{\cajarespuestaunalinea}
+
+{\bfseries Caja lipsum} \newline
+height = \the\ht\cajarespuestalipsum\newline
+depth = \the\dp\cajarespuestalipsum\newline
+total = \the\dimexpr \ht\cajarespuestalipsum+\dp\cajarespuestalipsum\relax\newline
+width = \the\wd\cajarespuestalipsum \newline
+\usebox{\cajarespuestalipsum}
+
+\begin{tikzpicture}[overlay]
+  \draw (0,0) circle (5cm);
+\end{tikzpicture}
+
+\begin{respuesta*}
+  hola
+\end{respuesta*}
+
+\begin{respuesta*}[2]
+  hola
+\end{respuesta*}
+
+\begin{respuesta*}[3]
+  hola
+\end{respuesta*}
+
+
+
+\end{document}

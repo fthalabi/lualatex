@@ -12,7 +12,10 @@ function Generar_muestras(n, mean, deviation)
   math.randomseed(os.time())
   local list = {}
   for i = 1, n do
-    list[i] = math.floor(Muestra_normal(mean, deviation))
+    repeat
+      muestra = math.floor(Muestra_normal(mean, deviation))
+    until muestra >= 0
+    list[i] = muestra
   end
   return list
 end
@@ -205,4 +208,15 @@ function Divisor_ideal(lista)
     table.insert(grupos, math.floor(rango / v))
   end
   return Mas_cercano(grupos, 5)
+end
+
+function Cuantil(lista, F)
+  local probabilidades = Probabilidades(lista)
+  local p_acumulativa = Suma_acumulativa(probabilidades)
+  local unicos = Obtener_unicos(lista)
+  local i = 1
+  while (p_acumulativa[i] < F) do
+    i = i + 1
+  end
+  return unicos[i]
 end

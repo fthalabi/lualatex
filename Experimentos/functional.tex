@@ -1,0 +1,35 @@
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\usepackage{functional}
+
+
+\seq_new:N \l__my_table_content_seq
+
+\cs_new_protected:Npn \__my_set_table_content: {
+  \seq_set_from_clist:Nn \l__my_table_content_seq {
+    {x}{y},
+    {5}{6}
+  }
+}
+
+\cs_new_eq:NN \miTabla \__my_set_table_content:
+
+\cs_new:Npn \__my_table_row:nn #1#2 {
+  #1 & #2 \\
+}
+
+\NewExpandableDocumentCommand{\getTableContent}{} {
+  \seq_map_function:NN \l__my_table_content_seq \__my_table_row:nn
+}
+
+\ExplSyntaxOff
+
+\begin{document}
+
+\miTabla % This sets the content
+
+\begin{tblr}[evaluate=\getTableContent]{cc}
+  \getTableContent
+\end{tblr}
+
+\end{document}

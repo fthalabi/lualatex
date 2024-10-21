@@ -15,6 +15,7 @@
 \providecommand{\nombre}{Prof. Fernando Halabi}
 \providecommand{\correo}{correo@ASDAS.cl}
 
+\RequirePackage{expl3}
 \RequirePackage{luacode}
 \RequirePackage[spanish,es-noshorthands]{babel} 
 \selectlanguage{spanish} 
@@ -40,6 +41,7 @@ cd,intersections,patterns,patterns.meta,angles,through}
 
 \pgfkeys{/pgf/number format/.cd,
   set decimal separator={,},set thousands separator={\,}}
+%\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3}
 
 \RequirePackage[most]{tcolorbox}
 \tcbuselibrary{skins}
@@ -50,7 +52,7 @@ cd,intersections,patterns,patterns.meta,angles,through}
 \RequirePackage{environ}
 \RequirePackage{xcolor}
 \RequirePackage{varwidth}
-\UseTblrLibrary{siunitx,varwidth,diagbox}
+\UseTblrLibrary{siunitx,varwidth,diagbox,functional}
 \sisetup{round-precision=3,round-mode=places,output-decimal-marker={,},
   mode = text, text-font-command = \normalsize}
 \RequirePackage[inline]{enumitem}
@@ -106,6 +108,17 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 \newtcolorbox{respuesta}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay boxed title={\begin{tcbclipinterior}
   \draw[help lines,step=5mm] (interior.south west) grid[xstep=0] (interior.north east);\end{tcbclipinterior}},title=Respuesta,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
   boxed title style={colback=white},coltitle=black,#1}
+      
+\NewDocumentEnvironment{importante}{O{}+b}{
+\begin{center}
+\begin{tcolorbox}[borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,
+  before skip=5mm,after skip=5mm,width=.9\linewidth, halign=flush left,#1]
+  #2
+}{
+\end{tcolorbox}
+\end{center}
+}
+
 
 % #1 left and right pad  
 % #2 top and bottom pad  
@@ -173,6 +186,21 @@ before-skip=\mytopsep,after-skip=\mytopsep
         #2
 }{%
     \end{enumerate*}
+}
+
+\NewDocumentEnvironment{preguntas}{O{}+b}%
+{%
+    \newcommand{\pregunta}{\item}
+    \begin{minipage}{\linewidth}
+      \vspace*{\mytopsep}
+      \begin{enumerate}[label={{\itshape\alph*})},
+        labelsep=10pt,leftmargin=0pt,labelwidth={\widthof{{\itshape a})}},
+        itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,#1]
+          #2      
+}{%
+    \end{enumerate}
+  \end{minipage}
 }
 
 % Define variables for options

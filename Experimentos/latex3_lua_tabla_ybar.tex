@@ -1,0 +1,313 @@
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\begin{document}
+
+\begin{luacode}
+  require('estadistica.lua')
+  function generar_lista()
+    repeat
+        m = math.random(13,23)
+        d = math.random(3,5)
+        lista = Generar_muestras(30,m,d)
+        v_unicos = Obtener_unicos(lista)
+        divisiones = Divisor_ideal(v_unicos)
+    until divisiones >2 and divisiones <7 and Rango(lista) < 15
+    return lista
+  end
+  lista = generar_lista()
+  divisiones = Divisor_ideal(Obtener_unicos(lista))
+  function lista_a_clist()
+    lista_str = table.concat(lista, ",")
+    tex.sprint(lista_str)
+  end
+\end{luacode}
+
+\ExplSyntaxOn
+
+%% DECLARAR LISTA 
+\clist_new:N \l_lista_lua
+\clist_set:Nx \l_lista_lua {\directlua{lista_a_clist()}}
+\seq_set_from_clist:NN \l_seq_lua \l_lista_lua 
+
+%% ORDENAR LISTA
+\seq_clear_new:N \l_lista_ordenada
+\seq_set_eq:NN \l_lista_ordenada \l_seq_lua
+\seq_sort:Nn \l_lista_ordenada {
+  \int_compare:nNnTF { #1 } > { #2 }
+  { \sort_return_swapped: }
+  { \sort_return_same: }
+}
+
+%% VALORES UNICOS
+\seq_clear_new:N \l_valores_unicos
+\seq_set_eq:NN \l_valores_unicos \l_lista_ordenada
+\seq_remove_duplicates:N \l_valores_unicos
+Valores~unicos:~\seq_use:Nn \l_valores_unicos { ,~} \par
+
+\cs_new_protected:Npn \__cuantil:n #1 {
+  \fp_zero_new:N \l_cuantil_prob_acum_actual
+  \seq_clear_new:N \l_cuantil_prob_acum
+  \seq_map_inline:Nn \l_valores_unicos {
+    \int_zero_new:N \l_cuantil_n
+    \seq_map_inline:Nn \l_seq_lua {
+      \int_compare:nT {##1=####1} {\int_gincr:N \l_cuantil_n}
+    }
+    \fp_gadd:Nn \l_cuantil_prob_acum_actual 
+      {\fp_eval:n {\int_use:N \l_cuantil_n / \seq_count:N \l_seq_lua}}
+    \seq_put_right:Nx \l_cuantil_prob_acum {\fp_use:N \l_cuantil_prob_acum_actual}
+  }
+  \seq_log:N \l_cuantil_prob_acum
+  \seq_clear_new:N \l_cuantil_menores
+  \seq_set_filter:NNn \l_cuantil_menores \l_cuantil_prob_acum {
+    \fp_compare_p:nNn {##1} < {#1}
+  }
+  \seq_log:N \l_cuantil_menores
+  \tl_clear_new:N \l_cuantil_resultado
+  \int_zero_new:N \l_cuantil_pos
+  \int_set:Nn \l_cuantil_pos {\int_eval:n {\seq_count:N \l_cuantil_menores + 1}}
+  \tl_set:Nx \l_cuantil_resultado {\seq_item:Nn \l_valores_unicos \l_cuantil_pos}
+  \tl_use:N \l_cuantil_resultado
+}
+
+\NewDocumentCommand{\cuantil}{m}{\__cuantil:n {#1}}
+
+\cs_new_protected:Npn \__cuantil_directo:n #1 {
+  \fp_zero_new:N \l_cd_fp_indice
+  \fp_set:Nn \l_cd_fp_indice 
+    {\fp_eval:n {ceil(#1 * \seq_count:N \l_seq_lua ,0)}}
+  \int_zero_new:N \l_cd_int_indice
+  \int_set:Nn \l_cd_int_indice {\fp_to_int:N \l_cd_fp_indice}
+  \tl_set:Nx \l_cd_valor {\seq_item:Nn \l_lista_ordenada \l_cd_int_indice}
+  \tl_use:N \l_cd_valor
+}
+
+\NewDocumentCommand{\cuantilAlt}{m}{\__cuantil_directo:n {#1}}
+
+\int_gzero_new:N \l_frecuencia
+\int_gzero_new:N \l_frecuencia_acumulada
+\fp_gzero:N \l_probabilidad
+\fp_gzero:N \l_probabilidad_acumulada
+
+\iow_new:N \g_archivo_tabla
+\iow_open:Nn \g_archivo_tabla { datos_tabla.tmp }
+\seq_map_inline:Nn \l_valores_unicos
+  {
+    \int_gzero:N \l_frecuencia
+    \seq_map_inline:Nn \l_seq_lua {
+      \int_compare:nT {#1=##1} {\int_gincr:N \l_frecuencia}
+    }
+    \int_gadd:Nn \l_frecuencia_acumulada {\int_use:N \l_frecuencia}
+    \fp_gset:Nn \l_probabilidad {\int_use:N \l_frecuencia / \seq_count:N \l_seq_lua }
+    \fp_gadd:Nn \l_probabilidad_acumulada {\fp_use:N \l_probabilidad}
+
+    \iow_now:Nx \g_archivo_tabla 
+      { #1 ~&~ \int_use:N \l_frecuencia ~&~ \int_use:N \l_frecuencia_acumulada ~&~
+      \fp_use:N \l_probabilidad ~&~ \fp_use:N \l_probabilidad_acumulada ~\\~ }
+  }
+\iow_close:N \g_archivo_tabla
+
+\begingroup
+\pgfkeys{/pgf/number~format/.cd,fixed,fixed~zerofill,precision=3}
+\begin{tblr}[evaluate=\fileInput]{colspec={ccccc},
+  cell{2-Z}{4,5}={cmd=\pgfmathprintnumber},hlines,hline{1,2,Z}={black,1pt},
+  row{1}={valign=m},rows={rowsep+=2pt}}
+  Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\
+  \fileInput{datos_tabla.tmp}
+\end{tblr} 
+\endgroup \par
+
+Q1:~\directlua{tex.sprint(Cuantil(lista,0.25))} \quad \cuantil{0.25} \quad \cuantilAlt{0.25} \newline
+Q2:~\directlua{tex.sprint(Cuantil(lista,0.5))}  \quad \cuantil{0.5} \quad \cuantilAlt{0.5} \newline
+Q3:~\directlua{tex.sprint(Cuantil(lista,0.75))} \quad \cuantil{0.75} \quad \cuantilAlt{0.75} \newline \par
+
+\seq_new:N \l_puntos
+\int_gzero_new:N \g_n
+\seq_map_inline:Nn \l_valores_unicos {
+  \int_gzero:N \g_n
+  \seq_map_inline:Nn \l_seq_lua {
+    \int_compare:nT {#1=##1} {\int_gincr:N \g_n}
+    }
+    \seq_put_right:Nx \l_puntos {(#1,~\int_use:N \g_n)}
+}
+Puntos:~\seq_map_inline:Nn \l_puntos {
+  \mbox{#1}~
+}
+
+\tl_new:N \l_datos_para_grafica
+\tl_set:Nx \l_datos_para_grafica { \seq_use:Nn \l_puntos {~} }
+
+\begin{tikzpicture}[baseline=(current~axis.north)]
+  \begin{axis}[
+      ybar,
+      title={Gráfico~de~barras},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[ybar,bar~width=1,pattern={Lines[angle=-45,distance=5pt]}]
+      ~coordinates~{\l_datos_para_grafica};
+  \end{axis}
+\end{tikzpicture} \hspace*{1cm}
+
+\iow_new:N \g_archivo
+\iow_open:Nn \g_archivo { datos_histograma.csv }
+\seq_map_inline:Nn \l_seq_lua
+  {
+    \iow_now:Nx \g_archivo { #1 }
+  }
+\iow_close:N \g_archivo
+
+\tl_new:N \l_n_barras
+\tl_set:Nx \l_n_barras {\directlua{tex.sprint(divisiones)}}
+
+\begin{tikzpicture}[baseline=(current~axis.north)]
+  \begin{axis}[
+      ybar~interval,
+      title={Histograma},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      grid=none,
+      xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+      x~tick~label~style={rotate=45,anchor=east}
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[hist={bins=\l_n_barras},pattern={Lines[angle=-45,distance=5pt]}]
+      ~table[y~index=0]~{datos_histograma.csv};
+  \end{axis}
+\end{tikzpicture} \par
+
+\int_new:N \l_min 
+\int_set:Nn \l_min {\seq_item:Nn \l_valores_unicos {1}}
+\int_new:N \l_max
+\int_set:Nn \l_max {\seq_item:Nn \l_valores_unicos {-1}}
+\seq_new:N \l_rango 
+\int_step_inline:nnn {\l_min} {\int_eval:n {\l_max + 1}} {
+  \seq_put_right:Nn \l_rango {\fp_eval:n {#1-0.5}}
+}
+\begin{tikzpicture}[baseline=(current~axis.north)]
+  \begin{axis}[
+      ybar,
+      title={Gráfico~de~barras},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      grid=major,
+      xmajorgrids=false,
+      x~grid~style={draw},
+      %tick~style={draw=none},
+      major~grid~style={draw=black},
+      extra~x~ticks={\seq_use:Nn \l_rango {,}},
+      extra~tick~style={grid=major,xticklabel={\empty},tick~style={draw=none}},
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[ybar,bar~width=1,draw=none]
+      ~coordinates~{\l_datos_para_grafica};
+  \end{axis}
+\end{tikzpicture} \hspace*{1cm}
+
+\begin{tikzpicture}[baseline=(current~axis.north)]
+  \begin{axis}[
+      ybar~interval,
+      title={Histograma},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      grid=major,
+      major~grid~style={draw=black},
+      %tick~style={draw=none},
+      xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+      x~tick~label~style={rotate=45,anchor=east}
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+      \addplot~[draw=none,hist={bins=\l_n_barras}]
+      ~table[y~index=0]~{datos_histograma.csv};
+  \end{axis}
+\end{tikzpicture} \par
+
+
+
+\ExplSyntaxOff
+
+El tercer cuartil de los datos es: \cuantil{0.75}
+
+\ExplSyntaxOn
+\seq_clear_new:N \l_frecuencias
+\seq_map_inline:Nn \l_valores_unicos {
+  \int_zero_new:N \l_frecuencia_actual
+  \seq_map_inline:Nn \l_seq_lua {
+    \int_compare:nT {#1=##1} {\int_gincr:N \l_frecuencia_actual}
+  }
+  \seq_put_right:Nx \l_frecuencias {\int_use:N \l_frecuencia_actual}
+}
+\seq_log:N \l_frecuencias
+\seq_sort:Nn \l_frecuencias {
+  \int_compare:nNnTF { #1 } > { #2 }
+  { \sort_return_swapped: }
+  { \sort_return_same: }
+}
+\seq_log:N \l_frecuencias
+\tl_new:N \l_frecuencia_maxima
+\tl_set:Nx \l_frecuencia_maxima {\seq_item:Nn \l_frecuencias {-1}}
+\edef\frecuenciaMaxima{\tl_use:N \l_frecuencia_maxima}
+\tl_new:N \l_dato_minimo
+\tl_set:Nx \l_dato_minimo {\seq_item:Nn \l_lista_ordenada {1}}
+\edef\datoMinimo{\tl_use:N \l_dato_minimo}
+\ExplSyntaxOff
+
+\edef\primerCuartil{\cuantil{0.25}}
+Q1: \primerCuartil
+
+\ExplSyntaxOn
+\tl_log:N \l_datos_para_grafica
+\edef\datosParaGraficoDeBarras{\tl_use:N \l_datos_para_grafica}
+\fp_zero_new:N \l_media_de_los_datos
+\fp_set:Nn \l_media_de_los_datos 
+  {\fp_eval:n {(\seq_use:Nn \l_seq_lua {+})/\seq_count:N \l_seq_lua}}
+\fp_log:N \l_media_de_los_datos
+\edef\mediaDeLosDatos{\fp_use:N \l_media_de_los_datos}
+\edef\puntosDeLaMedia{(\mediaDeLosDatos,-3) (\mediaDeLosDatos,10)}
+\ExplSyntaxOff
+
+\begin{tikzpicture}[baseline=(current axis.north)]
+  \begin{axis}[
+    ytickmin=0,
+    ylabel={Frecuencia},
+    %ylabel style={at={(axis cs: 0,\frecuenciaMaxima/2 -| yticklabel cs:0)}},
+    ylabel style={xshift=3mm},
+    xlabel={Datos},
+  ]
+    %\addplot+ [boxplot={
+    %  draw position=-1,
+    %}] table[y index=0] {datos_histograma.csv};
+    \addplot+ [boxplot={
+      draw position=-1,
+      whisker range=10,
+    }] table[y index=0] {datos_histograma.csv};
+
+    \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+     coordinates {\datosParaGraficoDeBarras};
+
+    \addplot [sharp plot,update limits=false,dashed] 
+      coordinates {(\mediaDeLosDatos,-3) (\mediaDeLosDatos,10)};
+    \coordinate (YT) at (yticklabel cs:1);
+    \coordinate (M) at (axis cs: \mediaDeLosDatos,0); 
+    
+  \end{axis}
+  \node[pin={[pin distance=1mm,pin edge={>={Triangle[width=8pt]},<-}]above:Media}] at (M |- YT) {};
+\end{tikzpicture}
+
+
+\ExplSyntaxOn
+
+
+\end{document}
