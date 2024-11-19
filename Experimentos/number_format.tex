@@ -1,0 +1,24 @@
+\documentclass{experimento}
+
+\begin{luacode*}
+  function round_to_three(number)
+      return string.format("%.3f", number)
+  end
+\end{luacode*}
+
+\newcommand{\round}[1]{\directlua{tex.sprint(round_to_three(#1))}}
+
+
+
+\makeatletter
+\protected@edef\x{\pgfmathprintnumber[verbatim,precision=3]{0.966666666666}}
+\protected@edef\xx{\round{0.966666666666}}
+
+\makeatother
+\begin{document}
+\x \par
+\xx \par
+\pgfmathparse{\xx*100}\pgfmathresult \par
+\pgfmathtruncatemacro{\y}{\xx*100}
+\y \par
+\end{document}

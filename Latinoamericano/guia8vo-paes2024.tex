@@ -1,0 +1,141 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Estudio}
+\def\subtitulo{¿Son mejores los establecimientos privados?}
+\def\curso{Octavo Básico}
+\documentclass[sin nombre,con autor]{plantilla-evaluacion-v1}
+
+\begin{document}
+\section*{Motivación}
+Este breve estudio busca demostrar cómo los contenidos trabajados en clases, se pueden
+utilizar para estudiar y modelar el mundo que nos rodea; y es que una persona puede
+preguntarse: ¿Para qué necesito este tipo de habilidades matemáticas? Si no busco
+trabajar en las ciencias o en la ingeniería a futuro. Por el simple hecho que nos
+dan herramientas necesarias para ser ciudadanos críticos e informados. \par
+
+Una persona que no desarrolla estas competencias matemáticas básicas, no es capaz de
+distinguir entre realidad o ficción, tampoco es capaz de argumentar sus respuestas o
+distinguir cuando está siendo manipulado por cifras mal usadas.\par
+
+\section*{Introducción}
+
+En enero, se liberan los resultados de la prueba de acceso a la educación superior; y
+cada año se destaca en los medios de comunicación que: 198 de los 200 establecimientos
+con mejor desempeño en las pruebas son particulares sin subvención.  Creando una
+narrativa de que estos establecimientos imparten una mejor educación; una educación
+de calidad. \par
+
+¿Es esto cierto? ¿Es mejor la educación privada que la pública? Usaremos los resultados
+de la prueba PAES del año 2024 para responder esta pregunta. \par
+
+\section*{Resultados en la prueba de Matemática (M1)}
+\includegraphics{/Users/fenho/Documents/r/paes_2024/mate_dep.pdf}
+
+Se puede observar que los puntajes van aumentando a medida que nos alejamos del
+sistema público; y es que, un establecimiento particular sin subvención con 651 puntos,
+supera al 98\% de los establecimientos públicos y al 91\% de los subvencionados. Por
+otro lado, este
+establecimiento con 651 puntos se encuentra en la posición 333 de 444,
+superando solo al 25\% de los establecimientos de su mismo tipo.
+
+
+  \tcbsidebyside[sidebyside adapt=both,sidebyside align=center,
+  colframe=white,colback=white,coltitle=black,sidebyside gap=5mm
+  ]{%
+  \includegraphics{/Users/fenho/Documents/r/paes_2024/media_dep.pdf}
+  }{%
+  \csvreader[
+    head to column names,
+    tabularray={
+    cells={valign=m},
+    colspec={lcc},
+    hline{1,2,Z}={black,1pt},
+    rows={rowsep+=2pt},
+    },
+    table head={{Tipo de\\Establecimiento} & Media & Mediana \\}
+    ]{/Users/fenho/Documents/r/paes_2024/mat_dep.csv}{}%
+    {\dep & \pgfmathprintnumber[verbatim,int trunc]{\media}
+      & \pgfmathprintnumber[verbatim,int trunc]{\mediana}}
+  }
+
+Esta es una gráfica que intenta comunicar lo mismo que la anterior, pero de manera
+más sencilla, resumiendo los datos en un solo punto usando la media.
+La tendencia creciente se observa más claramente, pero se pierden ciertos datos,
+como por ejemplo: que en establecimientos públicos los puntajes van desde 417 a 855
+puntos; o que en dichos establecimientos el 50\% se encuentra entre los 497 y 548
+puntos. Así, cada gráfica tiene sus ventajas. \par
+
+Las gráficas anteriores, establecen que hay una gran brecha de
+desempeño  entre los distintos tipos de
+establecimientos, pero, ¿a qué se debe esta diferencia? Para entender esto,
+debemos contextualizar los datos y mirar a los alumnos que asisten a estos
+establecimientos.\par
+
+%\includegraphics{/Users/fenho/Documents/r/paes_2024/n_dep_nse.pdf}
+\includegraphics{/Users/fenho/Documents/r/paes_2024/n_dep_nse_alt.pdf}
+
+\begin{tasks}[style=itemize](1)
+  \task
+  En el sector público se concentran los niveles socioeconómicos más bajos y están ausentes
+  los niveles de mayores recursos.
+  \task
+  Establecimientos privados con subvención tienen una composición un poco más equilibrada
+  que el sector público, notablemente con una mayor presencia de nivel medio y medio alto.
+  \task
+  Establecimientos privados sin subvención están compuestos casi
+  exclusivamente de los sectores con mayores recursos.
+\end{tasks}
+
+Esto nos muestra lo altamente segregado que está el sistema educacional chileno
+por niveles socioeconómicos. Veamos que pasa con el desempeño por tipo
+de establecimiento, cuando tomamos en cuenta la vulnerabilidad de los alumnos
+que asisten a estos establecimientos. \par
+
+\includegraphics{/Users/fenho/Documents/r/paes_2024/mate_dep_nse.pdf}
+
+\begin{tasks}[style=itemize](1)
+  \task
+  Se puede observar la misma tendencia en cada sector educacional, y es que, a medida que
+  incrementa el nivel socioeconómico los puntajes también aumentan.
+  \task
+  Cuando se comparan diagramas de caja de un mismo nivel socioeconómico, el
+  desempeño es similar. Sugiriendo que el desempeño del establecimiento depende mucho más de
+  la vulnerabilidad de sus estudiantes que del tipo de dependencia.
+\end{tasks}
+
+\tcbsidebyside[sidebyside adapt=both,colframe=white,colback=white,
+coltitle=black,lower separated=false,sidebyside gap=3mm
+]{%
+\csvreader[
+head to column names,
+tabularray={
+cells={valign=m},
+colspec={llc},
+hline{1,2,Z}={black,1pt},
+rows={rowsep+=2pt},
+},
+table head={{Nivel\\Socioeconómico} & {Tipo de\\Establecimiento} & Media \\}
+]{/Users/fenho/Documents/r/paes_2024/mat_dep_nse.csv}{}%
+{\nse & \dep & \pgfmathprintnumber[verbatim,int trunc]{\media}}
+}{%
+\includegraphics{/Users/fenho/Documents/r/paes_2024/media_dep_nse.pdf}
+}
+
+Para concluir que los establecimientos privados entregan una mejor educación, primero
+hay que solucionar el problema de la segregación; para que la comparación sea justa. Porque
+por lo observado acá, es un mejor predictor de buenos resultados el nivel
+socioeconómico que el tipo de establecimiento. Ya que todos se desempeñan de manera
+similar cuando se compara dentro de un mismo estrato social. \par
+
+Para profundizar en esta temática, recomiendo leer: Formas de Capital (Cap. IV) en
+Poder, Derecho y Clases sociales por Pierre Bourdieu. \par
+
+\section*{Fuentes}
+\begin{itemize}
+  \item Los puntajes por establecimiento fueron recopilados desde la base de datos del DEMRE
+  en la página \url{https://colegios.demre.cl/estadistica-resultados-puntajes}
+  \item Para la clasificación socioeconómica de los establecimientos se utilizó los datos
+  liberados por la Agencia de Calidad de la Educación en
+  \url{https://informacionestadistica.agenciaeducacion.cl}
+\end{itemize}
+
+\end{document}

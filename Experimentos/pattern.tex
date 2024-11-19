@@ -1,0 +1,40 @@
+\documentclass{experimento}
+
+\begin{document}
+
+
+\pgfdeclarepatterninherentlycolored{green stars}
+{\pgfpointorigin}{\pgfpoint{1cm}{1cm}}
+{\pgfpoint{1cm}{1cm}}
+{
+\pgfsetfillcolor{green!50!black}
+\pgftransformshift{\pgfpoint{.5cm}{.5cm}}
+\pgfpathmoveto{\pgfpointpolar{0}{4mm}}
+\pgfpathlineto{\pgfpointpolar{144}{4mm}}
+\pgfpathlineto{\pgfpointpolar{288}{4mm}}
+\pgfpathlineto{\pgfpointpolar{72}{4mm}}
+\pgfpathlineto{\pgfpointpolar{216}{4mm}}
+\pgfpathclose%
+\pgfusepath{stroke,fill}
+}
+\begin{tikzpicture}
+  \filldraw[pattern=green stars] (0,0) rectangle (3,2);
+\end{tikzpicture}
+
+\pgfdeclarepatternformonly{circulos}
+{\pgfpoint{5mm}{5mm}}     % shift pattern origin by +5mm in both directions
+{\pgfpoint{15mm}{15mm}}   % shift end point by same amount
+{\pgfpoint{10mm}{10mm}}   % keep tile size the same
+{
+  \pgfsetlinewidth{1pt}
+  \pgfpathcircle{\pgfpoint{10mm}{10mm}}{4mm}
+  \pgfusepath{stroke}
+}
+
+\begin{tikzpicture}
+  \filldraw[pattern=circulos] (0,0) rectangle (3,2);
+\end{tikzpicture}
+
+
+
+\end{document}

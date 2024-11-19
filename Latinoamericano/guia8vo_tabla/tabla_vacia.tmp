@@ -1,0 +1,9 @@
+ &  &  &  &  \\
+ &  &  &  &  \\
+ &  \casillabox [2pt][2pt]{\widthof {A}}{\bfseries \sffamily A} & &  &  \casillabox [2pt][2pt]{\widthof {A}}{\bfseries \sffamily D} \\
+ &  &  &  &  \\
+ &  &  &  &  \\
+ &  &  &  &  \\
+ &  &  &  &  \\
+ &  &  \casillabox [2pt][2pt]{\widthof {A}}{\bfseries \sffamily B} & &  \\
+ &  &  &  \casillabox [2pt][2pt]{\widthof {A}}{\bfseries \sffamily C} & \\

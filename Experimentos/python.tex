@@ -1,0 +1,285 @@
+\documentclass{experimento}
+
+\usepackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
+
+\begin{python}
+import math
+import random
+from mpmath import *
+
+random.seed(0)
+
+greeting = 'Hello PyLuaTeX!'
+
+def pgf_coords(x, y):
+    return ' '.join(f'({a},{b})' for a, b in zip(x, y))
+
+dominio = mp.linspace(0,1,100)
+f61 = lambda x: x**6*(1-x)
+c61 = quad(f61,[0,1])
+y61 = [fdiv(f61(x),c61) for x in dominio]
+
+f51 = lambda x: x**5*(1-x)
+c51 = quad(f51,[0,1])
+y51 = [fdiv(f51(x),c51) for x in dominio]
+
+f41 = lambda x: x**4*(1-x)
+c41 = quad(f41,[0,1])
+y41 = [fdiv(f41(x),c41) for x in dominio]
+
+f31 = lambda x: x**3*(1-x)
+c31 = quad(f31,[0,1])
+y31 = [fdiv(f31(x),c31) for x in dominio]
+
+f21 = lambda x: x**2*(1-x)
+c21 = quad(f21,[0,1])
+y21 = [fdiv(f21(x),c21) for x in dominio]
+
+f11 = lambda x: x**1*(1-x)
+c11 = quad(f11,[0,1])
+y11 = [fdiv(f11(x),c11) for x in dominio]
+
+\end{python}
+
+\newcommand{\randint}[2]{\py{random.randint(#1, #2)}}
+
+\begin{document}
+\py{greeting}
+
+$\sqrt{372} = \py{math.sqrt(372)}$
+
+$$\int_{0}^{1} x^6\cdot(1-x)\,dx = \py{quad(lambda x: x**6 * (1-x),[0,1])}$$
+
+\tikzset{
+  every pin/.style={pin distance=30pt,anchor=south west},
+}
+\begin{center}
+  \begin{tikzpicture}[]
+    \begin{axis}[
+      width=0.9\linewidth,
+      height=10cm,
+      axis x line=bottom,
+      x axis line style={-},
+      axis y line=none,
+      domain=0:1,
+      smooth,
+      clip=false
+      ]
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y61)}
+      } coordinate [pos=0.6] (Y61) ;
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y51)}
+      } coordinate [pos=0.65] (Y51) ;
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y41)}
+      } coordinate [pos=0.7] (Y41) ;
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y31)}
+      } coordinate [pos=0.75] (Y31);
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y21)}
+      } coordinate [pos=0.8] (Y21);
+      \addplot[] coordinates {
+        \py{pgf_coords(dominio,y11)}
+      } coordinate [pos=0.85] (Y11);
+      \node (F61) at ($(axis cs:0.9,\py{fdiv(f61(0.9),c61)})+(10:3cm)$) {$x^6\cdot(1-x)$};
+      \node (F51) [below=6mm of F61] {$x^5\cdot(1-x)$};
+      \node (F41) [below=6mm of F51] {$x^4\cdot(1-x)$};
+      \node (F31) [below=6mm of F41] {$x^3\cdot(1-x)$};
+      \node (F21) [below=6mm of F31] {$x^2\cdot(1-x)$};
+      \node (F11) [below=6mm of F21] {$x\cdot(1-x)$};
+      \draw (F61) -- (axis cs:0.9,\py{fdiv(f61(0.9),c61)});
+      \draw (F51) -- (axis cs:0.9,\py{fdiv(f51(0.9),c51)});
+      \draw (F41) -- (axis cs:0.9,\py{fdiv(f41(0.9),c41)});
+      \draw (F31) -- (axis cs:0.9,\py{fdiv(f31(0.9),c31)});
+      \draw (F21) -- (axis cs:0.9,\py{fdiv(f21(0.9),c21)});
+      \draw (F11) -- (axis cs:0.9,\py{fdiv(f11(0.9),c11)});
+
+    \end{axis}
+
+  \end{tikzpicture}
+\end{center}
+
+\begin{tikzpicture}
+  \begin{axis}
+    \addplot [name path=A] coordinates {
+      \py{pgf_coords(dominio,y61)}
+    };
+    \path [name path=B]
+    (\pgfkeysvalueof{/pgfplots/xmin},0) -- (\pgfkeysvalueof{/pgfplots/xmax},0);
+
+    \addplot [black!20] fill between [of=A and B, soft clip={domain=0.75:0.95}];
+  \end{axis}
+\end{tikzpicture}
+
+\begin{python}
+max_y61 = max(y61)
+rand_x = [rand() for _ in range(100)]
+rand_y = [0 + 3.2 * rand() for _ in range(100)]
+approved = [(x,y) for x, y in zip(rand_x,rand_y) if y < fdiv(f61(x),c61) ]
+not_approved = [(x,y) for x, y in zip(rand_x,rand_y) if y >= fdiv(f61(x),c61) ]
+coords_approved = " ".join([f"({x}, {y})" for x,y in approved])
+coords_not_approved = " ".join([f"({x}, {y})" for x,y in not_approved])
+
+x_approved = [x for x, _ in approved]
+mean = fdiv(fsum(x_approved),len(x_approved))
+\end{python}
+cv
+\begin{tikzpicture}
+  \begin{axis}[
+    legend style={
+      at={(1.05,1)},
+      anchor=north west,
+      %cells={anchor=west},
+      %font=\footnotesize,
+      %nodes={
+      %  inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+      %  inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+      %}
+    }
+  ]
+    \addplot [] coordinates {
+      \py{pgf_coords(dominio,y61)}
+    };
+    \addplot [only marks,mark=*] coordinates {
+      \py{coords_approved}
+    };
+    \addplot [only marks,mark=o] coordinates {
+      \py{coords_not_approved}
+    };
+    \legend{$x^6\cdot(1-x)$, Aprovados, No aprovados};
+  \end{axis}
+\end{tikzpicture}
+
+La media es: \py{mean}.
+
+\begin{tikzpicture}
+  \begin{axis}[
+      ybar interval,
+      xlabel={Values},
+      ylabel={Frequency},
+      ymin=0,
+      grid=none,
+      xticklabel={$[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$},
+      x tick label style={rotate=45,anchor=east},
+  ]
+  \addplot+[] coordinates {
+     (0,\py{len([x for x in x_approved if x < 0.2])})
+     (0.2,\py{len([x for x in x_approved if x >= 0.2 and x < 0.4])})
+     (0.4,\py{len([x for x in x_approved if x >= 0.4 and x < 0.6])})
+     (0.6,\py{len([x for x in x_approved if x >= 0.6 and x < 0.8])})
+     (0.8,\py{len([x for x in x_approved if x >= 0.8 and x < 1])})
+     (1,0)
+  };
+  \end{axis}
+\end{tikzpicture}
+
+\pgfdeclarepatternformonly{circulos}
+{\pgfpoint{5mm}{5mm}}     % shift pattern origin by +5mm in both directions
+{\pgfpoint{15mm}{15mm}}   % shift end point by same amount
+{\pgfpoint{10mm}{10mm}}   % keep tile size the same
+{
+  \pgfsetlinewidth{1pt}
+  \pgfpathcircle{\pgfpoint{10mm}{10mm}}{4mm}
+  \pgfusepath{stroke}
+}
+
+
+\begin{tikzpicture}
+  \begin{axis}[
+      ybar interval,
+      xlabel={Values},
+      ylabel={Frequency},
+      ymin=0,
+      grid=none,
+      xticklabel={$[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$},
+      x tick label style={rotate=45,anchor=east},
+  ]
+  \addplot+[pattern=circulos] coordinates {
+     (0,\py{len([x for x in x_approved if x < 0.2])})
+     (0.2,\py{len([x for x in x_approved if x >= 0.2 and x < 0.4])})
+     (0.4,\py{len([x for x in x_approved if x >= 0.4 and x < 0.6])})
+     (0.6,\py{len([x for x in x_approved if x >= 0.6 and x < 0.8])})
+     (0.8,\py{len([x for x in x_approved if x >= 0.8 and x < 1])})
+     (1,0)
+  };
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[
+      xlabel={Values},
+      ylabel={Frequency},
+      ymin=0,
+      xmin=-0.5,
+      xmax=4.5,
+      ytick={1,2,3,4,5},
+      xtick={0,1,2,3,4}
+  ]
+  \foreach \x/\y in {0/2,1/5,2/8,3/4,4/1} {
+      \foreach \i in {1,...,\y} {
+          \addplot [only marks, mark=*, mark size=7pt] coordinates {(\x,\i)};
+      }
+  }
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[
+      xlabel={Values},
+      ylabel={Frequency},
+      ymin=0,
+      enlarge x limits=true,
+      %ytick={1,2,3,4,5},
+      %xtick={0,1,2,3,4}
+  ]
+  \foreach \x/\y in {
+    0/2,0.2/5,0.4/8,0.6/4,0.8/\py{len([x for x in x_approved if x >= 0.8 and x < 1])}
+    } {
+      \foreach \i in {1,...,\y} {
+          \addplot [only marks, mark=*, mark size=3pt] coordinates {(\x,\i)};
+      }
+  }
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    ybar interval,
+    xmajorgrids=false,
+    xticklabel={$[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$},
+    x tick label style={rotate=45,anchor=east},
+    nodes near coords, nodes near coords align={horizontal},
+    nodes near coords style={anchor=south},
+    ]
+    \addplot+[] coordinates {
+      (0,\py{len([x for x in x_approved if x < 0.2])})
+      (0.2,\py{len([x for x in x_approved if x >= 0.2 and x < 0.4])})
+      (0.4,\py{len([x for x in x_approved if x >= 0.4 and x < 0.6])})
+      (0.6,\py{len([x for x in x_approved if x >= 0.6 and x < 0.8])})
+      (0.8,\py{len([x for x in x_approved if x >= 0.8 and x < 1])})
+      (1,0)
+   };
+  \end{axis}
+  \begin{axis}[
+    legend style={
+      at={(1.05,1)},
+      anchor=north west,
+    },
+    axis x line=none,
+    axis y line=none,
+  ]
+    \addplot [draw=none] coordinates {
+      \py{pgf_coords(dominio,y61)}
+    };
+    \addplot [only marks,mark=*] coordinates {
+      \py{coords_approved}
+    };
+  \end{axis}
+
+
+\end{tikzpicture}
+
+
+\end{document}

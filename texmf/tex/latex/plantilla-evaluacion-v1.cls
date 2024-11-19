@@ -1,12 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{plantilla-evaluacion-v1}[2024/9/28 v1.0 Config para generar evaluación]
 
-\PassOptionsToClass{10pt,spanish,oneside,letterpaper}{article}
+\PassOptionsToClass{10pt,oneside,letterpaper}{article}
 \LoadClass{article}
-
-
-%%% visual debug
-%\usepackage{lua-visual-debug}
 
 \providecommand{\colegio}{COLEGIO}
 \providecommand{\asignatura}{Departamento de Matemática}
@@ -15,89 +11,59 @@
 \providecommand{\nombre}{Prof. Fernando Halabi}
 \providecommand{\correo}{correo@ASDAS.cl}
 
-\RequirePackage{expl3}
-\RequirePackage{luacode}
-\RequirePackage[spanish,es-noshorthands]{babel} 
-\selectlanguage{spanish} 
-%\usepackage[fontsize=9pt]{fontsize}
-\RequirePackage[fleqn]{amsmath}
-\RequirePackage{icomma}
-\RequirePackage{calc}
-\RequirePackage{ifthen}
-\RequirePackage{xparse}
-\RequirePackage{hyperref}
-\RequirePackage{lipsum}
-\RequirePackage{tikz}
-\RequirePackage{varwidth}
-\RequirePackage{pgfplots}
-\usepgfplotslibrary{statistics}
-\pgfplotsset{compat=newest}
-\usepgflibrary {fpu}
-\usetikzlibrary{positioning,calc,math,backgrounds,%
-shapes.symbols,shapes.geometric,shapes.misc,shapes.callouts,%
-decorations.pathreplacing,calligraphy,arrows.meta,%
-cd,intersections,patterns,patterns.meta,angles,through}
-\RequirePackage{pgfornament}
+\input{paquetes}
 
-\pgfkeys{/pgf/number format/.cd,
-  set decimal separator={,},set thousands separator={\,}}
-%\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3}
+% Define variables for options
+\newboolean{optionone}
+\newboolean{optiontwo}
+\newboolean{optionthree}
+% Set default values
+\setboolean{optionone}{false}
+\setboolean{optiontwo}{false}
+\setboolean{optionthree}{false}
+% Declare options
+\DeclareOption{sincurso}{\setboolean{optionone}{true}}
+\DeclareOption{sinnombre}{\setboolean{optiontwo}{true}}
+\DeclareOption{conautor}{\setboolean{optionthree}{true}}
+% Handle unknown options
+\DeclareOption*{\PackageWarning{yourclassname}{Unknown option '\CurrentOption'}}
+% Process the options
+\ProcessOptions\relax
 
-\RequirePackage[most]{tcolorbox}
-\tcbuselibrary{skins}
-\tcbset{enhanced}
-\RequirePackage{adjustbox}
-\RequirePackage{tabularray}
-\RequirePackage{array}
-\RequirePackage{environ}
-\RequirePackage{xcolor}
-\RequirePackage{varwidth}
-\UseTblrLibrary{siunitx,varwidth,diagbox,functional}
-\sisetup{round-precision=3,round-mode=places,output-decimal-marker={,},
-  mode = text, text-font-command = \normalsize}
-\RequirePackage[inline]{enumitem}
-\RequirePackage{tasks}
-\RequirePackage{fontawesome5}
-\RequirePackage{lastpage}
-\RequirePackage[
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}{\sffamily\bfseries\Large}{\thesection.}{1.5em}{}
+
+\geometry{
   paper=letterpaper,
   top=2cm,
   bottom=2cm,
-  left=1.5cm,
-  right=1.5cm,
+  left=2cm,
+  right=2cm,
   headheight=2cm,
   headsep=15pt,
   footskip=20pt,
+  marginparwidth=0pt,
+  includemp=false,
+  heightrounded,
   %showframe
-]{geometry}
-\RequirePackage[skip=10pt, indent=0pt]{parskip}
+}
+\setlength{\marginparwidth}{0pt}
+\setlength{\marginparsep}{0pt}
 
-\RequirePackage{fancyhdr}
-% \setlength{\headheight}{26pt}
-% \setlength{\headsep}{6pt}
 \pagestyle{fancy}
 \fancyhfoffset[H]{0pt} 
-\fancyhead[C]{}
+\fancyhead[C]{\ifthenelse{\thepage=1}{}{\sffamily{\scshape\bfseries\titulo} - \subtitulo}}
 \fancyhead[L]{\ifthenelse{\thepage=1}{%
   \footnotesize{\colegio\\{\asignatura}\ifthenelse{\isundefined{\curso}}{}{{ -} {\curso}} }
   }{}
 }
-\fancyhead[R]{}
+\fancyhead[R]{\ifthenelse{\boolean{optionthree} \AND \thepage=1}{\footnotesize\nombre}{}}
 \fancyfoot[L,C]{}
 \fancyfoot[R]{\footnotesize{Página {\thepage} de {\pageref*{LastPage}}}}
 
-
-%\RequirePackage[compact,medium,sc,bf,sf]{titlesec}
 %\renewcommand{\thesection}{\Roman{section}}
 %\titleformat{\section}{\sffamily\scshape\bfseries\large}{\thesection.}{1.5em}{}
 
-\RequirePackage{notomath}
-\setmonofont{NotoMono-Regular}[
-  Path = /Users/fenho/Library/Fonts/,
-  Extension =  .ttf,
-  Ligatures = TeX,
-  Scale=MatchLowercase
-]
 
 \newtcolorbox{caja}[1][]{enhanced,colback=white,colframe=black,boxrule=1pt,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
 boxed title style={colback=white},coltitle=black,height=30pt,#1}
@@ -132,25 +98,30 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
 \NewDocumentEnvironment{partes}{O{}+b}%
 {%
-    \let\olditem\item
     \newcommand{\parte}{%
-      \ifthenelse{\lengthtest{\dimexpr \pagegoal-\pagetotal\relax < 4cm}}{\clearpage}{}
+      \ifthenelse{\lengthtest{\dimexpr \pagegoal-\pagetotal\relax < 6cm}}{\clearpage}{}
       %\par
       %\needspace{5\baselineskip}%
-      \olditem
+      \item
     }
     \begin{enumerate}[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\arabic*}},
-      wide, labelwidth=20pt, labelsep=15pt,itemindent=0pt,leftmargin=*, itemsep = 1ex,#1]
+      wide, labelwidth=20pt, labelsep=15pt,itemindent=0pt,leftmargin=*, itemsep = 1ex,
+      series=preguntas,resume=preguntas,#1]
         #2
 }{%
     \end{enumerate}
 }
 
 \newlength{\labelwith}
-\setlength{\labelwidth}{\widthof{\mybox[1pt][1pt]{\widthof{M}}{\sffamily\bfseries M}}}
-\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{M}}{\sffamily\bfseries\scshape\alph*}},
-label-width=\labelwidth,item-indent=30pt,
-label-offset=10pt,column-sep=10pt]{ejercicios}[\ejercicio](2)
+\setlength{\labelwidth}{\widthof{\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries 12}}}
+%\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{M}}{\sffamily\bfseries\scshape\alph*}},
+%label-width=\labelwidth,item-indent=30pt,
+%label-offset=10pt,column-sep=10pt]{ejercicios}[\ejercicio](2)
+
+\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\scshape\arabic*}},
+label-width=\labelwidth,item-indent=30pt,resume=true,
+label-offset=10pt,column-sep=10pt]{preguntas}[\pregunta](1)
+
 
 %% Setting values
 \newlength{\myitemsep}
@@ -188,38 +159,28 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \end{enumerate*}
 }
 
-\NewDocumentEnvironment{preguntas}{O{}+b}%
-{%
-    \newcommand{\pregunta}{\item}
-    \begin{minipage}{\linewidth}
-      \vspace*{\mytopsep}
-      \begin{enumerate}[label={{\itshape\alph*})},
-        labelsep=10pt,leftmargin=0pt,labelwidth={\widthof{{\itshape a})}},
-        itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
-        listparindent=0pt,#1]
-          #2      
-}{%
-    \end{enumerate}
-  \end{minipage}
+%\NewDocumentEnvironment{preguntas}{O{}+b}%
+%{%
+%    \newcommand{\pregunta}{\item}
+%    \begin{minipage}{\linewidth}
+%      \vspace*{\mytopsep}
+%      \begin{enumerate}[label={{\itshape\alph*})},
+%        labelsep=10pt,leftmargin=0pt,labelwidth={\widthof{{\itshape a})}},
+%        itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+%        listparindent=0pt,#1]
+%          #2      
+%}{%
+%    \end{enumerate}
+%  \end{minipage}
+%}
+
+
+\NewDocumentCommand{\respuestas}{}{%
+\begin{minipage}[b][\lineskip+15pt][t]{\linewidth}
+  \centering
+  \sffamily\Large {\scshape\bfseries Respuestas}
+\end{minipage}
 }
-
-% Define variables for options
-\newboolean{optionone}
-\newboolean{optiontwo}
-\newboolean{optionthree}
-% Set default values
-\setboolean{optionone}{false}
-\setboolean{optiontwo}{false}
-\setboolean{optionthree}{false}
-% Declare options
-\DeclareOption{sincurso}{\setboolean{optionone}{true}}
-\DeclareOption{sinnombre}{\setboolean{optiontwo}{true}}
-\DeclareOption{conautor}{\setboolean{optionthree}{true}}
-% Handle unknown options
-\DeclareOption*{\PackageWarning{yourclassname}{Unknown option '\CurrentOption'}}
-% Process the options
-\ProcessOptions\relax
-
 
 \AtBeginDocument{%
 	\hypersetup{%
@@ -227,15 +188,20 @@ before-skip=\mytopsep,after-skip=\mytopsep
     pdfauthor = {\nombre},
     pdfcreator = {Vscode + LuaTex}
 	}%
-  \begin{minipage}[c][\lineskip+20pt][c]{\linewidth} 
-    \centering
-    \sffamily\Large {\scshape\bfseries \titulo} - \subtitulo
-  \end{minipage}
+  %\begin{minipage}[b][\lineskip+15pt][t]{\linewidth} 
+  %  \centering
+  %  \sffamily\Large {\scshape\bfseries \titulo} - \subtitulo
+  %\end{minipage}
+  \begin{center}
+    {\sffamily\Large\scshape\bfseries \titulo} - {\sffamily\Large\subtitulo}
+  \end{center}
   %\datos
-  \raggedright
+  %\raggedright%
   \ifthenelse{\boolean{optiontwo}}{}{%
     \ifthenelse{\boolean{optionone}}{%
-      \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,raster column skip=3pt,raster force size=false]
+      \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,
+        raster column skip=3pt,raster force size=false,raster after skip=15pt,  
+        raster before skip=10pt]
         \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4cm]
         \end{caja}  
         \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]
@@ -245,7 +211,9 @@ before-skip=\mytopsep,after-skip=\mytopsep
         \end{caja}      
       \end{tcbraster}%
     }{%
-      \begin{tcbraster}[enhanced,raster columns=4,raster width=\linewidth,raster column skip=3pt,raster force size=false]%
+      \begin{tcbraster}[enhanced,raster columns=4,raster width=\linewidth,
+        raster column skip=3pt,raster force size=false,raster after skip=15pt,
+        raster before skip=10pt]%
         \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4.5cm]
         \end{caja}
         \begin{caja}[title={\sffamily\scshape\bfseries Curso},height=35pt,add to width=-1.5cm]
@@ -257,7 +225,8 @@ before-skip=\mytopsep,after-skip=\mytopsep
         \end{caja}      
       \end{tcbraster}%
     }
-  }
-  \vspace*{5pt}
-  \selectcolormodel{gray}
+  }%
 }
+
+\NewDocumentCommand{\negrita}{m}{{\sffamily\scshape\bfseries\large#1}}
+\NewDocumentCommand{\f}{m}{\pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{#1}}

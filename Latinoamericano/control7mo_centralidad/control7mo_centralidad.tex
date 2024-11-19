@@ -1,0 +1,282 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Control}
+\providecommand{\forma}{XX}
+\def\subtitulo{Medidas de centralidad (forma \forma)}
+\def\curso{Séptimo Básico}
+% 3*5 + 2 + 4
+\def\puntaje{21}
+
+\documentclass[sin curso]{plantilla-evaluacion-v1}
+
+\begin{python}
+import numpy as np
+
+def divisores(n):
+    div = [i for i in range(1, int(n ** 0.5) + 1) if n % i == 0]
+    div.extend([n // i for i in div if i != n // i])
+    return np.array(sorted(div))
+
+def n_barras(lista, ideal):
+  if (lista is None or len(lista) == 0):
+    return 0
+  min = np.min(lista)
+  max = np.max(lista) + 1
+  rango = np.abs(max-min)
+  div_rango = divisores(rango).astype(int)
+  n_bars = (rango/div_rango).astype(int)
+  distancia = np.abs(n_bars - ideal)
+  return n_bars[distancia.argmin()]
+
+def ticks(muestras):
+  t = np.linspace(
+    np.min(muestras),
+    np.max(muestras)+1,
+    n_barras(muestras,5)+1
+  ).astype(int)
+  return ",".join(t.astype(str))
+
+def obtener_muestras(m,d,n,s=None):
+  l = np.random.default_rng(seed=s).normal(m,d,size=n)
+  return np.floor(l).astype(int)
+
+muestras_m = obtener_muestras(155,3,45)
+muestras_h = obtener_muestras(158,3,50)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia(x, lista):
+  filtrado = np.extract(lista == x,lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia_acumulada(x, lista):
+  filtrado = np.extract(lista <= x, lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad(x, lista):
+  return frecuencia(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad_acumulada(x, lista):
+  return frecuencia_acumulada(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def cuantil(p, lista):
+  unicos = np.unique_values(lista)
+  dato = 0
+  for i in unicos:
+    p_acumulada = probabilidad_acumulada(i, lista=lista)
+    if (p_acumulada >= p):
+      dato = i
+      break
+  return dato
+
+def moda(lista):
+  valores, conteo = np.unique_counts(lista)
+  indice_max = np.argwhere(conteo == np.max(conteo))
+  return valores[indice_max].flatten()
+
+def pgf_coords(x,y):
+  return " ".join(f"({i},{j})" for i, j in zip(x,y))
+
+def imprimir(l):
+  return " • ".join(l.astype(str))
+
+while(True):
+  m1 = obtener_muestras(10,2,7)
+  if (np.min(m1)>0 and len(moda(m1))==1):
+    break
+
+while(True):
+  m2 = obtener_muestras(14,3,14)
+  if (np.min(m2)>0 and len(moda(m2))==1):
+    break
+
+while(True):
+  m3 = obtener_muestras(14,3,21)
+  if (np.min(m3)>0 and len(moda(m3))==1):
+    break
+
+while(True):
+  muestrasH = obtener_muestras(16,3.5,23)
+  if (np.min(muestrasH)>0 and len(np.unique_values(muestrasH))<=10 and len(moda(muestrasH))==1):
+    break
+
+while(True):
+  muestrasM = obtener_muestras(18,3.5,26)
+  if (np.min(muestrasM)>0 and n_barras(muestrasM,5) in [4,5,6] and len(moda(muestrasM))==1):
+    break
+
+np.savetxt("tablaH.csv",np.column_stack([
+  x := (np.unique_values(muestrasH)),
+  frecuencia(x,lista=muestrasH),
+  frecuencia_acumulada(x,lista=muestrasH),
+  probabilidad(x,lista=muestrasH),
+  probabilidad_acumulada(x,lista=muestrasH)
+  ]),
+  fmt=["%d","%d","%d","%.4f","%.4f"],
+  delimiter=","
+)
+
+np.savetxt("muestrasH.csv",muestrasH,delimiter=",")
+np.savetxt("muestrasM.csv",muestrasM,delimiter=",")
+\end{python}
+
+\newsavebox{\tabla}
+\begin{lrbox}{\tabla}
+  \begin{tblr}{colspec={ccc},vlines,hlines,rowsep=6pt,colsep=10pt,hline{1,2,Z}={black,1pt}}
+    Media & Mediana & Moda \\
+          &         &      \\
+  \end{tblr}
+\end{lrbox}
+
+\NewDocumentCommand{\generarTabla}{m}{%
+\begin{tblr}{colspec={ccc},vlines,hlines,rowsep=6pt,colsep=10pt,hline{1,2,Z}={black,1pt}}
+  Media & Mediana & Moda \\
+  \pgfmathprintnumber[verbatim,use comma]{\py{np.mean(#1)}} & \py{cuantil(0.5,lista=#1)} & \py{imprimir(moda(lista=#1))} \\
+\end{tblr}}
+
+\begin{document}
+Utiliza los datos entregados para completar las tablas con los valores indicados. [3p c/u]
+\begin{preguntas}[after-item-skip=15pt]
+  \pregunta Datos: \py{imprimir(m1)}
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Datos: \py{imprimir(m2)}
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Datos: \py{imprimir(m3)}
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+\end{preguntas}
+
+\section*{Comparando el número de amistades por género}
+A continuación, se encuentran los resultados de encuestar a un grupo de estudiantes y
+preguntarles a cada uno: \textbf{¿Cuántos amig@s tienes?}. \par
+
+Los resultados se encuentran separados por género. Para los niños, los datos se encuentran
+en una tabla de frecuencias; y para las niñas, los datos se encuentran en un gráfico de barras.
+Utilice estos valores para completar la tabla de valores de cada género, y así finalmente
+determinar que grupo generalmente tiene más amistades.
+
+\NewDocumentCommand{\formatear}{m}{%
+\pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{#1}%
+}
+\csvreader[no head,
+centered tabularray={
+cells={valign=m},
+colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+width=0.85\linewidth,
+hlines,
+vlines,
+hline{1,2,3,Z}={black,1pt},
+rows={rowsep+=2pt},
+cell{1}{1}={r=1,c=5}{c}
+},
+table head={Número de amig@s (Niños) & F & FA & P & PA \\ Datos & Frecuencia &
+  {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{tablaH.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \formatear{\d} & \formatear{\e} }
+
+\begin{preguntas}(1)
+  \pregunta Completa la tabla de valores usando las respuestas de los niños. [3p] \\[5pt]
+  \usebox{\tabla}
+\end{preguntas}%
+%
+\begin{python}
+  x_m = np.unique_values(muestrasM)
+  y_m = frecuencia(x_m,lista=muestrasM)
+\end{python}%
+%
+\begin{center}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar,
+        title={Respuestas de las niñas},
+        ylabel={Frecuencia},
+        xlabel={Número de amig@s},
+        xtick distance=3,
+        ymin=0,
+        %xtick=data,
+        %nodes~near~coords,
+        %nodes~near~coords~align={vertical},
+        ]
+        \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+         coordinates {\py{pgf_coords(x_m,y_m)}};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+\begin{preguntas}[after-item-skip=20pt](1)
+  \pregunta Rellena el siguiente histograma con \textbf{las respuestas de las niñas} y coloca
+  la frecuencia arriba de cada una de las barras. [2p] \\
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        %title={Histograma (Niñas)},
+        ylabel={Frecuencia},
+        xlabel={Número de amig@s},
+        xtick = {\py{ticks(muestrasM)}},
+        ymin=0,
+        grid=major,
+        xmin={\py{np.min(muestrasM)}},
+        xmax={\py{np.max(muestrasM)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east},
+        ]
+        \addplot [draw=none,hist={bins=\py{n_barras(muestrasM,5)}}]
+        table[y index=0] {muestrasM.csv};
+    \end{axis}
+  \end{tikzpicture}
+
+  \pregunta Completa la tabla de valores usando las respuestas de las niñas. [3p]
+  \begin{malla}[height=2cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Comparando las medidas de centralidad para ambos grupos de niños y niñas,
+  ¿Qué grupo tiene en general más amistades?. [4p]
+  \begin{respuesta}[height=5cm]
+  \end{respuesta}
+\end{preguntas}
+
+\newpage
+\respuestas
+
+
+\begin{preguntas}[after-item-skip=15pt,resume=false](1)
+  \pregunta \generarTabla{m1}
+  \pregunta \generarTabla{m2}
+  \pregunta \generarTabla{m3}
+  \pregunta \generarTabla{muestrasH}
+  \pregunta
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        title={Respuestas de las niñas},
+        ylabel={Frecuencia},
+        xlabel={Número de amig@s},
+        xtick = {\py{ticks(muestrasM)}},
+        ymin=0,
+        grid=major,
+        xmin={\py{np.min(muestrasM)}},
+        xmax={\py{np.max(muestrasM)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east},
+        ]
+        \addplot [hist={bins=\py{n_barras(muestrasM,5)}},pattern={Lines[angle=-45,distance=5pt]}]
+         table[y index=0] {muestrasM.csv};
+    \end{axis}
+  \end{tikzpicture}
+  \pregunta \generarTabla{muestrasM}
+
+\end{preguntas}
+
+\end{document}

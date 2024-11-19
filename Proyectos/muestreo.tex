@@ -1,0 +1,70 @@
+\documentclass{experimento}
+
+\begin{document}
+
+\pgfplotsset{
+  eje simple/.style={
+    xlabel=Hola,
+    domain=0:1,
+    smooth,
+    samples=500,
+    axis x line=bottom,
+    axis y line=none,
+    axis line style={-},
+  }
+}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {x};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {x*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^2)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^3)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^4)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^5)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^6)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[eje simple]
+    \addplot {(x^7)*(1-x)};
+  \end{axis}
+\end{tikzpicture}
+
+\ExplSyntaxOn
+
+
+\ExplSyntaxOff
+
+\end{document}

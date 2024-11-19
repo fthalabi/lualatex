@@ -1,0 +1,143 @@
+\documentclass{experimento}
+
+
+% This handler is a variant of \pgfplothandlerybar which works with
+% intervals instead of points.
+%
+% Bars are drawn between successive input coordinates and the width is
+% determined relatively to the interval length.
+%
+% It looks like this:
+%
+%    |---|      |-----|
+%    |   |      |     |
+%    |   |      |     |
+%    |   |      |     |
+% (X)------(X)-----------(X)
+%
+% where (X) denotes the x-axis offsets of input coordinates.
+%
+% In more detail, if (x_i,y_i) and (x_{i+1},y_{i+1}) denote successive
+% input coordinates, the bar will be placed above the
+% interval [x_i,x_{i+1}], centered at
+
+%
+%    x_i + \pgfkeysvalueof{/pgf/bar interval shift} * (x_{i+1} - x_i)
+%
+% with width
+%
+%    \pgfkeysvalueof{/pgf/bar interval width} * (x_{i+1} - x_i).
+%
+% If you have N+1 input points, you will get N bars (one for each
+% interval). The y_i value of the last bar will be ignored.
+%
+% Example:
+%
+% \pgfplothandlerybarinterval
+% \pgfplotxyfile{mytable}
+
+
+\def\pgf@plot@zbarinterval@handler@first#1{%
+  \pgf@process{#1}%
+  \xdef\pgf@plot@barinterval@intervalstart{\the\pgf@x}%
+  \xdef\pgf@plot@barinterval@bar{\the\pgf@y}%
+  \global\let\pgf@plotstreampoint=\pgf@plot@zbarinterval@handler%
+}%
+
+\def\pgf@plot@zbarinterval@handler#1{%
+  \pgfkeysvalueof{/pgf/at begin bar}%
+  \pgf@process{#1}%
+  \pgf@ya=\pgf@plot@barinterval@bar
+  \xdef\pgf@plot@barinterval@bar{\the\pgf@y}%
+  \pgf@xc=\pgf@plot@barinterval@intervalstart\relax
+  \xdef\pgf@plot@barinterval@intervalstart{\the\pgf@x}%
+  \pgf@xb=\pgf@x
+  \advance\pgf@xb by-\pgf@xc
+  \advance\pgf@xc by\pgfplotbarintervalshift@\pgf@xb
+  \pgf@xb=\pgfplotbarintervalwidth@\pgf@xb
+  \advance\pgf@xc by-.5\pgf@xb% center
+  \begingroup
+  \pgfplotyzerolevelstreamnext
+  \endgroup
+  \pgf@yb=\pgf@x
+  \advance\pgf@ya by-\pgf@yb
+  \pgfpathrectangle
+    {\pgfqpoint{\pgf@xc}{\pgf@yb}}%
+    {\pgfqpoint{\pgf@xb}{\pgf@ya}}%
+  \pgfkeysvalueof{/pgf/at end bar}%
+}%
+
+\pgfdeclareplothandler{\pgfplothandlerzbarinterval}{}{%
+  start={
+    \pgfmathparse{\pgfkeysvalueof{/pgf/bar interval width}}%
+    \xdef\pgfplotbarintervalwidth@{\pgfmathresult}%
+    \pgfmathparse{\pgfkeysvalueof{/pgf/bar interval shift}}%
+    \xdef\pgfplotbarintervalshift@{\pgfmathresult}%
+    \pgfplotyzerolevelstreamstart
+  },
+  end macro=\pgfplotyzerolevelstreamend,
+  point macro=\pgf@plot@zbarinterval@handler@first
+}%
+
+
+\tikzoption{my interval}[]{\let\tikz@plot@handler=\pgfplothandlerzbarinterval}%
+
+\pgfkeys{
+        /pgfplots/my interval/.style={%
+                bar direction=y,
+                /pgfplots/set point meta if empty=f(x),%
+                bar cycle list,
+                x tick label as interval,
+                clip limits if compat={clip ylimits=false},
+                xtick align=outside,
+                xtick=data,
+                ybar interval legend,
+                bar interval width={#1/\numplotsofactualtype},
+                bar interval shift={(\plotnumofactualtype+0.5)/\numplotsofactualtype},
+                /tikz/my interval,
+                xticklabel={$[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$},
+        },
+        /pgfplots/my interval/.default=1,
+}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{axis}[my interval]
+    \addplot[] coordinates { (1,3) (2,5) (3,2)};
+  \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \pgfplothandlerybarinterval
+  \pgfplotstreamstart
+  \pgfplotstreampoint{\pgfpoint{0cm}{2cm}}
+  \pgfplotstreampoint{\pgfpoint{1cm}{1cm}}
+  \pgfplotstreampoint{\pgfpoint{2cm}{0.5cm}}
+  \pgfplotstreampoint{\pgfpoint{4cm}{0.7cm}}
+  \pgfplotstreamend
+  \pgfusepath{stroke}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{axis}[
+      ytick={1,2,3,4,5},
+      yticklabels={Group A, Group B, Group C, Group D, Group E},
+      xlabel={Values},
+      ylabel={Groups},
+      xmajorgrids=true,
+      grid style=dashed,
+      height=8cm,
+      width=12cm,
+  ]
+  % Data for the stacked dots
+  \addplot[only marks, mark=*, mark size=2pt] coordinates {(1,1) (2,1) (3,1)};
+  \addplot[only marks, mark=*, mark size=2pt] coordinates {(2,2) (4,2)};
+  \addplot[only marks, mark=*, mark size=2pt] coordinates {(3,3) (5,3)};
+  \addplot[only marks, mark=*, mark size=2pt] coordinates {(4,4)};
+  \addplot[only marks, mark=*, mark size=2pt] coordinates {(5,5)};
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}

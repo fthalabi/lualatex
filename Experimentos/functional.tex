@@ -1,35 +1,49 @@
-\documentclass[sin nombre]{plantilla-evaluacion-v1}
+\documentclass{experimento}
 
-\usepackage{functional}
-
-
-\seq_new:N \l__my_table_content_seq
-
-\cs_new_protected:Npn \__my_set_table_content: {
-  \seq_set_from_clist:Nn \l__my_table_content_seq {
-    {x}{y},
-    {5}{6}
-  }
-}
-
-\cs_new_eq:NN \miTabla \__my_set_table_content:
-
-\cs_new:Npn \__my_table_row:nn #1#2 {
-  #1 & #2 \\
-}
-
-\NewExpandableDocumentCommand{\getTableContent}{} {
-  \seq_map_function:NN \l__my_table_content_seq \__my_table_row:nn
-}
-
-\ExplSyntaxOff
+\edef\nRows{8}
 
 \begin{document}
 
-\miTabla % This sets the content
+\IgnoreSpacesOn
+\prgNewFunction \generarTabla {} {
+  \tlNew \lTablaTl
+  \tlSet \lTablaTl {a & b \\}
+  \tlPutRight \lTablaTl {c & d\\}
+  \intStepInline {1} {1} {10} {
+    \tlPutRight \lTablaTl {e & f\\}
+  }
+\prgReturn {\tlUse \lTablaTl}
+}
+\IgnoreSpacesOff
 
-\begin{tblr}[evaluate=\getTableContent]{cc}
-  \getTableContent
+\begin{tblr}[evaluate=\generarTabla]{hlines}
+  Row1 & 1 \\
+  Row3 & 3 \\
+  Row5 & 5 \\
+  \generarTabla
 \end{tblr}
+
+
+\IgnoreSpacesOn
+\tlNew \lPlotTl
+
+\prgNewFunction \puntos {} {
+  \tlClear \lPlotTl
+  \tlPutRight \lPlotTl {(1,2)}
+  \tlPutRight \lPlotTl {(2,5)}
+  \prgReturn {\expValue \lPlotTl}
+}
+% First store the result
+\tlNew \lPuntosTl
+\tlSet \lPuntosTl {\expWhole {\puntos}}
+\edef\coords{\lPuntosTl}
+
+\IgnoreSpacesOff
+
+\begin{tikzpicture}
+  \begin{axis}
+    \addplot[] coordinates {\coords};
+  \end{axis}
+\end{tikzpicture}
 
 \end{document}

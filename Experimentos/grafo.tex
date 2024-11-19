@@ -1,0 +1,126 @@
+\documentclass{experimento}
+
+\begin{document}
+  \begin{tikz}
+    \graph[] {
+      a -> {
+        b[> "b"],
+        c[> "c"] -> {
+          e,
+          d,
+          f
+        }
+      }
+    };
+  \end{tikz}
+
+  \tikz \graph [spring layout, vertical=1 to 2] { 1--2--3--1 };
+
+  \tikz \graph [simple necklace layout, node distance=0cm, nodes={circle,draw}]
+    { 1--2--3--4--5--1 };
+
+    \tikz \graph [trie, simple, layered layout] {
+      a -> b -> a,
+      a -> b -> c,
+      a -> {d,a}
+    };
+    \tikz \graph [ simple, layered layout] {
+      a -> b -> a,
+      a -> b -> c,
+      a -> {d,a}
+    };
+    \tikz \graph [layered layout] {
+      a -> b -> a,
+      a -> b -> c,
+      a -> {d,a}
+    };
+
+    \tikz \graph [layered layout] {
+      a -> {
+        b -> {
+          d,
+          e
+        },
+        c -> {
+          f,
+          g
+        }
+      }
+    }; \par
+
+    \tikz \graph [layered layout, level distance=2cm] {
+      a -> {
+        b -> {
+          d,
+          e
+        },
+        c -> {
+          f,
+          g
+        }
+      }
+    }; \par
+
+    \tikz \graph [layered layout, level distance=2cm, sibling distance=2cm] {
+      a -> {
+        b[>"ho"] -> {
+          d,
+          e
+        },
+        c[>"wo"] -> {
+          f,
+          g
+        }
+      }
+    }; \par
+
+    \tikz \graph [layered layout, level distance=2cm, sibling distance=2cm,
+    edge={-{Triangle[round]}},
+    edge quotes={draw,inner sep=3pt,rounded corners, dashed, fill=white}] {
+      a -> {
+        b[>"$\frac{1}{2}$"] -> {
+          d,
+          e
+        },
+        c[>"wo"] -> {
+          f,
+          g
+        }
+      }
+    }; \par
+
+  \tikz \graph [layered layout] {
+    a -> {
+      hola[>"½"] -> {
+        como,
+        estas[>"$\alpha$"]
+      },
+      c[>"wo"] -> {
+        f,
+        g,
+        h[>"⅓"]
+      }
+    }
+  }; \par
+
+  \begin{tikzpicture}
+    \graph [layered layout] {
+      a -> {
+        hola[>"½"] -> {
+          como[>"¾"],
+          estas[>"$\alpha$"]
+        },
+        c[>"wo"] -> {
+          f[>"⅓"],
+          g[>"⅓"],
+          h[>"⅓"],
+          i[>"¼"],
+          j[>"⅕"],
+          k[>"⅙"],
+        }
+      }
+    };
+    
+  \end{tikzpicture}
+
+\end{document}

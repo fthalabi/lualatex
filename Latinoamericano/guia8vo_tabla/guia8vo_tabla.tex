@@ -1,0 +1,238 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Guía}
+%\def\subtitulo{Tabla de Frecuencias}
+\def\curso{Octavo Básico}
+
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\begin{document}
+
+\begin{luacode}
+  require('estadistica.lua')
+  function generar_lista()
+    repeat
+        m = math.random(13,23)
+        d = math.random(3,5)
+        lista = Generar_muestras(30,m,d)
+        v_unicos = Obtener_unicos(lista)
+        divisiones = Divisor_ideal(v_unicos)
+    until divisiones >2 and divisiones <7 and Rango(lista) < 12
+    return lista
+  end
+  lista = generar_lista()
+  divisiones = Divisor_ideal(Obtener_unicos(lista))
+  function lista_a_clist()
+    lista_str = table.concat(lista, ",")
+    tex.sprint(lista_str)
+  end
+\end{luacode}
+
+
+\ExplSyntaxOn
+\clist_new:N \l_lista_lua
+\clist_set:Nx \l_lista_lua {\directlua{lista_a_clist()}}
+\seq_set_from_clist:NN \l_lista_seq \l_lista_lua
+\def\datos{\seq_use:Nn \l_lista_seq {,~}}
+
+%% ORDENAR LISTA
+\seq_clear_new:N \l_lista_ordenada_seq
+\seq_set_eq:NN \l_lista_ordenada_seq \l_lista_seq
+\seq_sort:Nn \l_lista_ordenada_seq {
+  \int_compare:nNnTF { #1 } > { #2 }
+  { \sort_return_swapped: }
+  { \sort_return_same: }
+}
+
+%% VALORES UNICOS
+\seq_clear_new:N \l_valores_unicos_seq
+\seq_set_eq:NN \l_valores_unicos_seq \l_lista_ordenada_seq
+\seq_remove_duplicates:N \l_valores_unicos_seq
+
+\cs_new_protected:Npn \cuantil:n #1 {
+  \fp_zero_new:N \l_cd_fp_indice
+  \fp_set:Nn \l_cd_fp_indice
+    {\fp_eval:n {ceil(#1 * \seq_count:N \l_lista_seq ,0)}}
+  \int_zero_new:N \l_cd_int_indice
+  \int_set:Nn \l_cd_int_indice {\fp_to_int:N \l_cd_fp_indice}
+  \tl_set:Nx \l_cd_valor {\seq_item:Nn \l_lista_ordenada_seq \l_cd_int_indice}
+  \tl_use:N \l_cd_valor
+}
+
+%% PREGUNTAS AL AZAR
+\int_gzero_new:N \l_p_prob_int
+\int_gset:Nn \l_p_prob_int {\int_rand:nn {3} {\seq_count:N \l_valores_unicos_seq}}
+\int_gzero_new:N \l_p_probAcum_int
+\int_gset:Nn \l_p_probAcum_int {\int_rand:nn {3} {\seq_count:N \l_valores_unicos_seq}}
+\int_gzero_new:N \l_p_frec_int
+\int_gset:Nn \l_p_frec_int {\int_rand:nn {3} {\seq_count:N \l_valores_unicos_seq}}
+\int_gzero_new:N \l_p_frecAcum_int
+\int_gset:Nn \l_p_frecAcum_int {\seq_count:N \l_valores_unicos_seq}
+\int_compare:nNnTF {\l_p_frecAcum_int} = {\seq_count:N \l_valores_unicos_seq}
+{\int_gdecr:N \l_p_frecAcum_int} {}
+\int_compare:nNnTF {\l_p_frecAcum_int} = {\seq_count:N \l_valores_unicos_seq}
+{\int_gdecr:N \l_p_frecAcum_int} {}
+
+\tl_clear_new:N \l_r_prob_tl
+\tl_clear_new:N \l_r_probAcum_tl
+\tl_clear_new:N \l_r_frec_tl
+\tl_clear_new:N \l_r_frecAcum_tl
+
+
+%% CREANDO LA TABLA
+
+\int_gzero_new:N \l_frecuencia
+\int_gzero_new:N \l_frecuencia_acumulada
+\fp_gzero:N \l_probabilidad
+\fp_gzero:N \l_probabilidad_acumulada
+
+\iow_new:N \g_archivo_tabla
+\iow_open:Nn \g_archivo_tabla { datos_tabla.tmp }
+\seq_map_indexed_inline:Nn \l_valores_unicos_seq
+  {
+    \int_gzero:N \l_frecuencia
+    \seq_map_inline:Nn \l_lista_seq {
+      \int_compare:nT {#2=##1} {\int_gincr:N \l_frecuencia}
+    }
+    \int_gadd:Nn \l_frecuencia_acumulada {\int_use:N \l_frecuencia}
+    \fp_gset:Nn \l_probabilidad {\int_use:N \l_frecuencia / \seq_count:N \l_lista_seq }
+    \fp_gadd:Nn \l_probabilidad_acumulada {\fp_use:N \l_probabilidad}
+
+    %% guardando los datos para despues
+    \int_compare:nNnTF {\l_p_frec_int} = {#1}
+    {\tl_gset:Nx \l_r_frec_tl {\int_use:N \l_frecuencia}} {}
+    \int_compare:nNnTF {\l_p_frecAcum_int} = {#1}
+    {\tl_gset:Nx \l_r_frecAcum_tl {\int_use:N \l_frecuencia_acumulada}} {}
+    \int_compare:nNnTF {\l_p_prob_int} = {#1}
+    {\tl_gset:Nx \l_r_prob_tl {\fp_use:N \l_probabilidad}} {}
+    \int_compare:nNnTF {\l_p_probAcum_int} = {#1}
+    {\tl_gset:Nx \l_r_probAcum_tl {\fp_use:N \l_probabilidad_acumulada}} {}
+    %%
+
+    \iow_now:Nx \g_archivo_tabla
+      { #2 ~&~ \int_use:N \l_frecuencia ~&~ \int_use:N \l_frecuencia_acumulada ~&~
+      \fp_use:N \l_probabilidad ~&~ \fp_use:N \l_probabilidad_acumulada ~\\~ }
+  }
+\iow_close:N \g_archivo_tabla
+
+\iow_new:N \g_archivo_tabla_vacia
+\iow_open:Nn \g_archivo_tabla_vacia { tabla_vacia.tmp }
+\seq_map_indexed_inline:Nn \l_valores_unicos_seq
+  {
+    \tl_gclear_new:N \l_linea_tl
+    \tl_gput_right:Nn \l_linea_tl {~~&~}
+
+    \int_compare:nNnTF {\l_p_frec_int} = {#1}%
+    {\tl_gput_right:Nn \l_linea_tl {~\casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily~A}~&}}
+    {\tl_gput_right:Nn \l_linea_tl {~&~}}
+
+    \int_compare:nNnTF {\l_p_frecAcum_int} = {#1}
+    {\tl_gput_right:Nn \l_linea_tl {~\casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily~B}~&}}
+    {\tl_gput_right:Nn \l_linea_tl {~&~}}
+
+    \int_compare:nNnTF {\l_p_prob_int} = {#1}
+    {\tl_gput_right:Nn \l_linea_tl {~\casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily~C}~&}}
+    {\tl_gput_right:Nn \l_linea_tl {~&~}}
+
+    \int_compare:nNnTF {\l_p_probAcum_int} = {#1}
+    {\tl_gput_right:Nn \l_linea_tl {~\casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily~D}~\\}}
+    {\tl_gput_right:Nn \l_linea_tl {~\\}}
+
+    \iow_now:Nx \g_archivo_tabla_vacia {\tl_to_str:N \l_linea_tl}
+  }
+\iow_close:N \g_archivo_tabla_vacia
+
+\ExplSyntaxOff
+
+\NewDocumentCommand{\casillabox}{O{1pt}O{1pt}mm}{%
+\tcbox[on line, boxsep=0pt, left=#1, right=#1, top=#2, bottom=#2,%
+   width=1cm]{\makebox[#3][c]{#4}}
+}
+
+
+\begin{preguntas}(1)
+  \pregunta Utiliza los datos entregados a continuación para completar la tabla de
+  frecuencias.\par
+  \vspace*{5pt}
+  \textbf{Datos}: \datos. \par \vspace*{10pt}
+  \begin{tblr}[evaluate=\fileInput]{colspec={X[1]X[2]X[2]X[2]X[2]},hlines,hline{1,2,Z}={black,1pt},
+    row{1}={valign=m,c},rows={rowsep+=2pt},vlines,cell{2-Z}{1-Z}={r}}
+    Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\
+    \fileInput{tabla_vacia.tmp}
+  \end{tblr}
+\end{preguntas}
+
+Describe e interpreta el significado de los valores numéricos encontrados en las casillas señaladas.
+\begin{preguntas}(2)
+  \pregunta Casilla \casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily A}
+  \begin{respuesta}[height=3cm]
+  \end{respuesta}
+  \pregunta Casilla \casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily B}
+  \begin{respuesta}[height=3cm]
+  \end{respuesta}
+  \pregunta Casilla \casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily C}
+  \begin{respuesta}[height=3cm]
+  \end{respuesta}
+  \pregunta Casilla \casillabox[2pt][2pt]{\widthof{A}}{\bfseries\sffamily D}
+  \begin{respuesta}[height=3cm]
+  \end{respuesta}
+\end{preguntas}
+
+
+\newpage
+
+\begin{minipage}[c][\lineskip+20pt][c]{\linewidth}
+  \centering
+  \sffamily\Large {\scshape\bfseries Respuestas} - \subtitulo
+\end{minipage}
+
+\ExplSyntaxOn
+\edef\RespFrec{\tl_use:N \l_r_frec_tl}
+\tl_clear_new:N \l_frec_dato_tl
+\tl_set:Nx \l_frec_dato_tl {\seq_item:Nn \l_valores_unicos_seq {\int_use:N \l_p_frec_int}}
+\edef\RespFrecDato{\tl_use:N \l_frec_dato_tl}
+\edef\RespFrecAcum{\tl_use:N \l_r_frecAcum_tl}
+\tl_clear_new:N \l_frecAcum_dato_tl
+\tl_set:Nx \l_frecAcum_dato_tl {\seq_item:Nn \l_valores_unicos_seq {\int_use:N \l_p_frecAcum_int}}
+\edef\RespFrecAcumDato{\tl_use:N \l_frecAcum_dato_tl}
+\edef\RespProb{\tl_use:N \l_r_prob_tl}
+\tl_clear_new:N \l_prob_dato_tl
+\tl_set:Nx \l_prob_dato_tl {\seq_item:Nn \l_valores_unicos_seq {\int_use:N \l_p_prob_int}}
+\edef\RespProbDato{\tl_use:N \l_prob_dato_tl}
+\edef\RespProbAcum{\tl_use:N \l_r_probAcum_tl}
+\tl_clear_new:N \l_probAcum_dato_tl
+\tl_set:Nx \l_probAcum_dato_tl {\seq_item:Nn \l_valores_unicos_seq {\int_use:N \l_p_probAcum_int}}
+\edef\RespProbAcumDato{\tl_use:N \l_probAcum_dato_tl}
+\ExplSyntaxOff
+
+\NewDocumentCommand{\porcentaje}{m}{\pgfmathtruncatemacro{\y}{round(#1*1000)/10}\y\%}
+
+\begin{preguntas}[resume=false,after-item-skip=20pt]
+  \pregunta Tabla completada \par \vspace*{10pt}
+      \begingroup
+      \pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma}
+      \begin{tblr}[evaluate=\fileInput]{colspec={ccccc},
+        cell{2-Z}{4,5}={cmd=\pgfmathprintnumber},
+        hlines,hline{1,2,Z}={black,1pt},
+        row{1}={valign=m},rows={rowsep+=2pt}}
+        Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\
+        \fileInput{datos_tabla.tmp}
+      \end{tblr}
+      \endgroup
+  \pregunta La Frecuencia es {\RespFrec}, lo que significa que hay {\RespFrec}
+  datos con el valor {\RespFrecDato}.
+
+  \pregunta La Frecuencia Acumulada es {\RespFrecAcum}, lo que significa que hay {\RespFrecAcum}
+  datos que son menores o iguales a {\RespFrecAcumDato}.
+  \pregunta La Probabilidad es
+  \pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{\RespProb},
+  por lo tanto, el \porcentaje{\RespProb} de los datos tienen el valor {\RespProbDato}.
+  \pregunta La Probabilidad Acumulada es
+  \pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{\RespProbAcum},
+  es decir, el \porcentaje{\RespProbAcum} de los datos tiene un valor menor o igual a
+  {\RespProbAcumDato}.
+\end{preguntas}
+
+
+
+
+\end{document}

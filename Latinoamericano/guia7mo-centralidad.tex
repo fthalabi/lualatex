@@ -1,0 +1,370 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Guía}
+\def\subtitulo{Medidas de centralidad}
+\def\curso{Séptimo Básico}
+%\def\puntaje{30}
+
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\begin{python}
+import numpy as np
+
+def divisores(n):
+    div = [i for i in range(1, int(n ** 0.5) + 1) if n % i == 0]
+    div.extend([n // i for i in div if i != n // i])
+    return np.array(sorted(div))
+
+def n_barras(lista, ideal):
+  if (lista is None or len(lista) == 0):
+    return 0
+  min = np.min(lista)
+  max = np.max(lista) + 1
+  rango = np.abs(max-min)
+  div_rango = divisores(rango).astype(int)
+  n_bars = (rango/div_rango).astype(int)
+  distancia = np.abs(n_bars - ideal)
+  return n_bars[distancia.argmin()]
+
+def ticks(muestras):
+  t = np.linspace(
+    np.min(muestras),
+    np.max(muestras)+1,
+    n_barras(muestras,5)+1
+  ).astype(int)
+  return ",".join(t.astype(str))
+
+def obtener_muestras(m,d,n,s=None):
+  l = np.random.default_rng(seed=s).normal(m,d,size=n)
+  return np.floor(l).astype(int)
+
+muestras_h = np.array([160, 162, 160, 153, 153, 154, 157, 160, 157, 159, 155, 159, 165, 163,
+  154, 165, 159, 159, 157, 156, 163, 157, 156, 155, 156, 154, 158, 159, 154, 160, 161, 153,
+  158, 159, 164, 157, 155, 155, 157, 160, 154, 152, 166, 163, 158, 162, 155, 160, 157, 159],
+  dtype=int)
+#while (n_barras(muestras_m,5) != 5):
+#  muestras_m = obtener_muestras(155,3,45)
+
+muestras_m = np.array([153, 156, 152, 153, 152, 153, 153, 153, 153, 152, 155, 155, 152, 158,
+ 153, 157, 148, 153, 154, 152, 148, 158, 151, 156, 154, 150, 154, 157, 148, 155, 150, 157,
+ 153, 156, 154, 160, 153, 151, 154, 154, 162, 151, 157, 151, 155], dtype=int)
+#while (n_barras(muestras_h,5) != 5):
+#  muestras_h = obtener_muestras(158,3,50)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia(x, lista):
+  filtrado = np.extract(lista == x,lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia_acumulada(x, lista):
+  filtrado = np.extract(lista <= x, lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad(x, lista):
+  return frecuencia(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad_acumulada(x, lista):
+  return frecuencia_acumulada(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def cuantil(p, lista):
+  unicos = np.unique_values(lista)
+  dato = 0
+  for i in unicos:
+    p_acumulada = probabilidad_acumulada(i, lista=lista)
+    if (p_acumulada >= p):
+      dato = i
+      break
+  return dato
+
+def pgf_coords(x,y):
+  return " ".join(f"({i},{j})" for i, j in zip(x,y))
+
+x_h = np.unique_values(muestras_h)
+y_h = frecuencia(x_h,lista=muestras_h)
+
+x_m = np.unique_values(muestras_m)
+y_m = frecuencia(x_m,lista=muestras_m)
+
+np.savetxt("muestras_h.csv",muestras_h,delimiter=",")
+np.savetxt("muestras_m.csv",muestras_m,delimiter=",")
+
+\end{python}
+
+\begin{document}
+
+A continuación se encuentran las alturas, en centímetros, de un grupo de niñas y otro de
+niños. \par
+
+\begin{center}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar,
+        title={Gráfico de barras (Niñas)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        xtick distance=3,
+        ymin=0,
+        %xtick=data,
+        %nodes~near~coords,
+        %nodes~near~coords~align={vertical},
+        ]
+        \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+         coordinates {\py{pgf_coords(x_m,y_m)}};
+    \end{axis}
+  \end{tikzpicture}\hspace*{1cm}%
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar,
+        title={Gráfico de barras (Niños)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        xtick distance=3,
+        ymin=0,
+        %xtick=data,
+        %nodes~near~coords,
+        %nodes~near~coords~align={vertical},
+        ]
+        \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+         coordinates {\py{pgf_coords(x_h,y_h)}};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+Traspase los datos desde los gráficos de barras a un histograma. \par
+
+\begin{center}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        title={Histograma (Niñas)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        xtick = {\py{ticks(muestras_m)}},
+        ymin=0,
+        grid=major,
+        xmin={\py{np.min(muestras_m)}},
+        xmax={\py{np.max(muestras_m)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east},
+        ]
+        \addplot [draw=none,hist={bins=\py{n_barras(muestras_m,5)}}]
+         table[y index=0] {muestras_m.csv};
+    \end{axis}
+  \end{tikzpicture}\hspace*{1cm}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        title={Histograma (Niños)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        ymin=0,
+        grid=major,
+        xmin={\py{np.min(muestras_h)}},
+        xmax={\py{np.max(muestras_h)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east}
+        %xtick=data,
+        %nodes near coords,
+        %nodes near coords align={vertical},
+        ]
+        \addplot [draw=none,hist={bins=\py{n_barras(muestras_h,5)}}]
+         table[y index=0] {muestras_h.csv};
+    \end{axis}
+  \end{tikzpicture}
+\end{center} \par
+
+\section*{Medidas de centralidad}
+
+Las medidas de centralidad resumen todos los datos en un solo valor numérico e intentan
+comunicar cuales son los valores más frecuentes dentro de los datos, no siempre
+funcionan, y es la razón por la cual tenemos tres medidas que intentan hacer lo mismo
+de tres maneras distintas. \par
+
+\negrita{Media}: Es el promedio de los datos. Por ejemplo, para los datos: 3, 4, 4 y 5;
+el promedio se calcula como $(3+4\times2+5)\div4=\pgfmathprintnumber{\py{(3+8+5)/4}}$.
+¿Logra el promedio en este caso decirnos cual es valor más frecuente o más probable? \par
+
+Un ejemplo donde el promedio no funciona bien, es con los datos: 1, 1, 7 y 7.
+Aquí el promedio es $(1\times2 + 7\times2)=4$, pero no hay ningún cuatro en los datos. \par
+
+\negrita{Moda}: Es el dato con mayor frecuencia. En el ejemplo: 3, 4, 4 y 5; la moda
+es 4. Por otro lado, en: 1, 1, 7, y 7; la moda es 1 o 7, ya que tienen
+la misma frecuencia.\par
+
+\negrita{Mediana}: Es el dato más pequeño con una probabilidad acumulada mayor o igual
+a 0,5. \par
+
+En el ejemplo con los datos: 3, 4, 4 y 5. No hay datos con probabilidad acumulada igual
+a 0,5 y el que está más cerca es el 4 con probabilidad acumulada 0,750. Así, en
+este caso la mediana es 4. \par
+
+\begin{python}
+import numpy as np
+import polars as pl
+def generar_tabla(archivo,datos):
+  tabla = pl.DataFrame({'valores': np.floor(datos).astype(int)})
+  tabla = tabla.group_by('valores').len().sort('valores')
+  tabla = tabla.rename({'len':'frecuencia'})
+  tabla = tabla.with_columns(
+    pl.col('frecuencia').cum_sum().alias('f_cumulativa'),
+    (pl.col('frecuencia')/pl.col('frecuencia').sum()).alias('probabilidad'),
+  )
+  tabla = tabla.with_columns(
+    pl.col('probabilidad').cum_sum().alias('p_acumulada')
+  )
+  tabla.write_csv(archivo,include_header=False)
+
+generar_tabla("ejemplo1.csv",[3,4,4,5])
+\end{python}
+
+\begingroup
+\csvreader[no head,
+before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+centered tabularray={
+cells={valign=m},
+colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+width=0.7\linewidth,
+hlines,
+vlines,
+hline{1,2,Z}={black,1pt},
+rows={rowsep+=2pt},
+},
+table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{ejemplo1.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+\endgroup
+
+Para los datos: 1, 1, 7 y 7. Existe un dato con probabilidad acumulada 0,500, por lo que
+la mediana en este caso es 1. \par
+
+\begin{python}
+generar_tabla("ejemplo2.csv",[1,1,7,7])
+\end{python}
+
+\begingroup
+\csvreader[no head,
+before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+centered tabularray={
+cells={valign=m},
+colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+width=0.7\linewidth,
+hlines,
+vlines,
+hline{1,2,Z}={black,1pt},
+rows={rowsep+=2pt},
+},
+table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{ejemplo2.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+\endgroup
+
+Utiliza los datos que se encuentran en los gráficos de barra para calcular las
+medidas de centralidad de cada grupo.\par
+
+\begin{center}
+  \begin{tblr}{colspec={ccc},vlines,hlines,rows={rowsep+=3pt},columns={colsep+=20pt}}
+          &  Niñas    &   Niños   \\
+  Media   &           &           \\
+  Moda    &           &           \\
+  Mediana &           &           \\
+  \end{tblr}
+\end{center} \par
+
+¿Qué grupo tiene la media más alta? ¿Qué sugiere que un grupo tenga una media
+más alta que el otro?
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+¿Qué ocurre con la moda y la mediana de ambos grupos? ¿Sugieren lo mismo que la media?
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+
+\newpage
+
+\begin{minipage}[c][\lineskip+20pt][c]{\linewidth}
+  \centering
+  \sffamily\Large {\scshape\bfseries Respuestas} - \subtitulo
+\end{minipage}
+
+\begin{center}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        title={Histograma (Niñas)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        xtick = {\py{ticks(muestras_m)}},
+        ymin=0,
+        grid=none,
+        xmin={\py{np.min(muestras_m)}},
+        xmax={\py{np.max(muestras_m)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east},
+        %xtick=data,
+        %nodes near coords,
+        %nodes near coords align={vertical},
+        ]
+        \addplot [hist={bins=\py{n_barras(muestras_m,5)}},pattern={Lines[angle=-45,distance=5pt]}]
+         table[y index=0] {muestras_m.csv};
+    \end{axis}
+  \end{tikzpicture}\hspace*{1cm}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar interval,
+        title={Histograma (Niños)},
+        ylabel={Frecuencia},
+        xlabel={Altura (cm)},
+        ymin=0,
+        grid=none,
+        xmin={\py{np.min(muestras_h)}},
+        xmax={\py{np.max(muestras_h)+1}},
+        enlarge x limits,
+        xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
+        x tick label style={rotate=45,anchor=east}
+        %xtick=data,
+        %nodes near coords,
+        %nodes near coords align={vertical},
+        ]
+        \addplot [hist={bins=\py{n_barras(muestras_h,5)}},pattern={Lines[angle=-45,distance=5pt]}]
+         table[y index=0] {muestras_h.csv};
+    \end{axis}
+  \end{tikzpicture}
+\end{center} \par
+
+\begin{center}
+  \begin{tblr}{colspec={ccc},vlines,hlines,rows={rowsep+=3pt},columns={colsep+=20pt},
+    cell{2-Z}{2-Z}={cmd=\pgfmathprintnumber}}
+          &  Niñas    &   Niños   \\
+  Media   & \py{np.mean(muestras_m)} & \py{np.mean(muestras_h)} \\
+  Moda    & \py{np.bincount(muestras_m).argmax()} & \py{np.bincount(muestras_h).argmax()} \\
+  Mediana & \py{cuantil(0.5,lista=muestras_m)} & \py{cuantil(0.5,lista=muestras_h)} \\
+  \end{tblr} \par
+\end{center}
+
+% \begin{center}
+%   \begin{tikzpicture}[baseline=(current axis.north)]
+%     \begin{axis}[
+%       title={Comparación de las alturas por grupo},
+%       xlabel={Altura (cm)},
+%       ytick={1,2},
+%       yticklabels={Niñas,Niños},
+%     ]
+%       \addplot+ [boxplot={
+%         draw position=1,
+%         whisker range=10,
+%       }] table[y index=0] {muestras_m.csv};
+%       \addplot+ [boxplot={
+%         draw position=2,
+%         whisker range=10,
+%       },solid] table[y index=0] {muestras_h.csv};
+
+%     \end{axis}
+%   \end{tikzpicture}
+% \end{center}
+
+\end{document}

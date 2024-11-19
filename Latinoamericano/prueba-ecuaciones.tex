@@ -1,0 +1,151 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Evaluación Sumativa}
+\def\subtitulo{Ecuaciones}
+\def\curso{Octavo Básico}
+% 2*4 + 2*3 + 2*5 + 2*3
+\def\puntaje{30}
+
+\documentclass[sin curso]{plantilla-evaluacion-v1}
+
+\begin{document}
+
+\section*{Objetivo de la evaluación}
+
+(OA6) Mostrar que comprenden operatoria de expresiones algebraicas y (OA8) utilizan
+ecuaciones lineales para solucionar problemas contextualizados.
+
+\section*{Pauta de cotejo}
+En la corrección de la evaluación, se asignará puntaje a cada respuesta según los criterios 
+que se encuentran detallados en la tabla a continuación.
+
+\begin{importante}
+  \begin{tblr}{colspec={X[1,c,m]X[6,m]},hline{2-Y}={solid},vline{2-Y}={solid},
+    cell{1}{2}={c},cell{2-Z}{2}={cmd=\raggedright}}
+    Puntaje asignado & Criterios o indicadores\\
+    +50\% & Señala clara y correctamente cuál es la solución o el resultado de la pregunta hecha
+    en el enunciado.\\
+    +50\% & Incluye un desarrollo que relata de manera clara y ordenada los procedimientos 
+    \mbox{necesarios} para solucionar la problemática. En caso de estar incompleto o con 
+    \mbox{errores} el desarrollo, se asignará puntaje parcial si se muestra dominio de los 
+    contenidos y conceptos involucrados.\\
+    0\% &  La respuesta es incorrecta. De haber desarrollo, este tiene errores conceptuales.\\
+  \end{tblr}
+\end{importante}
+
+\begin{center}
+  \vspace*{5mm}
+  \begin{tikzpicture}[ampersand replacement=\&,]
+      %\node (A) [opacity=0.4] {\includegraphics[width=2cm]{../flork3.jpg}};
+      \node (B) [font=\slshape,text width=12cm]
+      {``Cree en ti mismo y en lo que eres. Sé consciente de que hay algo en tu interior %
+      que es más grande que cualquier obstáculo''};
+      \node [left=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{37}};
+      \node [right=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{38}};
+  \end{tikzpicture}
+  \vspace*{5mm}
+\end{center}
+
+
+
+\section{Operatoria algebraica}
+
+Reduce las siguientes expresiones algebraicas [2 puntos c/u].
+
+\begin{preguntas}(2)
+  \pregunta $-7a + 3a - 16a$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $-12m +3n -4m -10n +5m-n$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $(a^2+a-1)-(a^2-a+1)$
+  \begin{malla}[height=4cm]
+  \end{malla}
+  \pregunta $(2x-5)\cdot(3x+2)$
+  \begin{malla}[height=4cm]
+  \end{malla}
+
+\end{preguntas}
+
+Considera las siguientes igualdades y determina el valor de cada expresión [2 puntos c/u].
+\vspace*{3mm}
+\begin{tcbraster}[raster columns=3,raster width=.7\linewidth,raster column skip=20pt,
+  raster halign=center,halign=center,borderline={1pt}{0pt}{black,dashed},
+  colframe=white,colback=white]
+  \begin{tcolorbox}
+    $A = m + 2$
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    $B = 3m -5$
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    $C = -2m + 3$
+  \end{tcolorbox}
+\end{tcbraster}
+\vspace*{5mm}
+
+\begin{preguntas}(2)
+  \pregunta $3A$
+  \begin{malla}[height=4cm]
+  \end{malla}
+  \pregunta $A-B$
+  \begin{malla}[height=4cm]
+  \end{malla}
+  \pregunta! $A-(B-C)$
+  \begin{malla}[height=4cm]
+  \end{malla}
+
+\end{preguntas}
+
+\section{Resolución de ecuaciones}
+Determine el valor de la incógnita para cada una de las siguientes igualdades [2 puntos c/u].
+
+\begin{preguntas}(2)
+  \pregunta $2x-3=5$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $11y - 5y + 6 = -24 -9y$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $x-(2x+1)=8-(3x+3)$
+  \begin{malla}[height=5cm]
+  \end{malla}
+  \pregunta $\dfrac{1}{2}x+\dfrac{6}{4}=5$
+  \begin{malla}[height=5cm]
+  \end{malla}
+  \pregunta! $\dfrac{5}{6}x-\dfrac{7}{4}+\dfrac{2x}{3}=2x -\dfrac{5}{12}+\dfrac{x}{3}$
+  \begin{malla}[height=6cm]
+  \end{malla}
+\end{preguntas}
+
+\section{Resolución de problemas}
+Modele las siguientes situaciones usando lenguaje algebraico y encuentra la solución a los
+problemas planteados. Es importante que haya una respuesta a la pregunta formulada y 
+que esta describa el significado del valor numérico alcanzado [2 puntos c/u].
+
+\begin{preguntas}
+  \pregunta Un rectángulo es dos veces más ancho que alto y su perímetro mide 60. 
+  ¿Cuánto miden los lados del rectángulo? 
+  \begin{malla}[height=3.5cm]
+  \end{malla}
+  \begin{respuesta}[height=1.5cm]
+  \end{respuesta}
+
+  \pregunta La edad de Carla excede en 3 años a la de Daniel y el doble de la edad de Carla 
+  más 12 años equivale al triple de la de Daniel. Determina ambas edades.
+  \begin{malla}[height=7cm]
+  \end{malla}
+  \begin{respuesta}[height=2.5cm]
+  \end{respuesta}
+
+  \pregunta Sofía retira del banco \$5 000, en billetes de \$500, \$200 y \$100. Si el 
+  número de billetes de \$200 excede en 3 a los de \$100, y el número de billetes de \$100 
+  es el doble de los de \$500, ¿cuántos billetes de cada denominación recibió Sofía?
+  \begin{malla}[height=7cm]
+  \end{malla}
+  \begin{respuesta}[height=2.5cm]
+  \end{respuesta}
+
+\end{preguntas}
+
+\end{document}

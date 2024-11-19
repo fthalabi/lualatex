@@ -1,0 +1,206 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Control}
+%\def\subtitulo{Tabla de frecuencias}
+\def\curso{Séptimo Básico}
+\def\puntaje{13}
+
+\documentclass[sin curso]{plantilla-evaluacion-v1}
+
+\begin{python}
+import numpy as np
+import polars as pl
+
+def divisores(n):
+    div = [i for i in range(1, int(n ** 0.5) + 1) if n % i == 0]
+    div.extend([n // i for i in div if i != n // i])
+    return np.array(sorted(div))
+
+def n_barras(lista, ideal):
+  if (lista is None or len(lista) == 0):
+    return 0
+  min = np.min(lista)
+  max = np.max(lista) + 1
+  rango = np.abs(max-min)
+  div_rango = divisores(rango).astype(int)
+  n_bars = (rango/div_rango).astype(int)
+  distancia = np.abs(n_bars - ideal)
+  return n_bars[distancia.argmin()]
+
+def ticks(muestras):
+  t = np.linspace(
+    np.min(muestras),
+    np.max(muestras)+1,
+    n_barras(muestras,5)+1
+  ).astype(int)
+  return ",".join(t.astype(str))
+
+def obtener_muestras(m,d,n):
+  l = np.random.default_rng().normal(m,d,size=n)
+  return np.floor(l).astype(int)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia(x, lista):
+  filtrado = np.extract(lista == x,lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia_acumulada(x, lista):
+  filtrado = np.extract(lista <= x, lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad(x, lista):
+  return frecuencia(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad_acumulada(x, lista):
+  return frecuencia_acumulada(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def cuantil(p, lista):
+  unicos = np.unique_values(lista)
+  dato = 0
+  for i in unicos:
+    p_acumulada = probabilidad_acumulada(i, lista=lista)
+    if (p_acumulada >= p):
+      dato = i
+      break
+  return dato
+
+def pgf_coords(x,y):
+  return " ".join(f"({i},{j})" for i, j in zip(x,y))
+
+
+muestras = obtener_muestras(
+  np.random.choice([14,15,16]),
+  np.random.choice([3,4]),
+  np.random.choice([25,26,27,28])
+)
+
+def generar_tabla(archivo,datos):
+  tabla = pl.DataFrame({'valores': np.floor(datos).astype(int)})
+  tabla = tabla.group_by('valores').len().sort('valores')
+  tabla = tabla.rename({'len':'frecuencia'})
+  tabla = tabla.with_columns(
+    pl.col('frecuencia').cum_sum().alias('f_cumulativa'),
+    (pl.col('frecuencia')/pl.col('frecuencia').sum()).alias('probabilidad'),
+  )
+  tabla = tabla.with_columns(
+    pl.col('probabilidad').cum_sum().alias('p_acumulada')
+  )
+  tabla.write_csv(archivo,include_header=False)
+generar_tabla(archivo='tabla_frecuencia.csv', datos=muestras)
+
+def muestra_aleatoria(muestras):
+  rango = np.unique_values(muestras)[1:-1]
+  return np.random.choice(rango)
+
+m_f = muestra_aleatoria(muestras)
+m_fa = muestra_aleatoria(muestras)
+m_p = muestra_aleatoria(muestras)
+m_pa = muestra_aleatoria(muestras)
+
+#frec = frecuencia(datos,lista=muestras)
+#frec_acum = frecuencia_acumulada(datos,lista=muestras)
+#prob = probabilidad(datos,lista=muestras)
+#prob_acum = probabilidad_acumulada(datos,lista=muestras)
+#np.savetxt("tabla_frecuencias2.csv",np.column_stack([datos,frec,frec_acum,prob,prob_acum]),delimiter=",")
+
+\end{python}
+
+\NewDocumentCommand{\f}{m}{\pgfmathprintnumber[fixed,precision=2,verbatim,use comma]{#1}}
+
+\begin{document}
+
+A continuación se presentan los resultados al encuestar un grupo de estudiantes. \par
+\negrita{Pregunta}: ¿Cuántas horas usas tu celular dentro de una semana? \par
+\negrita{Respuestas}: \py{", ".join(muestras.astype(str))}
+
+\begin{preguntas}(1)
+  \pregunta Utilice las respuestas de los encuestados para rellenar la tabla
+  de frecuencias. [5 puntos]  \newline
+  \csvreader[no head,
+  before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+  centered tabularray={
+  cells={valign=m},
+  colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+  width=0.7\linewidth,
+  hlines,
+  vlines,
+  hline{1,2,Z}={black,1pt},
+  rows={rowsep+=2pt},
+  cell{2-Z}{1-Z}={fg=white}
+},
+  table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{tabla_frecuencia.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+\end{preguntas}
+
+\begin{importante}
+  Contextualice y explique el significado de los siguientes valores que
+  aparecen en la tabla de frecuencias.
+\end{importante}
+
+\begin{preguntas}(1)
+  \pregunta ¿Qué significa que al dato \py{m_f} le corresponda la frecuencia
+  \py{frecuencia(m_f,lista=muestras)}? [2 puntos]
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
+  \pregunta ¿Qué significa que al dato \py{m_fa} le corresponda la frecuencia
+  acumulada \py{frecuencia_acumulada(m_fa,lista=muestras)}? [2 puntos]
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
+  \pregunta ¿Qué significa que al dato \py{m_p} le corresponda la probabilidad
+  \f{\py{probabilidad(m_p,lista=muestras)}}? [2 puntos]
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
+  \pregunta ¿Qué significa que al dato \py{m_pa} le corresponda la probabilidad
+  acumulada \f{\py{probabilidad_acumulada(m_pa,lista=muestras)}}? [2 puntos]
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
+\end{preguntas}
+
+\newpage
+
+\begin{minipage}[c][\lineskip+20pt][c]{\linewidth}
+  \centering
+  \sffamily\Large {\scshape\bfseries Respuestas} - \subtitulo
+\end{minipage}
+
+\begin{preguntas}[resume=false,after-item-skip=20pt]
+  \pregunta \newline
+  \csvreader[no head,
+  before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+  centered tabularray={
+  cells={valign=m},
+  colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+  width=0.7\linewidth,
+  hlines,
+  hline{1,2,Z}={black,1pt},
+  rows={rowsep+=2pt},
+  },
+  table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+  ]{tabla_frecuencia.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+  {\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+
+  \pregunta Significa que hubo \py{frecuencia(m_f,lista=muestras)} estudiante(s)
+  que usa(n) el celular \py{m_f} hora(s) dentro de una semana.
+
+  \pregunta Significa que hubo \py{frecuencia_acumulada(m_fa,lista=muestras)} estudiante(s)
+  que usan el celular \py{m_fa} o menos horas dentro de una semana. En otras palabras,
+  \py{frecuencia_acumulada(m_fa,lista=muestras)} estudiante(s) usan el celular
+  a lo más \py{m_fa} horas dentro de la semana.
+
+  \pregunta Significa que el \py{np.int_(probabilidad(m_p,lista=muestras)*100)}\% de los
+  estudiantes utiliza el celular \py{m_p} horas dentro de la semana.
+
+  \pregunta Significa que el
+  \py{np.int_(probabilidad_acumulada(m_pa,lista=muestras)*100)}\% de los
+  estudiantes utiliza el celular \py{m_pa} o menos horas dentro de la semana. Es decir,
+  el \py{np.int_(probabilidad_acumulada(m_pa,lista=muestras)*100)}\% de los estudiantes
+  utiliza el celular a lo más \py{m_pa} horas dentro de la semana.
+
+\end{preguntas}
+
+
+\end{document}

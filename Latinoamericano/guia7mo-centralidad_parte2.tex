@@ -1,0 +1,234 @@
+
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Guía}
+\def\subtitulo{Medidas de centralidad (II)}
+\def\curso{Séptimo Básico}
+%\def\puntaje{30}
+
+\documentclass[sin nombre]{plantilla-evaluacion-v1}
+
+\begin{python}
+import numpy as np
+
+def divisores(n):
+    div = [i for i in range(1, int(n ** 0.5) + 1) if n % i == 0]
+    div.extend([n // i for i in div if i != n // i])
+    return np.array(sorted(div))
+
+def n_barras(lista, ideal):
+  if (lista is None or len(lista) == 0):
+    return 0
+  min = np.min(lista)
+  max = np.max(lista) + 1
+  rango = np.abs(max-min)
+  div_rango = divisores(rango).astype(int)
+  n_bars = (rango/div_rango).astype(int)
+  distancia = np.abs(n_bars - ideal)
+  return n_bars[distancia.argmin()]
+
+def ticks(muestras):
+  t = np.linspace(
+    np.min(muestras),
+    np.max(muestras)+1,
+    n_barras(muestras,5)+1
+  ).astype(int)
+  return ",".join(t.astype(str))
+
+def obtener_muestras(m,d,n,s=None):
+  l = np.random.default_rng(seed=s).normal(m,d,size=n)
+  return np.floor(l).astype(int)
+
+muestras_m = obtener_muestras(155,3,45)
+muestras_h = obtener_muestras(158,3,50)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia(x, lista):
+  filtrado = np.extract(lista == x,lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def frecuencia_acumulada(x, lista):
+  filtrado = np.extract(lista <= x, lista)
+  return len(filtrado)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad(x, lista):
+  return frecuencia(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def probabilidad_acumulada(x, lista):
+  return frecuencia_acumulada(x, lista=lista)/len(lista)
+
+@np.vectorize(excluded=['lista'])
+def cuantil(p, lista):
+  unicos = np.unique_values(lista)
+  dato = 0
+  for i in unicos:
+    p_acumulada = probabilidad_acumulada(i, lista=lista)
+    if (p_acumulada >= p):
+      dato = i
+      break
+  return dato
+
+def moda(lista):
+  valores, conteo = np.unique_counts(lista)
+  indice_max = np.argwhere(conteo == np.max(conteo))
+  return valores[indice_max].flatten()
+
+def pgf_coords(x,y):
+  return " ".join(f"({i},{j})" for i, j in zip(x,y))
+
+def imprimir(l):
+  return " • ".join(l.astype(str))
+
+muestras1 = np.array([3,1,2,3],dtype=int)
+muestras2 = np.array([1,5,3,2,3,2,6],dtype=int)
+muestras3 = obtener_muestras(m=10,d=4,n=12,s=7)
+muestras4 = obtener_muestras(m=10,d=4,n=15,s=8)
+
+nAmigosH = obtener_muestras(m=17,d=4,n=21,s=31)
+nAmigosM = obtener_muestras(m=19,d=4,n=25,s=321)
+
+np.savetxt("nAmigosH.csv",np.column_stack([
+  x := (np.unique_values(nAmigosH)),
+  frecuencia(x,lista=nAmigosH),
+  frecuencia_acumulada(x,lista=nAmigosH),
+  probabilidad(x,lista=nAmigosH),
+  probabilidad_acumulada(x,lista=nAmigosH)
+  ]),
+  fmt=["%d","%d","%d","%.4f","%.4f"],
+  delimiter=","
+)
+
+np.savetxt("muestrasH.csv",nAmigosH,delimiter=",")
+np.savetxt("muestrasM.csv",nAmigosM,delimiter=",")
+\end{python}
+
+\newsavebox{\tabla}
+\begin{lrbox}{\tabla}
+  \begin{tblr}{colspec={ccc},vlines,hlines,rowsep=6pt,colsep=10pt}
+    Media & Mediana & Moda \\
+          &         &      \\
+  \end{tblr}
+\end{lrbox}
+
+\NewDocumentCommand{\generarTabla}{m}{%
+\begin{tblr}{colspec={ccc},vlines,hlines,rowsep=6pt,colsep=10pt}
+  Media & Mediana & Moda \\
+  \pgfmathprintnumber[verbatim,use comma]{\py{np.mean(#1)}} & \py{cuantil(0.5,lista=#1)} & \py{imprimir(moda(lista=#1))} \\
+\end{tblr}}
+
+\begin{document}
+Utilice los datos entregados para completar las tablas.
+\begin{preguntas}[after-item-skip=15pt]
+  \pregunta Datos: \py{imprimir(muestras1)}
+  \begin{malla}[height=2cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Datos: \py{imprimir(muestras2)}
+  \begin{malla}[height=2cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Datos: \py{imprimir(muestras3)}
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Datos: \py{imprimir(muestras4)}
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+\end{preguntas}
+
+\section*{Comparando el número de amistades por género}
+A continuación, se encuentran los resultados de encuestar a un grupo de estudiantes y
+preguntarles a cada uno: \textbf{¿Cuántos amig@s tienes?}. \par
+
+Los resultados se encuentran separados por género. Para los niños, los datos se encuentran
+en una tabla de frecuencias; y para las niñas, los datos se encuentran en un gráfico de barras.
+Utilice estos valores para completar la tabla de valores de cada género, y así finalmente
+determinar que grupo generalmente tiene más amistades.
+
+\NewDocumentCommand{\formatear}{m}{%
+\pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{#1}%
+}
+\csvreader[no head,
+centered tabularray={
+cells={valign=m},
+colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+width=0.7\linewidth,
+hlines,
+vlines,
+hline{1,2,3,Z}={black,1pt},
+rows={rowsep+=2pt},
+cell{1}{1}={r=1,c=5}{c}
+},
+table head={Número de amig@s (Niños) & F & FA & P & PA \\ Datos & Frecuencia &
+  {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{nAmigosH.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \formatear{\d} & \formatear{\e} }
+
+\begin{preguntas}(1)
+  \pregunta Complete la tabla de valores usando las respuestas de los niños.
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+\end{preguntas}%
+%
+\begin{python}
+  x_m = np.unique_values(nAmigosM)
+  y_m = frecuencia(x_m,lista=nAmigosM)
+\end{python}%
+%
+\begin{center}
+  \begin{tikzpicture}[baseline=(current axis.north)]
+    \begin{axis}[
+        ybar,
+        title={Número de amig@s (Niñas)},
+        ylabel={Frecuencia},
+        xlabel={Número de amig@s},
+        xtick distance=3,
+        ymin=0,
+        %xtick=data,
+        %nodes~near~coords,
+        %nodes~near~coords~align={vertical},
+        ]
+        \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+         coordinates {\py{pgf_coords(x_m,y_m)}};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+\begin{preguntas}[after-item-skip=20pt](1)
+  \pregunta Complete la tabla de valores usando las respuestas de las niñas.\\[5pt]
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \usebox{\tabla}
+
+  \pregunta Comparando las medidas de centralidad para ambos grupos de niños y niñas,
+  ¿Qué grupo tiene en general más amistades?
+  \begin{respuesta}[height=5cm]
+  \end{respuesta}
+\end{preguntas}
+
+\newpage
+\respuestas
+\begin{preguntas}[resume=false,after-item-skip=15pt]
+  \pregunta \generarTabla{muestras1}
+  \pregunta \generarTabla{muestras2}
+  \pregunta \generarTabla{muestras3}
+  \pregunta \generarTabla{muestras4}
+  \pregunta \generarTabla{nAmigosH}
+  \pregunta \generarTabla{nAmigosM}
+  \pregunta Ambos grupos coinciden en la mediana, pero, el grupo
+  de las niñas tiene una mayor media y moda. Lo que sugiere que el grupo de las
+  niñas tiene en general tiene más amistades que el grupo de los niños, ya que los
+  superan a los niños en dos de las tres medidas calculadas.\\[6pt]
+  Cabe destacar que las diferencias encontradas entre ambos grupos son leves, por lo que si
+  bien es cierto que \textit{‟las niñas tienen más amistades que los niños”}, la aseveración tiene
+  poco peso.
+\end{preguntas}
+
+\end{document}

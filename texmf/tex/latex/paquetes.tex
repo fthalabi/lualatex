@@ -1,0 +1,139 @@
+%%% visual debug
+%\usepackage{lua-visual-debug}
+\RequirePackage{expl3}
+\RequirePackage{luacode}
+%\RequirePackage[spanish,es-noshorthands]{babel}
+%\selectlanguage{spanish}
+\RequirePackage{polyglossia}
+\setmainlanguage{spanish}
+%\usepackage[fontsize=9pt]{fontsize}
+\RequirePackage[]{amsmath}
+\RequirePackage{icomma}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\RequirePackage{xparse}
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,          % true: colored links, false: boxes
+    linkcolor=darkblue,       % internal links
+    citecolor=darkgreen,      % citations
+    filecolor=darkmagenta,    % file links
+    urlcolor=darkred,         % external urls
+    breaklinks=true,          % allow links to break across lines
+    hidelinks,                % remove colored boxes AND colored text
+    breaklinks=true,          % Enable breaking of links
+}
+%\urlstyle{same}
+% Define where URLs can break
+\renewcommand{\UrlBreaks}{\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>}
+
+\RequirePackage{lipsum}
+\RequirePackage{tikz}
+\RequirePackage{varwidth}
+\RequirePackage{pgfplots}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=newest}
+\usepgflibrary {fpu}
+\usetikzlibrary{positioning,calc,math,backgrounds,%
+shapes.symbols,shapes.geometric,shapes.misc,shapes.callouts,%
+decorations.pathreplacing,calligraphy,arrows.meta,%
+cd,intersections,patterns,patterns.meta,angles,through,
+graphs,graphdrawing,quotes}
+\usegdlibrary {force}
+\usegdlibrary{trees}
+\usegdlibrary{circular}
+\usegdlibrary {layered}
+\RequirePackage{pgfornament}
+
+\pgfkeys{/pgf/number format/.cd,
+  set decimal separator={,},set thousands separator={\,}}
+%\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3}
+\pgfkeys{/pgfplots/boxplot/estimator=R1,
+  /pgfplots/boxplot/every median/.style={
+    line width=3pt
+  }
+}
+
+\tikzset{
+  >={Triangle[round]},
+  %every pin/.style={pin edge={Triangle[]-}},
+  /tikz/graphs/layered layout/.append style={
+    level distance=2cm,
+    sibling distance=1.5cm,
+    edge quotes={draw, inner sep=3pt,rounded corners, dashed, fill=white},
+    edge={-{Triangle[round]}}
+  }
+}
+
+\pgfplotsset{
+  eje escolar/.style={
+    axis y line=center,
+    axis x line=middle,
+    xlabel=$x$,ylabel=$y$,
+    axis line style={-{Triangle[round]},shorten >=-10pt},
+    xlabel style={
+      at={(xticklabel* cs:1.05)},
+      anchor=west,
+    },
+    ylabel style={
+      at={(yticklabel* cs:1.06)},
+      anchor=south,
+    },
+    enlargelimits=0.01,  % Extends y-axis by 10% beyond ymax
+    axis on top,
+    tick label style={
+      fill=white,
+      fill opacity=0.9,
+      inner xsep=1pt,
+      inner ysep=1pt,
+    },
+    trig format plots=rad,
+    legend style={
+      at={(1.05,1)},
+      anchor=north west,
+      cells={anchor=west},
+      font=\footnotesize,
+      nodes={
+        inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+        inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+      }
+    }
+  },
+  cycle list name=linestyles,
+  every axis plot/.append style={line width=1pt}
+}
+
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{skins}
+\tcbset{enhanced}
+\RequirePackage[export]{adjustbox}
+\RequirePackage{tabularray}
+\RequirePackage{array}
+\RequirePackage{environ}
+\RequirePackage{xcolor}
+\RequirePackage{varwidth}
+\UseTblrLibrary{siunitx,varwidth,diagbox,functional}
+\sisetup{round-precision=3,round-mode=places,output-decimal-marker={,},
+  mode = text, text-font-command = \normalsize}
+\RequirePackage[inline]{enumitem}
+\RequirePackage{tasks}
+\RequirePackage{fontawesome5}
+\RequirePackage{lastpage}
+\RequirePackage{geometry}
+\RequirePackage{microtype}
+\RequirePackage[skip=10pt, indent=0pt]{parskip}
+\RequirePackage{fancyhdr}
+\RequirePackage[big,sc,bf,sf]{titlesec}
+
+\RequirePackage{notomath}
+\setmonofont{NotoMono-Regular}[
+  Path = /Users/fenho/Library/Fonts/,
+  Extension =  .ttf,
+  Ligatures = TeX,
+  Scale=MatchLowercase,
+  Scale=0.95
+]
+
+\RequirePackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
+\RequirePackage{csvsimple-l3}

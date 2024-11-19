@@ -2,28 +2,265 @@
 \def\titulo{Evaluación Sumativa}
 \def\subtitulo{Proporciones}
 \def\curso{Séptimo Básico}
-\def\puntaje{10}
+% 2*6+2*8+2*6+7
+\def\puntaje{47}
 
 \documentclass[sin curso]{plantilla-evaluacion-v1}
 
-
-
 \begin{document}
 
+\section*{Objetivo de la evaluación}
+(OA8) Mostrar que comprenden las proporciones directas e inversas
+en sus diversas formas, y utilizan estos conceptos en la resolución de problemas
+contextualizados.
+
+\begin{center}
+  \vspace*{1cm}
+  \begin{tikzpicture}[ampersand replacement=\&,]
+      %\node (A) [opacity=0.4] {\includegraphics[width=2cm]{../flork3.jpg}};
+      \node (B) [font=\slshape,text width=12cm]
+      {``Cree en ti mismo y en lo que eres. Sé consciente de que hay algo en tu interior %
+      que es más grande que cualquier obstáculo''};
+      \node [left=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{37}};
+      \node [right=0mm of B,opacity=0.4] {\pgfornament[width=2cm]{38}};
+  \end{tikzpicture}
+  \vspace*{1cm}
+\end{center}
+
+\section{Definir los conceptos}
+
+Define y Describe los conceptos de proporción directa e inversa, según los criterios 
+que se encuentran a continuación.
 
 \begin{importante}
-  \begin{tblr}{colspec={X[1]X[6]},cells={cmd=\raggedright}}
-    Objetivos: &
-    (OA8) Mostrar que comprenden las proporciones directas e inversas
-    en sus diversas formas, y utilizar estos conceptos en la resolución de problemas
-    contextualizados. \\
-    Puntaje: &
-    1 punto por cada pregunta de alternativas.\\
+  \begin{tblr}{colspec={X[1,c,m]X[6,m]},hline{2-Y}={solid},vline{2-Y}={solid},
+    cell{1}{2}={c},cell{2-Z}{2}={cmd=\raggedright}}
+    Puntaje asignado & Criterios o indicadores \\
+    +3 puntos & La definición deja claro como es el comportamiento de dos 
+    cantidades que se dicen ser directa o inversamente proporcionales. \\
+    +3 puntos & Describe como se identifica, más allá de toda duda, si dos cantidades
+    son realmente proporcionales o no.\\
   \end{tblr}
 \end{importante}
-hola
 
+\begin{preguntas}
+  \pregunta ¿Qué es una proporción directa? ¿Cómo se verifica que dos cantidades
+  son directamente proporcionales?
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
 
-asdladl 
-asdlasdlasdd 
+  \pregunta ¿Qué es una proporción inversa? ¿Cómo se verifica que dos cantidades
+  son inversamente proporcionales?
+  \begin{respuesta}[height=4cm]
+  \end{respuesta}
+\end{preguntas}
+
+\section{Reconocer y aplicar los conceptos}
+
+Determina si las cantidades, descritas en las siguientes oraciones y tablas de valores, son proporcionales
+o no y marca la alternativa correcta [2 puntos c/u].
+
+\begin{preguntas}(2)
+  \pregunta El valor de un kilogramo de cierto producto y la cantidad final a pagar.
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta El caudal de una llave y el tiempo que se demora en llenar un estanque.
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta La estatura de una persona y su masa corporal.
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta La medida de los lados de un triángulo equilátero y su perímetro.
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta
+  \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,
+    cells={mode=math},baseline=1}
+    x & y \\
+    9 & 1 \\
+    3 & 3 \\
+    -3 & -3 \\
+  \end{tblr}
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta
+  \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,
+    cells={mode=math},baseline=1}
+    v & w \\
+    0 & 0 \\
+    5 & 100 \\
+    20 & 400 \\
+  \end{tblr}
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta
+  \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,
+    cells={mode=math},baseline=1}
+    j & k \\
+    6 & 0,15 \\
+    3 & 0,075 \\
+    1 & 0,025 \\
+  \end{tblr}
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+  \pregunta
+  \begin{tblr}{colspec={cc},row{1}={black!10},vlines,hlines,
+    cells={mode=math},baseline=1}
+    a & b \\
+    5 & 15 \\
+    10 & 10 \\
+    15 & 5 \\
+  \end{tblr}
+  \begin{vertical}
+    \alternativa Proporción directa.
+    \alternativa Proporción inversa.
+    \alternativa Ninguna de las anteriores.
+  \end{vertical}
+\end{preguntas}
+
+Para las siguientes tablas de valores, encuentra el valor faltante en cada una y 
+colócalo en la casilla correspondiente [2 punto c/u].
+
+\begin{preguntas}(2)
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Directa & \\
+    h & 6 \\
+    4 & 2 \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$h$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Directa & \\
+    75 & 100 \\
+    150 & p \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$p$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Directa & \\
+    0,05 & 0,25 \\
+    0,15 & k \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$k$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Inversa & \\
+    2 & y \\
+    4 & 5 \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$y$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Inversa & \\
+    2159 & x \\
+    127 & 34 \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$x$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  \pregunta
+  \begin{tblr}{colspec={X[c]X[c]},width=0.6\linewidth,row{1}={black!10},vlines,hlines,
+    row{2-Z}={mode=math},baseline=1,cell{1}{1}={c=2,r=1}{c}}
+    Proporción Inversa & \\
+    z & 0,14 \\
+    0,17 & 0,21 \\
+  \end{tblr}
+  \begin{caja}[height=35pt,title=$z$,hbox]
+  \hspace*{1.5cm}
+  \end{caja}
+  
+\end{preguntas} % 0,17*0,21/0,14
+
+\section{Resolución de problemas}
+
+Lee los enunciados y encuentra la solución a cada una de las problemáticas. Cada 
+pregunta tiene un puntaje diferente, pero en todos se distribuirá el puntaje 
+utilizando los siguientes criterios.
+
+\begin{importante}
+  \begin{tblr}{colspec={X[1,c,m]X[6,m]},hline{2-Y}={solid},vline{2-Y}={solid},
+    cell{1}{2}={c},cell{2-Z}{2}={cmd=\raggedright}}
+    Puntaje asignado & Criterios o indicadores\\
+    +50\% & Señala clara y correctamente cuál es la solución o el resultado de la pregunta hecha
+    en el enunciado.\\
+    +50\% & Incluye un desarrollo que relata de manera clara y ordenada los procedimientos 
+    \mbox{necesarios} para solucionar la problemática. En caso de estar incompleto o con 
+    \mbox{errores} el desarrollo, se asignará puntaje parcial si se muestra dominio de los 
+    contenidos y conceptos involucrados.\\
+    0\% &  La respuesta es incorrecta. De haber desarrollo, este tiene errores conceptuales.\\
+  \end{tblr}
+\end{importante}
+
+\begin{preguntas}(1)
+
+  \pregunta Una bodega se llena con 3500 sacos de 6 kg de papas cada uno y otra
+  con la misma capacidad se llena con sacos de 5 kg, ¿cuántos sacos caben en la
+  segunda bodega? [2 puntos]
+  \begin{malla}[height=8cm]
+  \end{malla}
+  \begin{respuesta}[height=2cm]
+  \end{respuesta}
+
+  \pregunta Si un automóvil se demoró 9 horas durante un recorrido de 750 kilómetros,
+  ¿qué tiempo empleará en recorrer 2250 kilómetros si su velocidad es constante?
+  [2 puntos]
+  \begin{malla}[height=8cm]
+  \end{malla}
+  \begin{respuesta}[height=2cm]
+  \end{respuesta}
+
+  \pregunta Si 4 hombres terminan un trabajo en 63 días, ¿cuántos más deben de
+  añadirse a los primeros para concluir el mismo trabajo en 28 días?
+  [2 puntos]
+  \begin{malla}[height=8cm]
+  \end{malla}
+  \begin{respuesta}[height=2cm]
+  \end{respuesta}
+
+  \pregunta Andrea lee un libro de 500 páginas en 20 días y lee 1 hora diaria,
+  ¿cuántos minutos debe leer diariamente para que en condiciones iguales lea un libro
+  de 800 páginas en 15 días?
+  [1 punto]
+  \begin{malla}[height=8cm]
+  \end{malla}
+  \begin{respuesta}[height=2cm]
+  \end{respuesta}
+
+\end{preguntas}
+
 \end{document}

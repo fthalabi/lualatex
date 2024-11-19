@@ -1,0 +1,73 @@
+\documentclass{experimento}
+
+\begin{python}
+import numpy as np
+import polars as pl
+
+np.random.seed()
+muestras = np.random.default_rng().normal(10,3,size=99)
+
+def generar_tabla(archivo,datos):
+  tabla = pl.DataFrame({'valores': np.floor(datos).astype(int)})
+  tabla = tabla.group_by('valores').len().sort('valores')
+  tabla = tabla.rename({'len':'frecuencia'})
+  tabla = tabla.with_columns(
+    pl.col('frecuencia').cum_sum().alias('f_cumulativa'),
+    (pl.col('frecuencia')/pl.col('frecuencia').sum()).alias('probabilidad'),
+  )
+  tabla = tabla.with_columns(
+    pl.col('probabilidad').cum_sum().alias('p_acumulada')
+  )
+  tabla.write_csv(archivo,include_header=False)
+generar_tabla(archivo='tabla.csv', datos=muestras)
+\end{python}
+
+\begin{document}
+
+\csvreader[no head,
+  before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+  centered tabularray={
+  cells={valign=m},
+  %cell{1}{2,4} = {r=1,c=2}{c},
+  %cell{1}{1-Z}={font=\bfseries},
+  colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+  width=0.7\linewidth,
+  hlines,
+  hline{1,2,Z}={black,1pt},
+  rows={rowsep+=2pt},
+  %vline{1,2,4,6} = {1pt,solid},
+  %hline{1,2,Z} = {1pt,solid},
+  % hline{2}={1}{-}{solid},
+  % hline{2}={2}{-}{solid},
+},
+  table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{tabla.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+
+\begin{python}
+
+muestras2 = np.random.default_rng().normal(15,2,size=30)
+muestras2 = np.floor(muestras2).astype(int)
+while (abs(np.min(muestras2)-np.max(muestras2)) <= 10):
+  muestras2 = np.random.default_rng().normal(15,2,size=30)
+  muestras2 = np.floor(muestras2).astype(int)
+
+generar_tabla(archivo="tabla2.csv",datos=muestras2)
+\end{python}
+
+\csvreader[no head,
+  before reading=\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=3,verbatim,use comma},
+  centered tabularray={
+  cells={valign=m},
+  colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+  width=0.7\linewidth,
+  hlines,
+  hline{1,2,Z}={black,1pt},
+  rows={rowsep+=2pt},
+},
+  table head={Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\}
+]{tabla2.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \pgfmathprintnumber{\d}  & \pgfmathprintnumber{\e}}
+
+
+\end{document}

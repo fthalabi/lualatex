@@ -24,10 +24,10 @@
 
 \ExplSyntaxOn
 
-%% DECLARAR LISTA 
+%% DECLARAR LISTA
 \clist_new:N \l_lista_lua
 \clist_set:Nx \l_lista_lua {\directlua{lista_a_clist()}}
-\seq_set_from_clist:NN \l_seq_lua \l_lista_lua 
+\seq_set_from_clist:NN \l_seq_lua \l_lista_lua
 
 %% ORDENAR LISTA
 \seq_clear_new:N \l_lista_ordenada
@@ -52,7 +52,7 @@ Valores~unicos:~\seq_use:Nn \l_valores_unicos { ,~} \par
     \seq_map_inline:Nn \l_seq_lua {
       \int_compare:nT {##1=####1} {\int_gincr:N \l_cuantil_n}
     }
-    \fp_gadd:Nn \l_cuantil_prob_acum_actual 
+    \fp_gadd:Nn \l_cuantil_prob_acum_actual
       {\fp_eval:n {\int_use:N \l_cuantil_n / \seq_count:N \l_seq_lua}}
     \seq_put_right:Nx \l_cuantil_prob_acum {\fp_use:N \l_cuantil_prob_acum_actual}
   }
@@ -73,7 +73,7 @@ Valores~unicos:~\seq_use:Nn \l_valores_unicos { ,~} \par
 
 \cs_new_protected:Npn \__cuantil_directo:n #1 {
   \fp_zero_new:N \l_cd_fp_indice
-  \fp_set:Nn \l_cd_fp_indice 
+  \fp_set:Nn \l_cd_fp_indice
     {\fp_eval:n {ceil(#1 * \seq_count:N \l_seq_lua ,0)}}
   \int_zero_new:N \l_cd_int_indice
   \int_set:Nn \l_cd_int_indice {\fp_to_int:N \l_cd_fp_indice}
@@ -100,7 +100,7 @@ Valores~unicos:~\seq_use:Nn \l_valores_unicos { ,~} \par
     \fp_gset:Nn \l_probabilidad {\int_use:N \l_frecuencia / \seq_count:N \l_seq_lua }
     \fp_gadd:Nn \l_probabilidad_acumulada {\fp_use:N \l_probabilidad}
 
-    \iow_now:Nx \g_archivo_tabla 
+    \iow_now:Nx \g_archivo_tabla
       { #1 ~&~ \int_use:N \l_frecuencia ~&~ \int_use:N \l_frecuencia_acumulada ~&~
       \fp_use:N \l_probabilidad ~&~ \fp_use:N \l_probabilidad_acumulada ~\\~ }
   }
@@ -113,7 +113,7 @@ Valores~unicos:~\seq_use:Nn \l_valores_unicos { ,~} \par
   row{1}={valign=m},rows={rowsep+=2pt}}
   Datos & Frecuencia & {Frecuencia\\Acumulada} & Probabilidad & {Probabilidad\\Acumulada} \\
   \fileInput{datos_tabla.tmp}
-\end{tblr} 
+\end{tblr}
 \endgroup \par
 
 Q1:~\directlua{tex.sprint(Cuantil(lista,0.25))} \quad \cuantil{0.25} \quad \cuantilAlt{0.25} \newline
@@ -182,11 +182,11 @@ Puntos:~\seq_map_inline:Nn \l_puntos {
   \end{axis}
 \end{tikzpicture} \par
 
-\int_new:N \l_min 
+\int_new:N \l_min
 \int_set:Nn \l_min {\seq_item:Nn \l_valores_unicos {1}}
 \int_new:N \l_max
 \int_set:Nn \l_max {\seq_item:Nn \l_valores_unicos {-1}}
-\seq_new:N \l_rango 
+\seq_new:N \l_rango
 \int_step_inline:nnn {\l_min} {\int_eval:n {\l_max + 1}} {
   \seq_put_right:Nn \l_rango {\fp_eval:n {#1-0.5}}
 }
@@ -225,9 +225,7 @@ Puntos:~\seq_map_inline:Nn \l_puntos {
       %tick~style={draw=none},
       xticklabel= $[\pgfmathprintnumber\tick-\pgfmathprintnumber\nexttick[$,
       x~tick~label~style={rotate=45,anchor=east}
-      %xtick=data,
-      %nodes~near~coords,
-      %nodes~near~coords~align={vertical},
+
       ]
       \addplot~[draw=none,hist={bins=\l_n_barras}]
       ~table[y~index=0]~{datos_histograma.csv};
@@ -271,7 +269,7 @@ Q1: \primerCuartil
 \tl_log:N \l_datos_para_grafica
 \edef\datosParaGraficoDeBarras{\tl_use:N \l_datos_para_grafica}
 \fp_zero_new:N \l_media_de_los_datos
-\fp_set:Nn \l_media_de_los_datos 
+\fp_set:Nn \l_media_de_los_datos
   {\fp_eval:n {(\seq_use:Nn \l_seq_lua {+})/\seq_count:N \l_seq_lua}}
 \fp_log:N \l_media_de_los_datos
 \edef\mediaDeLosDatos{\fp_use:N \l_media_de_los_datos}
@@ -297,11 +295,11 @@ Q1: \primerCuartil
     \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
      coordinates {\datosParaGraficoDeBarras};
 
-    \addplot [sharp plot,update limits=false,dashed] 
+    \addplot [sharp plot,update limits=false,dashed]
       coordinates {(\mediaDeLosDatos,-3) (\mediaDeLosDatos,10)};
     \coordinate (YT) at (yticklabel cs:1);
-    \coordinate (M) at (axis cs: \mediaDeLosDatos,0); 
-    
+    \coordinate (M) at (axis cs: \mediaDeLosDatos,0);
+
   \end{axis}
   \node[pin={[pin distance=1mm,pin edge={>={Triangle[width=8pt]},<-}]above:Media}] at (M |- YT) {};
 \end{tikzpicture}
