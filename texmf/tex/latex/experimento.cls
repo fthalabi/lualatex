@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{experimento}[2024/10/21 v1.0 Plantilla para hackear en latex]
 
-\PassOptionsToClass{10pt,spanish,oneside,letterpaper}{article}
+\PassOptionsToClass{10pt,oneside,letterpaper}{article}
 \LoadClass{article}
 
 \input{paquetes}

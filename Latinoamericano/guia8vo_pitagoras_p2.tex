@@ -1,0 +1,113 @@
+  \def\colegio{Colegio Latinoamericano de Integración}
+  \def\titulo{Guía}
+  \def\subtitulo{Teorema de Pitágoras (Parte II)}
+  \def\curso{Octavo Básico}
+  \documentclass[sin nombre,con autor]{plantilla-evaluacion-v1}
+
+\begin{document}
+
+\tcbsidebyside[title=Definición, lefthand width=4cm,
+,fonttitle=\bfseries\sffamily\scshape,center title,drop lifted shadow,
+colback=white,before skip=15pt]{%
+\centering
+\begin{tikzpicture}[line width=1pt,scale=0.6]
+  \draw (0,0) -- (0:3) coordinate (B) -- (90:4) coordinate (C)
+  -- cycle coordinate (A);
+  \draw (0,0) -- (0:10pt) -- ([turn]90:10pt) -- ([turn]90:10pt);
+
+  \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt},
+        line width=1pt] (A) -- (B) node [midway,below,yshift=-10pt] {$b$};
+  \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt},
+        line width=1pt] (B) -- (C) node [midway,above right,xshift=7pt,yshift=5pt] {$c$};
+  \draw [decorate, decoration={calligraphic brace,mirror,raise=5pt,amplitude=5pt},
+        line width=1pt] (C) -- (A) node [midway,left,xshift=-10pt] {$a$};
+
+\end{tikzpicture}
+}{%
+\begin{equation*}
+  \begin{+array}{lcr}
+    a^2 + b^2 = c^2 & \Longleftrightarrow & \text{El triángulo es rectángulo}\\
+  \end{+array}
+\end{equation*}
+\begin{tasks}[style=itemize](1)
+  \task Si el triángulo es rectángulo, entonces se cumple el teorema de Pitágoras.
+  \task Si los lados del triángulo son pitagóricos, entonces el triángulo es rectángulo.
+\end{tasks}
+}
+
+\section*{Ejercicios}
+
+\begin{preguntas}[resume=false](1)
+  \pregunta ¿Cuál de las siguientes alternativas representa un triángulo rectángulo?
+  \begin{alternativasgraficas}
+    \alternativa
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt,scale=0.7]
+      \path[name path=lineaA] (60:3) -- ([turn]-90:6);
+      \path[name path=lineaB] (0,0) -- (0:10);
+      \draw[name intersections={of=lineaA and lineaB,by=x}] (0,0)
+      -- (60:3) node [midway,above left=3pt] {$3$ cm}
+      -- (x) node [midway,above right=3pt] {$5$ cm}
+      -- cycle node [midway,below=3pt] {$7$ cm};
+    \end{tikzpicture}
+    \alternativa
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt,scale=0.7]
+      \path[name path=lineaA] (60:3) -- ([turn]-90:6);
+      \path[name path=lineaB] (0,0) -- (0:10);
+      \draw[name intersections={of=lineaA and lineaB,by=x}] (0,0)
+      -- (60:3) node [midway,above left=3pt] {$5$ cm}
+      -- (x) node [midway,above right=3pt] {$9$ cm}
+      -- cycle node [midway,below=3pt] {$13$ cm};
+    \end{tikzpicture}
+    \alternativa
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt,scale=0.7]
+      \path[name path=lineaA] (60:3) -- ([turn]-90:6);
+      \path[name path=lineaB] (0,0) -- (0:10);
+      \draw[name intersections={of=lineaA and lineaB,by=x}] (0,0)
+      -- (60:3) node [midway,above left=3pt] {$6$ cm}
+      -- (x) node [midway,above right=3pt] {$8$ cm}
+      -- cycle node [midway,below=3pt] {$10$ cm};
+    \end{tikzpicture}
+    \alternativa
+    \begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt,scale=0.7]
+      \path[name path=lineaA] (60:3) -- ([turn]-90:6);
+      \path[name path=lineaB] (0,0) -- (0:10);
+      \draw[name intersections={of=lineaA and lineaB,by=x}] (0,0)
+      -- (60:3) node [midway,above left=3pt] {$3$ cm}
+      -- (x) node [midway,above right=3pt] {$12$ cm}
+      -- cycle node [midway,below=3pt] {$13$ cm};
+    \end{tikzpicture}
+
+  \end{alternativasgraficas}
+
+  \pregunta ¿Cuál es la altura de un trapecio isósceles de bases 8 dm y 10 dm de longitud,
+  y lados iguales de 7 dm?
+  \begin{malla}[height=4.5cm]
+  \end{malla}
+  \begin{respuesta}[height=1.5cm]
+  \end{respuesta}
+
+  \pregunta Las diagonales de un rombo miden 12 cm y 16 cm. ¿Cuál es la medida de cada
+  uno de sus lados?
+  \begin{malla}[height=4.5cm]
+  \end{malla}
+  \begin{respuesta}[height=1.5cm]
+  \end{respuesta}
+
+  \pregunta ¿Cuál es la medida de la altura de un triángulo equilátero de lado 6 cm?
+  \begin{malla}[height=4.5cm]
+  \end{malla}
+  \begin{respuesta}[height=1.5cm]
+  \end{respuesta}
+
+  \pregunta El perímetro de un cuadrado mide 20 cm. ¿Cuánto mide su diagonal?
+  \begin{malla}[height=4.5cm]
+  \end{malla}
+  \begin{respuesta}[height=1.5cm]
+  \end{respuesta}
+
+
+\end{preguntas}
+
+
+\end{document}
+

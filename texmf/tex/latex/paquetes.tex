@@ -73,12 +73,14 @@ graphs,graphdrawing,quotes}
     xlabel=$x$,ylabel=$y$,
     axis line style={-{Triangle[round]},shorten >=-10pt},
     xlabel style={
-      at={(xticklabel* cs:1.05)},
+      at={(xticklabel* cs:1)},
       anchor=west,
+      xshift=10pt,
     },
     ylabel style={
-      at={(yticklabel* cs:1.06)},
+      at={(yticklabel* cs:1)},
       anchor=south,
+      yshift=10pt,
     },
     enlargelimits=0.01,  % Extends y-axis by 10% beyond ymax
     axis on top,
@@ -106,6 +108,7 @@ graphs,graphdrawing,quotes}
 
 \RequirePackage[most]{tcolorbox}
 \tcbuselibrary{skins}
+\tcbuselibrary{raster}
 \tcbset{enhanced}
 \RequirePackage[export]{adjustbox}
 \RequirePackage{tabularray}
@@ -113,6 +116,7 @@ graphs,graphdrawing,quotes}
 \RequirePackage{environ}
 \RequirePackage{xcolor}
 \RequirePackage{varwidth}
+\UseTblrLibrary{amsmath}
 \UseTblrLibrary{siunitx,varwidth,diagbox,functional}
 \sisetup{round-precision=3,round-mode=places,output-decimal-marker={,},
   mode = text, text-font-command = \normalsize}
@@ -137,3 +141,4 @@ graphs,graphdrawing,quotes}
 
 \RequirePackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
 \RequirePackage{csvsimple-l3}
+\RequirePackage{alphalph}

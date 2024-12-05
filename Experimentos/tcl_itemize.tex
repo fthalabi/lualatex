@@ -1,0 +1,141 @@
+\documentclass{experimento}
+\usepackage{alphalph}
+
+\begin{document}
+
+\begin{tcbitemize}[raster columns=2,raster equal height,blank,
+  fonttitle=\itshape,coltitle=black,
+  title={\alphalph{\thetcbrasternum})}]
+  \tcbitem
+  First box
+  \tcbitem
+  Second box
+  \tcbitem
+  Third box
+\end{tcbitemize}
+
+\NewDocumentEnvironment{alternativasgraficas}{O{}+b}{%
+  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
+  \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
+    leftupper=10pt,fonttitle=\itshape,valign=center,halign=center,
+    coltitle=black,title={\alphalph{\thetcbrasternum})},#1]
+      #2
+}{%
+  \end{tcbitemize}
+}
+
+\newsavebox{\dibujo}
+\begin{lrbox}{\dibujo}
+\begin{tikzpicture}[baseline=(current bounding box.north),line width=1pt,scale=0.7]
+  \path[name path=lineaA] (60:3) -- ([turn]-90:6);
+  \path[name path=lineaB] (0,0) -- (0:10);
+  \draw[name intersections={of=lineaA and lineaB,by=x}] (0,0)
+  -- (60:3) node [midway,above left=3pt] {$9$ cm}
+  -- (x) node [midway,above right=3pt] {$13$ cm}
+  -- cycle node [midway,below=3pt] {$y$ cm};
+  \draw (60:3) -- ([turn]-90:10pt) -- ([turn]-90:10pt) -- ([turn]-90:10pt);
+\end{tikzpicture}
+\end{lrbox}
+
+\vspace*{2cm}
+
+\begin{alternativasgraficas}
+  \alternativa
+  \usebox{\dibujo}
+  \alternativa
+  \usebox{\dibujo}
+  \alternativa
+  \usebox{\dibujo}
+  \alternativa
+  \usebox{\dibujo}
+  \alternativa
+  \usebox{\dibujo}
+
+\end{alternativasgraficas}
+
+\newpage
+\begin{alternativasgraficas}[]
+  \alternativa
+  \begin{tikzpicture}[scale=0.7]
+      \draw[->] (0,0) -- (4,0) node [below] {$x$};
+      \draw[->] (0,0) -- (0,5) node [left] {$y$};
+      \draw[line width=1pt] let \p{a} = (0,3), \p{b} = (2,1) in
+          ($(\p{b})!1.5!(\p{a})$) -- ($(\p{a})!2!(\p{b})$);
+      \node at (0,3) [left] {$3$};
+      \node at (0,1) [left] {$1$};
+      \node at (2,0) [below] {$2$};
+      \draw[dashed] (0,1) -- (2,1) -- (2,0);
+  \end{tikzpicture}
+  \alternativa
+  \begin{tikzpicture}[scale=0.7]
+      \draw[->] (-4,0) -- (3,0) node [below] {$x$};
+      \draw[->] (0,-1) -- (0,4) node [left] {$y$};
+      \draw[line width=1pt] let \p{a} = (-3,0), \p{b} = (2,1) in
+          ($(\p{b})!1.15!(\p{a})$) -- ($(\p{a})!1.4!(\p{b})$);
+      \node at (-3,0) [below] {$-3$};
+      \node at (0,1) [left] {$1$};
+      \node at (2,0) [below] {$2$};
+      \draw[dashed] (0,1) -- (2,1) -- (2,0);
+  \end{tikzpicture}
+  \alternativa
+  \begin{tikzpicture}[scale=0.7]
+      \draw[->] (0,0) -- (4,0) node [below] {$x$};
+      \draw[->] (0,-4) -- (0,3) node [left] {$y$};
+      \draw[line width=1pt] let \p{a} = (0,-3), \p{b} = (2,1) in
+          ($(\p{b})!1.2!(\p{a})$) -- ($(\p{a})!1.3!(\p{b})$);
+      \node at (0,-3) [left] {$-3$};
+      \node at (0,1) [left] {$1$};
+      \node at (2,0) [below] {$2$};
+      \draw[dashed] (0,1) -- (2,1) -- (2,0);
+  \end{tikzpicture}
+  \alternativa
+  \begin{tikzpicture}[scale=0.7]
+      \draw[->] (0,0) -- (4,0) node [below] {$x$};
+      \draw[->] (0,-4) -- (0,3) node [left] {$y$};
+      \draw[line width=1pt] let \p{a} = (0,-3), \p{b} = (2,0) in
+          ($(\p{b})!1.15!(\p{a})$) -- ($(\p{a})!1.4!(\p{b})$);
+      \node at (0,-3) [left] {$-3$};
+      \node at (2,0) [below] {$2$};
+  \end{tikzpicture}
+\end{alternativasgraficas}
+
+
+
+\begin{alternativasgraficas}
+  \alternativa
+  \begin{tikzpicture}
+    \begin{axis}[scale=0.7,eje escolar,xtick=\empty,ytick={3},extra x ticks={2},
+      extra y ticks={1},extra tick style={grid=major,grid style={black,dashed}}]
+      %\addplot[] coordinates {(0,3) (2,1)};
+      \addplot[domain=-0.5:3.5] {3 -1*x};
+    \end{axis}
+  \end{tikzpicture}
+
+  \alternativa
+  \begin{tikzpicture}
+    \begin{axis}[scale=0.7,eje escolar,ytick=\empty,xtick={-3},extra x ticks={2},
+      extra y ticks={1},extra tick style={grid=major}]
+      %\addplot[] coordinates {(0,3) (2,1)};
+      \addplot[domain=-3.5:3] {(x-2)/5  + 1};
+    \end{axis}
+  \end{tikzpicture}
+
+  \alternativa
+  \begin{tikzpicture}
+    \begin{axis}[scale=0.7,eje escolar,ytick={-3},xtick=\empty,extra x ticks={2},
+      extra y ticks={1},extra tick style={grid=major}]
+      %\addplot[] coordinates {(0,3) (2,1)};
+      \addplot[domain=-0.5:2.5] {4*(x)/2 -3};
+    \end{axis}
+  \end{tikzpicture}
+
+  \alternativa
+  \begin{tikzpicture}
+    \begin{axis}[scale=0.7,eje escolar,ytick={-3},xtick={2}]
+      %\addplot[] coordinates {(0,3) (2,1)};
+      \addplot[domain=-0.5:2.5] {3*(x)/2 -3};
+    \end{axis}
+  \end{tikzpicture}
+\end{alternativasgraficas}
+
+\end{document}

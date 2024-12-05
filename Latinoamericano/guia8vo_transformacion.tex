@@ -1,0 +1,86 @@
+\def\colegio{Colegio Latinoamericano de Integración}
+\def\titulo{Guía}
+\def\subtitulo{Transformaciones Isométricas}
+\def\curso{Octavo Básico}
+\documentclass[sin nombre,con autor]{plantilla-evaluacion-v1}
+
+\begin{document}
+
+\section*{La traslación}
+\begin{preguntas}[after-item-skip=15pt]
+  \pregunta Traslada la figura según el vector $\overrightarrow{v}=(4,3)$.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=0,ymin=0,ymax=9,xmax=12,unit vector ratio=1,
+      scale=1.5,xtick distance=1,ytick distance=1,grid=major,nodes near coords,
+      nodes near coords style={yshift=5pt}]
+      \addplot[mark=*,point meta=explicit symbolic,
+      coordinate style/.condition={x==5}{xshift=-5pt}]
+      coordinates{(1,2) [A] (3,4) [B] (6,3) [C] (5,0) [D] (2,1) [E]} --cycle;
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+
+  \pregunta Traslada la figura según el vector $\overrightarrow{v}=(-11,-6)$.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=-10,ymin=-6,ymax=6,xmax=10,unit vector ratio=1,
+      scale=2,xtick distance=1,ytick distance=1,grid=major]
+      \addplot[mark=*] coordinates{(3,2) (6,2) (6,1) (8,2.5) (6,4) (6,3) (3,3) (3,2)};
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+
+\end{preguntas}
+
+\section*{La reflexión}
+
+\begin{preguntas}[after-item-skip=15pt]
+  \pregunta Refleja la figura respecto al eje $x$ y al eje $y$.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=-10,ymin=-6,ymax=6,xmax=10,unit vector ratio=1,
+      scale=2,xtick distance=1,ytick distance=1,grid=major]
+      \addplot[mark=*] coordinates{(1,-5) (1,-3) (5,-2) (7,-3) (1,-5)};
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+  \pregunta Refleja la figura respecto al eje $x$, y la figura resultante refléjala
+  respecto al eje $y$.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=-10,ymin=-6,ymax=6,xmax=10,unit vector ratio=1,
+      scale=2,xtick distance=1,ytick distance=1,grid=major]
+      \addplot[mark=*] coordinates{(2,5) (2,1) (4,1) (4,2) (3,2) (3,5) (2,5)};
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+\end{preguntas}
+
+\section*{La rotación}
+
+
+\begin{preguntas}[after-item-skip=15pt]
+  \pregunta Rota la figura con respecto al origen en: $90^\circ$, $180^\circ$ y $270^\circ$.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=-10,ymin=-7,ymax=7,xmax=10,unit vector ratio=1,
+      scale=2,xtick distance=1,ytick distance=1,grid=major]
+      \addplot[mark=*] coordinates{(1,2) (1,6) (4,6) (4,3) (3,3) (3,5) (2,5)
+        (2,2) (1,2)};
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+  \pregunta Rota la figura con respecto al punto $(4,1)$ en:
+  $90^\circ$, $180^\circ$ y $270^\circ$. Usa un color distinto para cada rotación.\\
+  \begin{tikzpicture}[baseline=(current bounding box.north)]
+    \begin{axis}[eje escolar,xmin=-10,ymin=-6,ymax=6,xmax=10,unit vector ratio=1,
+      scale=2,xtick distance=1,ytick distance=1,grid=major]
+      \addplot[mark=*] coordinates{(2,5) (2,1) (4,1) (4,2) (3,2) (3,5) (2,5)};
+      %\node (A) at (axis cs:3.5,2)
+      %  {\shortstack[c]{Trasladar según\\$\overrightarrow{v}=(4,3)$}};
+    \end{axis}
+  \end{tikzpicture}
+\end{preguntas}
+
+\end{document}

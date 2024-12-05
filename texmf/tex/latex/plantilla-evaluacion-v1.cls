@@ -182,6 +182,16 @@ before-skip=\mytopsep,after-skip=\mytopsep
 \end{minipage}
 }
 
+\NewDocumentEnvironment{alternativasgraficas}{O{}+b}{%
+  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
+  \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
+    leftupper=10pt,fonttitle=\itshape,valign=center,halign=center,
+    coltitle=black,title={\alphalph{\thetcbrasternum})},#1]
+      #2
+}{%
+  \end{tcbitemize}
+}
+
 \AtBeginDocument{%
 	\hypersetup{%
 		pdftitle = {\titulo - \subtitulo},
