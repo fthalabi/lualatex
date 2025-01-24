@@ -1,10 +1,8 @@
 \def\colegio{Colegio Latinoamericano de Integración}
-\def\titulo{Transformaciones isometricas}
+\def\titulo{Transformaciones isométricas}
 \def\subtitulo{La traslación}
 
-\documentclass[tema claro]{presentacion}
-
-\usepackage{emoji}
+\documentclass[]{presentacion}
 
 \NewDocumentCommand{\corazon}{O{0}mm}{
   \addplot [
@@ -16,12 +14,12 @@
   ] ( {sin(t)^3 + #2},{(13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t))/16 + 0.1 + #3} );
 }
 
-\NewDocumentCommand{\ticket}{mm}{\node[] at (axis cs: #1,#2) {\emoji{check-mark}};}
-\NewDocumentCommand{\cruz}{mm}{\node[] at (axis cs: #1,#2) {\emoji{cross-mark}};}
+\NewDocumentCommand{\ticket}{mm}{\node[] at (axis cs: #1,#2) {\check};}
+\NewDocumentCommand{\cruz}{mm}{\node[] at (axis cs: #1,#2) {\xmark};}
 \ExplSyntaxOn
 \NewDocumentCommand{\flecha}{mmmm}{
   \draw[->,shorten~>=0.2cm,shorten~<=0.2cm] (#1,#2) -- (#3,#4)
-    node[midway,above,fill=white,fill~opacity=1,text~opacity=1,inner~sep=1pt]
+    node[midway,above,fill=ColorBackground,fill~opacity=1,text~opacity=1,inner~sep=1pt]
       {(\int_eval:n{#3-#1},\int_eval:n{#4-#2})};
 }
 \ExplSyntaxOff
@@ -59,7 +57,77 @@
   \end{tikzpicture}
 \end{center}
 
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+\begin{itemize}
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+  \item askdasdok
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+hola
+\begin{ejercicios}(3)
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\ejercicio $x^2-3x+1$
+\end{ejercicios}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{problema}
+  some text
+\end{problema}
+
+\begin{problema}[1]
+  some text
+\end{problema}
+
+\begin{problema}[2]
+  some text
+\end{problema}
+
+\begin{problema}[3]
+  some text
+\end{problema}
 
 \end{frame}
 
 \end{document}
+
+
+

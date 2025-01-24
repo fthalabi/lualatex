@@ -142,3 +142,20 @@ graphs,graphdrawing,quotes}
 \RequirePackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
 \RequirePackage{csvsimple-l3}
 \RequirePackage{alphalph}
+
+\newfontfamily\FA{Font Awesome 6 Pro}
+\def\check{\FA\char"F00C}
+\def\xmark{\FA\char"F00D}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\lvl}{m}{
+  \tl_gclear:N \tl_symbol
+  \int_case:nnF {#1} {
+    {1} {\tl_gset:Nn \tl_symbol {{\FA \char"F816}}}
+    {2} {\tl_gset:Nn \tl_symbol {{\FA \char"F06D}}}
+    {3} {\tl_gset:Nn \tl_symbol {{\FA \char"F54C}}}
+  } {\tl_gset:Nn \tl_symbol {?}}
+  \tl_use:N \tl_symbol
+}
+
+\ExplSyntaxOff

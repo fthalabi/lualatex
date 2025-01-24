@@ -4,12 +4,12 @@
 \PassOptionsToClass{noamsthm,professionalfonts,10pt}{beamer}
 \LoadClass{beamer}
 
-\providecommand{\colegio}{Colegio}
-\providecommand{\asignatura}{Departamento de Matemática}
-\providecommand{\titulo}{Titulo}
-\providecommand{\subtitulo}{Subtitulo}
+%\providecommand{\colegio}{Colegio}
+%\providecommand{\asignatura}{Departamento de Matemática}
+%\providecommand{\titulo}{Titulo}
+%\providecommand{\subtitulo}{Subtitulo}
 \providecommand{\nombre}{Prof. Fernando Halabi}
-\providecommand{\correo}{correo@ASDAS.cl}
+%\providecommand{\correo}{correo@ASDAS.cl}
 
 \makeatletter
 \newcommand{\disablepackage}[2]{%
@@ -77,7 +77,7 @@
 
 
 \definecolor{MonokaiBrown}{HTML}{2C2525}       % nord15
-\definecolor{MonokaiBlack}{HTML}{211F22}       % nord15
+\definecolor{MonokaiBlack}{HTML}{282A3A}       % nord15
 \definecolor{MonokaiRed}{HTML}{FF6188}       % nord15
 \definecolor{MonokaiOrange}{HTML}{FC9867}       % nord15
 \definecolor{MonokaiYellow}{HTML}{FFD866}       % nord15
@@ -114,11 +114,11 @@
   \colorlet{ColorSiguiente}{NordBrightBlack!30}
 }{
   \colorlet{ColorBackground}{MonokaiBlack}
-  \colorlet{ColorText}{MonokaiWhite!70!MonokaiBlack}
+  \colorlet{ColorText}{MonokaiWhite}
   \colorlet{ColorExampleText}{NordBrightCyan}
   \colorlet{ColorStructure}{NordCyan}
-  \colorlet{ColorTitle}{NordBlue}
-  \colorlet{ColorSubtitle}{NordBlue!80!MonokaiBlack}
+  \colorlet{ColorTitle}{MonokaiOrange}
+  \colorlet{ColorSubtitle}{MonokaiOrange}
   \colorlet{ColorSubsectionInTocShaded}{NordCyan!20!NordBrightBlack}
   \colorlet{ColorItemizeItem}{NordBlue}
   \colorlet{ColorBlockTitleBg}{NordBlack!80}
@@ -130,9 +130,9 @@
   \colorlet{ColorBlockBodyFg}{NordCyan}
   \colorlet{ColorExampleBlockBodyFg}{NordWhite}
   \colorlet{ColorAlertedBlockBodyFg}{NordWhite}
-  \colorlet{ColorPrevio}{NordBlue!50!MonokaiBlack}
-  \colorlet{ColorActual}{NordBrightCyan}
-  \colorlet{ColorSiguiente}{NordBrightBlack!30!MonokaiBlack}
+  \colorlet{ColorPrevio}{MonokaiGreen!30!MonokaiBlack}
+  \colorlet{ColorActual}{MonokaiGreen!70!MonokaiBlack}
+  \colorlet{ColorSiguiente}{NordBrightBlack!80!MonokaiBlack}
 }
 
 
@@ -213,11 +213,21 @@
 
 \AtBeginDocument{%
 \begin{frame}{}{}
-  {\usebeamercolor[fg]{title}\bfseries\sffamily\Huge\titulo}\\
-  {\usebeamercolor[fg]{subtitle}\bfseries\sffamily\LARGE\subtitulo\\[70pt]}
-  {\usebeamercolor[fg]{normal text}\nombre\\[5pt]}
-  {\usebeamercolor[fg]{normal text}\colegio\\}
-
+  \@ifundefined{curso}%
+ {\ClassWarning{ppt}{\string\c urso no esta definido}}%
+ {{\usebeamercolor[fg]{title}\bfseries\sffamily\large\curso\\[-5pt]}}%
+  \@ifundefined{titulo}%
+ {\ClassWarning{ppt}{\string\t itulo no esta definido}}%
+ {{\usebeamercolor[fg]{title}\bfseries\sffamily\Huge\titulo\\[10pt]}}%
+ \@ifundefined{subtitulo}%
+ {\ClassWarning{ppt}{\string\s ubtitulo no esta definido}}%
+ {{\usebeamercolor[fg]{subtitle}\bfseries\sffamily\LARGE\underline{\subtitulo}\\[70pt]}}
+ \@ifundefined{nombre}%
+ {\ClassWarning{ppt}{\string\n ombre no esta definido}}%
+ {{\usebeamercolor[fg]{normal text}\nombre\\[5pt]}}
+ \@ifundefined{colegio}%
+ {\ClassWarning{ppt}{\string\c olegio no esta definido}}%
+ {{\usebeamercolor[fg]{normal text}\scshape\colegio\\}}
 \end{frame}
 }
 
@@ -226,5 +236,123 @@
     tick label style={
       fill=ColorBackground,
     },
+  }
+}
+
+\NewDocumentCommand{\mybox}{O{1pt}O{1pt}mm}{%
+\tcbox[colback=ColorTitle!80!ColorBackground, colframe=ColorTitle!80!ColorBackground,%
+   coltext=ColorText,on line, boxsep=0pt, left=#1, right=#1, top=#2, bottom=#2,%
+   width=1cm]{\makebox[#3][c]{#4}}
+}
+
+\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\scshape\arabic*}},
+item-format=\usebeamercolor[fg]{normal text},
+label-width=20pt,item-indent=30pt,resume=false,after-item-skip=15pt,
+label-offset=10pt,column-sep=10pt]{ejercicios}[*](3)
+
+\NewTasksEnvironment[style=itemize,label={$\color{ColorTitle}\bullet$},
+item-format=\usebeamercolor[fg]{normal text},
+,resume=false,after-item-skip=5pt,column-sep=10pt]{lista}[*](1)
+
+
+% Create the counter
+\newcounter{nproblema}
+\NewDocumentEnvironment{problema}{O{} +b}{%
+  \stepcounter{nproblema}%
+  \par\noindent Problema \thenproblema\hspace*{5pt}
+  \IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
+  \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
+    coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
+    borderline west={3pt}{0pt}{ColorTitle},borderline south={1pt}{0pt}{ColorTitle}]
+    #2
+  \end{tcolorbox}
+}{}
+
+\tikzset{
+  /tikz/graphs/layered layout/.append style={
+    edge quotes={draw, inner sep=3pt,rounded corners, dashed, fill=ColorBackground},
+  }
+}
+
+\tcbset{coltext=ColorText}
+
+\NewDocumentEnvironment{columnas}{O{0.5}O{} +b}{%
+  \NewDocumentCommand{\partir}{}{\tcblower}
+  \begin{tcolorbox}[blanker,sidebyside,width=0.9\textwidth,center,lefthand ratio=#1,
+    before skip=1cm,sidebyside align=top seam,#2]
+    #3
+  \end{tcolorbox}
+}{}
+
+
+\pgfplotscreateplotcyclelist{mycolors}{
+MonokaiOrange,every mark/.append style={fill=MonokaiOrange!80!black},mark=*\\
+MonokaiGreen,every mark/.append style={fill=MonokaiGreen!80!black},mark=square*\\
+MonokaiPurple,every mark/.append style={fill=MonokaiPurple!80!black},mark=otimes*\\
+MonokaiYellow,mark=star\\
+}
+
+%\pgfplotsset{
+%
+%  every axis legend/.style={
+%    at={(1.05,1)},
+%    anchor=north west,
+%    cells={anchor=west},
+%    fill=none,
+%    draw=none,
+%    %font=\HUGE,
+%    cells={font=\large},
+%    %nodes={
+%    %  inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+%    %  inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+%    %}
+%  },
+%  every tick label/.style={
+%    color=red,
+%    fill=white,
+%    fill opacity=1,
+%    inner sep=5mm
+%  }
+%}
+
+
+\pgfplotsset{
+  cycle list name=mycolors,
+  every axis plot/.append style={line width=2pt},
+  eje escolar/.style={
+    axis y line=center,
+    axis x line=middle,
+    xlabel=$x$,ylabel=$y$,
+    axis line style={-{Triangle[round]},shorten >=-10pt},
+    xlabel style={
+      at={(xticklabel* cs:1)},
+      anchor=west,
+      xshift=10pt,
+    },
+    ylabel style={
+      at={(yticklabel* cs:1)},
+      anchor=south,
+      yshift=10pt,
+    },
+    enlargelimits=0.01,  % Extends y-axis by 10% beyond ymax
+    axis on top,
+    tick label style={
+      fill=ColorBackground,
+      fill opacity=1,
+      inner xsep=2pt,
+      inner ysep=2pt,
+    },
+    trig format plots=rad,
+    legend style={
+      fill=none,
+      draw=none,
+      at={(1.05,1)},
+      anchor=north west,
+      cells={anchor=west,font=\large},
+      nodes={
+        inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+        inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+      }
+    }
   }
 }

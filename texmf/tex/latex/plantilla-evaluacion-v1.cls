@@ -75,7 +75,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
   \draw[help lines,step=5mm] (interior.south west) grid[xstep=0] (interior.north east);\end{tcbclipinterior}},title=Respuesta,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
   boxed title style={colback=white},coltitle=black,#1}
       
-\NewDocumentEnvironment{importante}{O{}+b}{
+\®{importante}{O{}+b}{
 \begin{center}
 \begin{tcolorbox}[borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,
   before skip=5mm,after skip=5mm,width=.9\linewidth, halign=flush left,#1]

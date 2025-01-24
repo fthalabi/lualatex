@@ -1,0 +1,94 @@
+\documentclass{experimento}
+
+%%% PAQUESTES PARA GRIFICAR
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+%%%
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{groupplot}[group style={group size=2 by 5,vertical sep=0pt,horizontal sep=0pt,
+  x descriptions at=edge bottom,y descriptions at=edge left},
+  height=3.5cm,width=8cm,ymin=0.5,ymax=0.9,xmin=0,xmax=40,
+  enlarge y limits,enlarge x limits,
+  xlabel=$r$,ylabel=$\rho$,ylabel style={rotate=-90},
+  legend style={at={(0.5,0.90)},anchor=north,rounded corners=3pt,
+  font=\footnotesize,draw=none},legend plot pos=none]
+
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_10_20.dat};
+  \legend{fl10};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_50_60.dat};
+  \legend{fl50};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_100_110.dat};
+  \legend{fl100};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_140_150.dat};
+  \legend{fl140};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_190_200.dat};
+  \legend{fl190};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_240_250.dat};
+  \legend{fl240};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_290_300.dat};
+  \legend{fl290};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_340_350.dat};
+  \legend{fl340};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_390_400.dat};
+  \legend{fl390};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/fldensity_440_450.dat};
+  \legend{fl440};
+  \end{groupplot}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \begin{groupplot}[group style={group size=2 by 5,vertical sep=0pt,horizontal sep=0pt,
+  x descriptions at=edge bottom,y descriptions at=edge left},
+  height=3.5cm,width=8cm,ymin=0,ymax=3000,,xmin=0,xmax=40,ytick={500,1500,2500},
+  enlarge y limits,enlarge x limits,
+  xlabel=$r$,ylabel=$\rho$,ylabel style={rotate=-90},
+  legend style={at={(0.5,0.90)},anchor=north,rounded corners=3pt,
+  font=\footnotesize,draw=none},legend plot pos=none]
+
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_10_20.out};
+  \legend{temp10};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_50_60.out};
+  \legend{temp50};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_100_110.out};
+  \legend{temp100};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_140_150.out};
+  \legend{temp140};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_190_200.out};
+  \legend{temp190};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_240_250.out};
+  \legend{temp240};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_290_300.out};
+  \legend{temp290};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_340_350.out};
+  \legend{temp340};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_390_400.out};
+  \legend{temp390};
+  \nextgroupplot
+  \addplot table[x index=0, y index=3] {datos/temp_440_450.out};
+  \legend{temp440};
+  \end{groupplot}
+\end{tikzpicture}
+
+\end{document}

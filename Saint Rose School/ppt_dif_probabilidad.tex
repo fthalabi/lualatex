@@ -1,0 +1,90 @@
+\def\titulo{Probabilidad y Estadística}
+\def\subtitulo{Introducción al cálculo probabilístico}
+\def\curso{Optativo de profundización}
+\def\colegio{Colegio Saint Rose School}
+
+\documentclass[]{presentacion}
+
+\begin{document}
+
+\begin{frame}
+
+\frametitle{Titulo}
+\framesubtitle{Subtitulo}
+  hola
+\begin{problema}
+  asdasd
+\end{problema}
+
+\begin{problema}[3]
+  este esta super dificil
+\end{problema}
+
+\end{frame}
+
+\begin{frame}
+Encuentra las soluciones para cada función.
+\begin{ejercicios}
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+* $x^2+3x-1$
+\end{ejercicios}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{problema}[1]
+  asd kasdk aod kaodk os
+\end{problema}
+
+\begin{columnas}[0.6]
+  \centering
+  \tikz \graph [layered layout] {
+    a -> {
+      hola[>"½"] -> {
+        como,
+        estas[>"$\alpha$"]
+      },
+      c[>"wo"] -> {
+        f,
+        g,
+        h[>"⅓"]
+      }
+    }
+  };
+  \partir
+  \begin{lista}(2)
+    * HOLA
+    * HOLA
+    *! Chao asdk asdk qwe
+    * Chao
+    * ¿¿??
+    * ¿¿??
+    * ¿¿??
+  \end{lista}
+\end{columnas}
+
+\end{frame}
+
+\begin{frame}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[eje escolar, ytick={-1,1},xtick={pi/2,pi,3*pi/2,2*pi},
+      xticklabels={$\dfrac{\pi}{2}$,$\pi$,$\dfrac{3\pi}{2}$,$2\pi$}]
+      \addplot+[domain=0:2*pi,no marks,smooth,samples=100] {sin(x)};
+      \addplot+[domain=0:2*pi,no marks,smooth,samples=100] {cos(x)};
+      \addplot+[domain=0:2*pi,no marks,smooth,samples=100] {cos(x)*sin(x)};
+      %\addplot+[domain=0:2*pi,no marks,smooth,samples=100] {sin(x^2)};
+      \legend{$sin(x)$, $cos(x)$, $cos(x)\cdot sin(x)$}
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+\end{document}
