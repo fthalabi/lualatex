@@ -258,7 +258,11 @@ item-format=\usebeamercolor[fg]{normal text},
 % Create the counter
 \newcounter{nproblema}
 \NewDocumentEnvironment{problema}{O{} +b}{%
-  \stepcounter{nproblema}%
+  \makeatletter
+  \ifnum\beamer@slideinframe=1
+    \stepcounter{nproblema}
+  \fi
+  \makeatother
   \par\noindent Problema \thenproblema\hspace*{5pt}
   \IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
   \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
@@ -268,6 +272,23 @@ item-format=\usebeamercolor[fg]{normal text},
   \end{tcolorbox}
 }{}
 
+% Create the counter
+\newcounter{nejemplo}
+\NewDocumentEnvironment{ejemplo}{+b}{%
+  \makeatletter
+  \ifnum\beamer@slideinframe=1
+    \stepcounter{nejemplo}%
+  \fi
+  \makeatother
+  \par\noindent Ejemplo \thenejemplo\hspace*{5pt}
+  %\IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
+  \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
+    coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
+    borderline west={3pt}{0pt}{MonokaiPurple},borderline south={1pt}{0pt}{MonokaiPurple}]
+    #1
+  \end{tcolorbox}
+}{}
+ 
 \tikzset{
   /tikz/graphs/layered layout/.append style={
     edge quotes={draw, inner sep=3pt,rounded corners, dashed, fill=ColorBackground},
@@ -351,8 +372,30 @@ MonokaiYellow,mark=star\\
       cells={anchor=west,font=\large},
       nodes={
         inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
-        inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+        inner ysep=0.3em,  % Reduce vertical spacing between legend entries
       }
+    }
+  },
+  leyenda abajo/.style={
+    legend style={
+      fill=none,
+      draw=none,
+      at={(0.5,-0.05)}, % Position the legend above the plot
+      anchor=north,    % Anchor the legend at the bottom center
+      legend columns=-1, % Distribute entries horizontally
+      column sep=5pt,
+      cells={anchor=west,font=\large}
+    }
+  },
+  leyenda arriba/.style={
+    legend style={
+      fill=none,
+      draw=none,
+      at={(0.5,1.05)}, % Position the legend above the plot
+      anchor=south,    % Anchor the legend at the bottom center
+      legend columns=-1, % Distribute entries horizontally
+      column sep=5pt,
+      cells={anchor=west,font=\large}
     }
   }
 }
