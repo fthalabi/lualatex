@@ -90,6 +90,13 @@
 \colorlet{ColorAlertedText}{NordRed}
 \colorlet{ColorSubtitle}{NordBlue}
 \colorlet{ColorSubsectionInToc}{ColorSubtitle}
+\colorlet{naranjo}{MonokaiOrange}
+\colorlet{verde}{MonokaiGreen}
+\colorlet{violeta}{MonokaiPurple}
+\colorlet{azul}{MonokaiBlue}
+\colorlet{rojo}{MonokaiRed}
+\colorlet{amarillo}{MonokaiYellow}
+\colorlet{cafe}{MonokaiBrown}
 
 \ifthenelse{\boolean{modoclaro}}{
   \colorlet{ColorBackground}{white}
@@ -215,7 +222,7 @@
 \begin{frame}{}{}
   \@ifundefined{curso}%
  {\ClassWarning{ppt}{\string\c urso no esta definido}}%
- {{\usebeamercolor[fg]{title}\bfseries\sffamily\large\curso\\[-5pt]}}%
+ {{\usebeamercolor[fg]{title}\bfseries\sffamily\Large\curso\\[-5pt]}}%
   \@ifundefined{titulo}%
  {\ClassWarning{ppt}{\string\t itulo no esta definido}}%
  {{\usebeamercolor[fg]{title}\bfseries\sffamily\Huge\titulo\\[10pt]}}%
@@ -227,7 +234,7 @@
  {{\usebeamercolor[fg]{normal text}\nombre\\[5pt]}}
  \@ifundefined{colegio}%
  {\ClassWarning{ppt}{\string\c olegio no esta definido}}%
- {{\usebeamercolor[fg]{normal text}\scshape\colegio\\}}
+ {{\usebeamercolor[fg]{normal text}\bfseries\large\scshape\colegio\\}}
 \end{frame}
 }
 
