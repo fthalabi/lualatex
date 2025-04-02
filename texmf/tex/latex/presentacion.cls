@@ -48,8 +48,8 @@
 
 
 \geometry{
-  paperwidth=18cm,
-  paperheight=13cm,
+  paperwidth=16cm,
+  paperheight=9cm,
   left=1cm,
   right=1cm
 }
@@ -257,6 +257,12 @@ item-format=\usebeamercolor[fg]{normal text},
 label-width=20pt,item-indent=30pt,resume=false,after-item-skip=15pt,
 label-offset=10pt,column-sep=10pt]{ejercicios}[*](3)
 
+\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\alph*}},
+item-format=\usebeamercolor[fg]{normal text},
+label-width=20pt,item-indent=30pt,resume=false,after-item-skip=10pt,
+label-offset=10pt,column-sep=10pt]{ejercicios*}[*](1)
+
+
 \NewTasksEnvironment[style=itemize,label={$\color{ColorTitle}\bullet$},
 item-format=\usebeamercolor[fg]{normal text},
 ,resume=false,after-item-skip=5pt,column-sep=10pt]{lista}[*](1)
@@ -274,7 +280,24 @@ item-format=\usebeamercolor[fg]{normal text},
   \IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
   \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
     coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
-    borderline west={3pt}{0pt}{ColorTitle},borderline south={1pt}{0pt}{ColorTitle}]
+    borderline west={3pt}{0pt}{ColorTitle},borderline south={1pt}{0pt}{ColorTitle},
+    after skip=15pt,breakable]
+    #2
+  \end{tcolorbox}
+}{}
+
+\NewDocumentEnvironment{continuacion}{O{} +b}{%
+  \makeatletter
+  \ifnum\beamer@slideinframe=1
+    \stepcounter{nproblema}
+  \fi
+  \makeatother
+  \par\noindent Continuación...\hspace*{5pt}
+  \IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
+  \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
+    coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
+    borderline west={3pt}{0pt}{ColorTitle},borderline south={1pt}{0pt}{ColorTitle},
+    after skip=15pt,breakable]
     #2
   \end{tcolorbox}
 }{}
@@ -291,11 +314,33 @@ item-format=\usebeamercolor[fg]{normal text},
   %\IfBlankTF{#1}{}{\mybox[1pt][2pt]{\widthof{22}}{\lvl{#1}}}
   \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
     coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
-    borderline west={3pt}{0pt}{MonokaiPurple},borderline south={1pt}{0pt}{MonokaiPurple}]
+    borderline west={3pt}{0pt}{MonokaiPurple},borderline south={1pt}{0pt}{MonokaiPurple},
+    after skip=15pt]
     #1
   \end{tcolorbox}
 }{}
  
+\NewDocumentEnvironment{teorema}{+b}{%
+  \par\noindent Teorema \hspace*{5pt}
+  \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
+    coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
+    borderline west={3pt}{0pt}{MonokaiGreen},borderline south={1pt}{0pt}{MonokaiGreen},
+    after skip=15pt]
+    #1
+  \end{tcolorbox}
+}{}
+ 
+\NewDocumentEnvironment{propiedad}{+b}{%
+  \par\noindent Propiedad \hspace*{5pt}
+  \begin{tcolorbox}[leftrule=2mm,enhanced,colback=ColorBackground,
+    coltext=ColorText,rightrule=0mm,toprule=0mm,frame hidden,rounded corners=southwest,
+    borderline west={3pt}{0pt}{MonokaiBrown},borderline south={1pt}{0pt}{MonokaiBrown},
+    after skip=15pt]
+    #1
+  \end{tcolorbox}
+}{}
+
+
 \tikzset{
   /tikz/graphs/layered layout/.append style={
     edge quotes={draw, inner sep=3pt,rounded corners, dashed, fill=ColorBackground},

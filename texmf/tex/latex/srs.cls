@@ -1,15 +1,16 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{plantilla-evaluacion-v1}[2024/9/28 v1.0 Config para generar evaluación]
+\ProvidesClass{srs}[2025/03/03 v1.0 Plantilla para SRS]
 
-\PassOptionsToClass{10pt,oneside,letterpaper}{article}
+\PassOptionsToClass{10pt,oneside}{article}
 \LoadClass{article}
 
-\providecommand{\colegio}{COLEGIO}
+\providecommand{\colegio}{Saint Rose School}
 \providecommand{\asignatura}{Departamento de Matemática}
 \providecommand{\titulo}{TITULO}
 \providecommand{\subtitulo}{SUBTITULO}
-\providecommand{\nombre}{Prof. Fernando Halabi}
+\providecommand{\nombre}{Fernando Halabi A.}
 \providecommand{\correo}{correo@ASDAS.cl}
+\providecommand{\curso}{Curso}
 
 \input{paquetes}
 
@@ -34,30 +35,33 @@
 \titleformat{\section}{\sffamily\bfseries\Large}{\thesection.}{1.5em}{}
 
 \geometry{
-  paper=letterpaper,
-  top=2cm,
-  bottom=2cm,
+  paperheight=33cm,
+  paperwidth=21.6cm,
+  top=3cm,
+  bottom=2.5cm,
   left=2cm,
   right=2cm,
   headheight=2cm,
-  headsep=15pt,
-  footskip=20pt,
+  headsep=0.5cm, %15
+  footskip=0.5cm,
   marginparwidth=0pt,
   includemp=false,
   heightrounded,
   %showframe
 }
+
 \setlength{\marginparwidth}{0pt}
 \setlength{\marginparsep}{0pt}
 
 \pagestyle{fancy}
 \fancyhfoffset[H]{0pt} 
-\fancyhead[C]{\ifthenelse{\thepage=1}{}{\sffamily{\scshape\bfseries\titulo} - \subtitulo}}
-\fancyhead[L]{\ifthenelse{\thepage=1}{%
-  \footnotesize{\colegio\\{\asignatura}\ifthenelse{\isundefined{\curso}}{}{{ -} {\curso}} }
-  }{}
-}
-\fancyhead[R]{\ifthenelse{\boolean{optionthree} \AND \thepage=1}{\footnotesize\nombre}{}}
+\fancyhead[C]{\ifthenelse{\thepage=1}{
+  \begin{tikzpicture}[baseline=-0.2cm]
+    \node (A) {\includegraphics[width=1cm]{srs_logo.pdf}};
+  \end{tikzpicture}
+}{\vspace*{10pt}\normalsize\sffamily{\scshape\bfseries\titulo} - \subtitulo}}
+\fancyhead[L]{\ifthenelse{\thepage=1}{\textit{Saint Rose School\\Departamento de Matemática}{}}}
+\fancyhead[R]{\ifthenelse{\thepage=1}{\textit{Sir: \nombre\\Curso: \curso}}{}}
 \fancyfoot[L,C]{}
 \fancyfoot[R]{\footnotesize{Página {\thepage} de {\pageref*{LastPage}}}}
 
@@ -69,7 +73,7 @@
 boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
 \newtcolorbox{malla}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay={\begin{tcbclipinterior}
-  \draw[help lines,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},#1}
+  \draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},#1}
 
 \newtcolorbox{respuesta}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay boxed title={\begin{tcbclipinterior}
   \draw[help lines,step=5mm] (interior.south west) grid[xstep=0] (interior.north east);\end{tcbclipinterior}},title=Respuesta,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
@@ -125,9 +129,9 @@ label-offset=10pt,column-sep=10pt]{preguntas}[\pregunta](1)
 
 %% Setting values
 \newlength{\myitemsep}
-\setlength{\myitemsep}{3pt}
+\setlength{\myitemsep}{5pt}
 \newlength{\mytopsep}
-\setlength{\mytopsep}{5pt}
+\setlength{\mytopsep}{10pt}
 
 \NewTasksEnvironment[
   label={{\itshape\alph*})},
@@ -147,6 +151,23 @@ before-skip=\mytopsep,after-skip=\mytopsep
           #2      
 }{%
     \end{enumerate}
+    \vspace*{\mytopsep}
+  \end{minipage}
+}
+
+\NewDocumentEnvironment{vertical*}{O{}+b}%
+{%
+    \newcommand{\alternativa}{\item}
+    \begin{minipage}{\linewidth}
+      \vspace*{\mytopsep}
+      \begin{enumerate}[label={{\Roman*.}},
+        labelsep=10pt,leftmargin=25pt,labelwidth={\widthof{{IV.}}},
+        itemindent={\widthof{{IV.}}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,#1]
+          #2      
+}{%
+    \end{enumerate}
+    \vspace*{0.5\mytopsep}
   \end{minipage}
 }
 
@@ -208,35 +229,48 @@ before-skip=\mytopsep,after-skip=\mytopsep
   %\datos
   %\raggedright%
   \ifthenelse{\boolean{optiontwo}}{}{%
-    \ifthenelse{\boolean{optionone}}{%
-      \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,
-        raster column skip=3pt,raster force size=false,raster after skip=15pt,  
-        raster before skip=10pt]
-        \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4cm]
-        \end{caja}  
-        \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]
-          \ifthenelse{\isundefined{\puntaje}}{}{\hspace*{30pt}/ \puntaje}
-        \end{caja}
-        \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=35pt,add to width=-2cm]
-        \end{caja}      
-      \end{tcbraster}%
-    }{%
-      \begin{tcbraster}[enhanced,raster columns=4,raster width=\linewidth,
-        raster column skip=3pt,raster force size=false,raster after skip=15pt,
-        raster before skip=10pt]%
-        \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4.5cm]
-        \end{caja}
-        \begin{caja}[title={\sffamily\scshape\bfseries Curso},height=35pt,add to width=-1.5cm]
-        \end{caja}    
-        \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=35pt,add to width=-1.5cm,valign=bottom,halign=center]
-          \ifthenelse{\isundefined{\puntaje}}{}{\hspace*{30pt}/ \puntaje}
-        \end{caja}
-        \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=35pt,add to width=-1.5cm]
-        \end{caja}      
-      \end{tcbraster}%
-    }
+    \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,
+      raster column skip=3pt,raster force size=false,raster after skip=15pt,  
+      raster before skip=10pt]
+      \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4cm]
+      \end{caja}  
+      \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]
+        \ifthenelse{\isundefined{\puntaje}}{}{\hspace*{30pt}/ \puntaje}
+      \end{caja}
+      \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=35pt,add to width=-2cm]
+      \end{caja}      
+    \end{tcbraster}%
   }%
 }
 
 \NewDocumentCommand{\negrita}{m}{{\sffamily\scshape\bfseries\large#1}}
 \NewDocumentCommand{\f}{m}{\pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{#1}}
+
+
+\NewDocumentCommand{\separador}{O{5mm}}{
+  \begin{center}
+    \vspace*{#1}
+    \begin{tikzpicture}
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (8cm,0);
+      \pgfornamentline[color=black!30]{A}{B}{1}{88}
+    \end{tikzpicture}
+    \vspace*{#1}
+  \end{center}
+}
+
+\NewDocumentEnvironment{equation**}{b}{%
+\newline
+\begin{minipage}{\textwidth}
+ \begin{equation*}
+    #1
+ \end{equation*}
+\end{minipage}
+}{}
+
+\NewDocumentEnvironment{mcaja}{O{}+b}{\newline%
+  \tcboxmath[borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,center,
+  before skip=-2pt,after skip=3pt,#1]%
+  {#2}
+}{}
+
