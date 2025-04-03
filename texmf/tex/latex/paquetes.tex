@@ -7,6 +7,7 @@
 \RequirePackage{polyglossia}
 \setmainlanguage{spanish}
 %\usepackage[fontsize=9pt]{fontsize}
+\RequirePackage{letltxmacro}
 \RequirePackage[]{amsmath}
 \RequirePackage{icomma}
 \RequirePackage{calc}
@@ -159,3 +160,23 @@ graphs,graphdrawing,quotes}
 }
 
 \ExplSyntaxOff
+
+%%% Raíz cerrada
+
+\LetLtxMacro{\OldSqrt}{\sqrt}
+\newcommand{\ClosedSqrt}[1][\hphantom{3}]{\def\DHLindex{#1}\mathpalette\DHLhksqrt}
+\makeatletter
+    \newcommand*\bold@name{bold}
+    \def\DHLhksqrt#1#2{%
+        \setbox0=\hbox{$#1\OldSqrt{#2\,}$}\dimen0=\ht0\relax%
+        % Modify this value to adjust the vertical position of the closing line
+        \advance\dimen0-0.4\ht0\relax% Changed from 0.4 to 0.2
+        %\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+        \setbox2=\hbox{\vrule width 0.6pt height\ht0 depth -\dimen0}% Added width parameter
+        {\hbox{$#1\expandafter\OldSqrt\expandafter[\DHLindex]{#2\,}$}
+        % Adjust this vertical offset as needed
+        \lower\ifx\math@version\bold@name0.8pt\else0.56pt\fi\box2}% Changed from 0.6/0.4 to 0.8/0.6
+    }
+    % root index positioning and added space at the end
+    \renewcommand*{\sqrt}[2][\ ]{\ClosedSqrt[\leftroot{0}\uproot{1}#1]{#2}\kern0.1em}
+\makeatother
