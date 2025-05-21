@@ -5,6 +5,7 @@
 \begin{python}
 import math
 import random
+import pandas as pd
 from mpmath import *
 
 random.seed(0)
@@ -38,6 +39,11 @@ y21 = [fdiv(f21(x),c21) for x in dominio]
 f11 = lambda x: x**1*(1-x)
 c11 = quad(f11,[0,1])
 y11 = [fdiv(f11(x),c11) for x in dominio]
+
+dt = pd.DataFrame(
+  {"x": dominio, "y": y11}, dtype=float
+)
+dt.to_csv("datos.csv", index=False)
 
 \end{python}
 
@@ -100,6 +106,13 @@ $$\int_{0}^{1} x^6\cdot(1-x)\,dx = \py{quad(lambda x: x**6 * (1-x),[0,1])}$$
 
   \end{tikzpicture}
 \end{center}
+
+\tikz \datavisualization [scientific axes,
+  x axis={attribute=x, length=2.5cm, ticks=few},
+  y axis={attribute=y},
+  visualize as scatter]
+data {\py{dt}};
+
 
 \begin{tikzpicture}
   \begin{axis}

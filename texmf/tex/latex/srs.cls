@@ -1,16 +1,17 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{srs}[2025/03/03 v1.0 Plantilla para SRS]
 
-\PassOptionsToClass{10pt,oneside}{article}
+\PassOptionsToClass{11pt,oneside}{article}
 \LoadClass{article}
 
-\providecommand{\colegio}{Saint Rose School}
+\providecommand{\colegio}{School Rose School}
 \providecommand{\asignatura}{Departamento de Matemática}
 \providecommand{\titulo}{TITULO}
 \providecommand{\subtitulo}{SUBTITULO}
 \providecommand{\nombre}{Fernando Halabi A.}
 \providecommand{\correo}{correo@ASDAS.cl}
 \providecommand{\curso}{Curso}
+\providecommand{\fecha}{XX de XXXXXX,XXXX}
 
 \input{paquetes}
 
@@ -23,7 +24,7 @@
 \setboolean{optiontwo}{false}
 \setboolean{optionthree}{false}
 % Declare options
-\DeclareOption{sincurso}{\setboolean{optionone}{true}}
+\DeclareOption{paginavacia}{\setboolean{optionone}{true}}
 \DeclareOption{sinnombre}{\setboolean{optiontwo}{true}}
 \DeclareOption{conautor}{\setboolean{optionthree}{true}}
 % Handle unknown options
@@ -33,6 +34,11 @@
 
 \renewcommand{\thesection}{\Roman{section}}
 \titleformat{\section}{\sffamily\bfseries\Large}{\thesection.}{1.5em}{}
+\titlespacing*{\section}{0pt}{*10}{*5}
+
+\titleformat{\subsection}{\sffamily\bfseries\large}{\thesection.}{1.5em}{}
+\titlespacing*{\subsection}{0pt}{*4}{*1.5}
+
 
 \geometry{
   paperheight=33cm,
@@ -53,20 +59,19 @@
 \setlength{\marginparwidth}{0pt}
 \setlength{\marginparsep}{0pt}
 
+\ifthenelse{\not\boolean{optionone}}{
 \pagestyle{fancy}
 \fancyhfoffset[H]{0pt} 
 \fancyhead[C]{\ifthenelse{\thepage=1}{
   \begin{tikzpicture}[baseline=-0.2cm]
     \node (A) {\includegraphics[width=1cm]{srs_logo.pdf}};
   \end{tikzpicture}
-}{\vspace*{10pt}\normalsize\sffamily{\scshape\bfseries\titulo} - \subtitulo}}
-\fancyhead[L]{\ifthenelse{\thepage=1}{\textit{Saint Rose School\\Departamento de Matemática}{}}}
-\fancyhead[R]{\ifthenelse{\thepage=1}{\textit{Sir: \nombre\\Curso: \curso}}{}}
+}{\vspace*{10pt}\normalsize\sffamily{\bfseries\titulo} - \subtitulo}}
+\fancyhead[L]{\ifthenelse{\thepage=1}{\textit{Saint\space Rose\space School\\Departamento\space de\space Matemática}{}}}
+\fancyhead[R]{\ifthenelse{\thepage=1}{\textit{Sir:\space \nombre\\Curso:\space \curso}}{}}
 \fancyfoot[L,C]{}
 \fancyfoot[R]{\footnotesize{Página {\thepage} de {\pageref*{LastPage}}}}
-
-%\renewcommand{\thesection}{\Roman{section}}
-%\titleformat{\section}{\sffamily\scshape\bfseries\large}{\thesection.}{1.5em}{}
+}{\pagestyle{empty}}
 
 
 \newtcolorbox{caja}[1][]{enhanced,colback=white,colframe=black,boxrule=1pt,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
@@ -96,7 +101,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 % #4 character
 \NewDocumentCommand{\mybox}{O{1pt}O{1pt}mm}{%
 \tcbox[colback=black!60, colframe=black!60, coltext=white,%
-   on line, boxsep=0pt, left=#1, right=#1, top=#2, bottom=#2,%
+    on line,boxsep=0pt, left=#2, right=#2, top=#2, bottom=#2,%
    width=1cm]{\makebox[#3][c]{#4}}
 }
 
@@ -116,15 +121,30 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
     \end{enumerate}
 }
 
-\newlength{\labelwith}
-\setlength{\labelwidth}{\widthof{\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries 12}}}
 %\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{M}}{\sffamily\bfseries\scshape\alph*}},
 %label-width=\labelwidth,item-indent=30pt,
 %label-offset=10pt,column-sep=10pt]{ejercicios}[\ejercicio](2)
 
-\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\scshape\arabic*}},
-label-width=\labelwidth,item-indent=30pt,resume=true,
-label-offset=10pt,column-sep=10pt]{preguntas}[\pregunta](1)
+%\NewTasksEnvironment[label={\mybox[1pt][2pt]{\widthof{22}}{\sffamily\bfseries\arabic*}},
+%label-width=\labelwidth,item-indent=30pt,resume=true,
+%label-offset=10pt,column-sep=10pt]{preguntas}[\pregunta](1)
+
+\newcounter{mytaskcounter}
+
+\NewDocumentCommand{\superbox}{m}{%
+\ifthenelse{\value{mytaskcounter} < 100}{%
+\tcbox[colback=black!60, colframe=black!60, coltext=white,%
+  on line,boxsep=0pt, left=1pt, right=1pt, top=1pt, bottom=1pt,%
+  width=1cm]{\makebox[\widthof{22}][c]{#1}}}{%
+\tcbox[colback=black!60, colframe=black!60, coltext=white,%
+  on line,boxsep=0pt, left=1pt, right=1pt, top=1pt, bottom=1pt,%
+  width=1cm]{#1}}}
+
+\NewTasksEnvironment[label=\superbox{\sffamily\bfseries\arabic*},
+label-width=3em,item-indent=4em,resume=true,
+label-offset=1em,column-sep=10pt,counter=mytaskcounter]{preguntas}[\pregunta](1)
+
+
 
 
 %% Setting values
@@ -140,12 +160,13 @@ before-skip=\mytopsep,after-skip=\mytopsep
 ]{alternativas}[\alternativa](1)
 
 \NewDocumentEnvironment{vertical}{O{}+b}%
-{%
+{%  
+    \newline
     \newcommand{\alternativa}{\item}
     \begin{minipage}{\linewidth}
       \vspace*{\mytopsep}
-      \begin{enumerate}[label={{\itshape\alph*})},
-        labelsep=10pt,leftmargin=0pt,labelwidth={\widthof{{\itshape a})}},
+      \begin{enumerate}[label={{\itshape\alph*}\space)},
+        labelsep=10pt,leftmargin=2pt,labelwidth={\widthof{{\itshape a}\space)}},
         itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
         listparindent=0pt,#1]
           #2      
@@ -155,8 +176,9 @@ before-skip=\mytopsep,after-skip=\mytopsep
   \end{minipage}
 }
 
-\NewDocumentEnvironment{vertical*}{O{}+b}%
+\NewDocumentEnvironment{verticali}{O{}+b}%
 {%
+    \newline
     \newcommand{\alternativa}{\item}
     \begin{minipage}{\linewidth}
       \vspace*{\mytopsep}
@@ -171,6 +193,24 @@ before-skip=\mytopsep,after-skip=\mytopsep
   \end{minipage}
 }
 
+\NewDocumentEnvironment{verticaln}{O{}+b}%
+{%  
+    \newline
+    \newcommand{\alternativa}{\item}
+    \begin{minipage}{\linewidth}
+      \vspace*{\mytopsep}
+      \begin{enumerate}[label={(\arabic*)},
+        labelsep=10pt,leftmargin=25pt,labelwidth={\widthof{{(8)}}},
+        itemindent={\widthof{(8)}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,#1]
+          #2      
+}{%
+    \end{enumerate}
+    \vspace*{0.5\mytopsep}
+  \end{minipage}
+}
+
+
 \NewDocumentEnvironment{horizontal}{O{}+b}%
 {%
     \newcommand{\alternativa}{\item}
@@ -180,26 +220,10 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \end{enumerate*}
 }
 
-%\NewDocumentEnvironment{preguntas}{O{}+b}%
-%{%
-%    \newcommand{\pregunta}{\item}
-%    \begin{minipage}{\linewidth}
-%      \vspace*{\mytopsep}
-%      \begin{enumerate}[label={{\itshape\alph*})},
-%        labelsep=10pt,leftmargin=0pt,labelwidth={\widthof{{\itshape a})}},
-%        itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
-%        listparindent=0pt,#1]
-%          #2      
-%}{%
-%    \end{enumerate}
-%  \end{minipage}
-%}
-
-
 \NewDocumentCommand{\respuestas}{}{%
 \begin{minipage}[b][\lineskip+15pt][t]{\linewidth}
   \centering
-  \sffamily\Large {\scshape\bfseries Respuestas}
+  \sffamily\Large {\bfseries Respuestas}
 \end{minipage}
 }
 
@@ -215,31 +239,27 @@ before-skip=\mytopsep,after-skip=\mytopsep
 
 \AtBeginDocument{%
 	\hypersetup{%
-		pdftitle = {\titulo - \subtitulo},
-    pdfauthor = {\nombre},
-    pdfcreator = {Vscode + LuaTex}
+		pdftitle = {\titulo - \subtitulo},%
+    pdfauthor = {\nombre},%
+    pdfcreator = {Vscode + LuaTex}%
 	}%
-  %\begin{minipage}[b][\lineskip+15pt][t]{\linewidth} 
-  %  \centering
-  %  \sffamily\Large {\scshape\bfseries \titulo} - \subtitulo
-  %\end{minipage}
-  \begin{center}
-    {\sffamily\Large\scshape\bfseries \titulo} - {\sffamily\Large\subtitulo}
-  \end{center}
-  %\datos
-  %\raggedright%
-  \ifthenelse{\boolean{optiontwo}}{}{%
-    \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,
-      raster column skip=3pt,raster force size=false,raster after skip=15pt,  
-      raster before skip=10pt]
-      \begin{caja}[title={\sffamily\scshape\bfseries Nombre},height=35pt,add to width=4cm]
-      \end{caja}  
-      \begin{caja}[title={\sffamily\scshape\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]
-        \ifthenelse{\isundefined{\puntaje}}{}{\hspace*{30pt}/ \puntaje}
-      \end{caja}
-      \begin{caja}[title={\sffamily\scshape\bfseries Nota},height=35pt,add to width=-2cm]
-      \end{caja}      
+  \ifthenelse{\not\boolean{optionone}}{%
+  \begin{center}%
+    {\sffamily\Large\bfseries \titulo} - {\sffamily\Large\subtitulo}%
+  \end{center}}{}%
+  \ifthenelse{\boolean{optiontwo} \or \boolean{optionone}}{}{%
+    \begin{tcbraster}[enhanced,raster columns=3,raster width=\linewidth,%
+      raster column skip=3pt,raster force size=false,raster after skip=15pt,%
+      raster before skip=10pt]%
+      \begin{caja}[title={\sffamily\bfseries Nombre},height=35pt,add to width=4cm]%
+      \end{caja}%
+      \begin{caja}[title={\sffamily\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]%
+        \ifthenelse{\isundefined{\puntaje}}{}{\hspace*{30pt}/ \puntaje}%
+      \end{caja}%
+      \begin{caja}[title={\sffamily\bfseries Nota},height=35pt,add to width=-2cm]%
+      \end{caja}%
     \end{tcbraster}%
+    \hfill\textbf{\sffamily Fecha:} \fecha\hspace*{10pt}\\\vspace*{-30pt}%
   }%
 }
 
@@ -274,3 +294,30 @@ before-skip=\mytopsep,after-skip=\mytopsep
   {#2}
 }{}
 
+\newcommand{\q}[1]{``#1''}
+
+\newtcolorbox{aviso}[1][]{enhanced,
+  boxrule=0.4pt,left=5mm,right=2mm,top=2mm,bottom=2mm,
+  %borderline={1pt}{0pt}{black,dashed},
+  %colframe=white,colback=white,
+  before skip=5mm,after skip=5mm,width=.9\linewidth, halign=flush left,
+  enlarge left by=0.05\linewidth,
+  colback=black!7,
+  colframe=black!50,
+  sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
+  underlay={%
+    \path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[fill=black!50,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
+    },
+  drop fuzzy shadow,#1}
+
+  % --- Store the original \maketitle command ---
+\let\OriginalMakeTitle\maketitle
+
+% --- Redefine \maketitle ---
+\renewcommand{\maketitle}{%
+  \OriginalMakeTitle% Call the original \maketitle command
+  \thispagestyle{empty}% Add this command immediately after
+  \pagestyle{empty}
+}

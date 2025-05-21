@@ -1,0 +1,56 @@
+\def\curso{Tercero medio A y B}
+\def\puntaje{7}
+\def\titulo{Resumen}
+\def\subtitulo{Trigonometría}
+\def\fecha{28 de abril, 2025}
+\documentclass[sin nombre]{srs}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{axis}[
+    title=Funciones trigonometricas,
+    eje escolar,
+    x post scale=2,
+    y post scale=2,
+    %y=3cm,
+    cycle list name=linestyles,
+    %extra tick style={grid=major,yticklabel=\empty,xticklabel=\empty},
+    ytick={-1,-0.86,-0.7,-0.5,0,0.5,0.7,0.86,1},
+    yticklabels={$-1$,$-\sqrt{3}/2$,$-\sqrt{2}/2$,$-1/2$,$0$,$1/2$,$\sqrt{2}/2$,$\sqrt{3}/2$,$1$},
+    xtick={0,pi/6,pi/4,pi/3,pi/2,4*pi/6,3*pi/4,5*pi/6,pi,7*pi/6,5*pi/4,
+    4*pi/3,3*pi/2,5*pi/3,7*pi/4,11*pi/6,2*pi},
+    xticklabels={0\textdegree, 30\textdegree, 45\textdegree, 60\textdegree, 90\textdegree, 120\textdegree, 135\textdegree, 150\textdegree, 180\textdegree, 210\textdegree, 225\textdegree, 240\textdegree, 270\textdegree, 300\textdegree, 315\textdegree, 330\textdegree, 360\textdegree},
+    x tick label style={rotate=45},
+    grid=major,
+    tick label style={
+      inner xsep=2pt,
+      inner ysep=2pt,
+      rounded corners
+    },
+    %xticklabel={\pgfmathprintnumber{\tick}\textdegree},
+    %extra y ticks={-1,-0.86,-0.7,-0.5,0.5,0.7,0.86,1},
+    %extra x ticks={pi/6,pi/4,pi/3,pi/2,4*pi/6,3*pi/4,5*pi/6,pi,7*pi/6,5*pi/4,
+    %4*pi/3,3*pi/2,5*pi/3,7*pi/4,11*pi/6,2*pi},
+    %xticklabels={$\dfrac{\pi}{2}$,$\pi$,$\dfrac{3\pi}{2}$,$2\pi$},
+    smooth,
+    enlarge y limits=0.2,
+    trig format plots=rad,
+    legend style={
+      at={(0.95,0.95)},
+      anchor=north east,
+      cells={anchor=west},
+      nodes={
+        inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+        inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+      }
+    }
+    ]
+    \addplot[domain=0:2*pi,no marks] {cos(x)}
+      node[pos=0.01,pin=60:Cos($\theta$\textdegree)] {};
+    \addplot[domain=0:2*pi,no marks] {sin(x)}
+    node[pos=0.25,pin=60:Sen($\theta$\textdegree)] {};
+  \end{axis}
+\end{tikzpicture}%
+
+\end{document}

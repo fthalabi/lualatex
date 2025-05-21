@@ -1,12 +1,24 @@
+\usepackage{fontspec} % For loading OpenType fonts
+\usepackage{unicode-math} % For modern math font handling
+%% Set the main fonts (Libertinus family)
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono} % For code listings
+%% Set the math font
+\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
+\usepackage{setspace}
+\setstretch{0.9}
+
 %%% visual debug
-%\usepackage{lua-visual-debug}
+%%%\usepackage{lua-visual-debug}
 \RequirePackage{expl3}
 \RequirePackage{luacode}
-%\RequirePackage[spanish,es-noshorthands]{babel}
-%\selectlanguage{spanish}
+%%\RequirePackage[spanish,es-noshorthands]{babel}
+%%\selectlanguage{spanish}
 \RequirePackage{polyglossia}
-\setmainlanguage{spanish}
-%\usepackage[fontsize=9pt]{fontsize}
+\setmainlanguage[spanishoperators=all]{spanish}
+
+%%\usepackage[fontsize=9pt]{fontsize}
 \RequirePackage{letltxmacro}
 \RequirePackage[]{amsmath}
 \RequirePackage{icomma}
@@ -24,8 +36,8 @@
     hidelinks,                % remove colored boxes AND colored text
     breaklinks=true,          % Enable breaking of links
 }
-%\urlstyle{same}
-% Define where URLs can break
+\urlstyle{same}
+%%%% Define where URLs can break
 \renewcommand{\UrlBreaks}{\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>}
 
 \RequirePackage{lipsum}
@@ -40,7 +52,8 @@
 shapes.symbols,shapes.geometric,shapes.misc,shapes.callouts,%
 decorations.pathreplacing,calligraphy,arrows.meta,%
 cd,intersections,patterns,patterns.meta,angles,through,
-graphs,graphdrawing,quotes}
+graphs,graphdrawing,quotes,datavisualization,
+datavisualization.formats.functions}
 \usegdlibrary {force}
 \usegdlibrary{trees}
 \usegdlibrary{circular}
@@ -64,7 +77,8 @@ graphs,graphdrawing,quotes}
     sibling distance=1.5cm,
     edge quotes={draw, inner sep=3pt,rounded corners, dashed, fill=white},
     edge={-{Triangle[round]}}
-  }
+  },
+  samples=200,
 }
 
 \pgfplotsset{
@@ -129,16 +143,24 @@ graphs,graphdrawing,quotes}
 \RequirePackage{microtype}
 \RequirePackage[skip=10pt, indent=0pt]{parskip}
 \RequirePackage{fancyhdr}
-\RequirePackage[big,sc,bf,sf]{titlesec}
+%\RequirePackage[big,sc,bf,sf]{titlesec}
+\RequirePackage[]{titlesec}
+\RequirePackage{ragged2e}
+%\RequirePackage{notomath}
+%\usepackage[mono,vvarbb,upint]{notomath}
+%\usepackage[scaled=1.12]{nimbusmononarrow}% typewriter font
+%\usepackage[sfdefault,subscriptcorrection]{notomath}
+%\setmonofont{NotoMono-Regular}[
+%  Path = /Users/fenho/Library/Fonts/,
+%  Extension =  .ttf,
+%  Ligatures = TeX,
+%  Scale=MatchLowercase,
+%  Scale=0.95
+%]
 
-\RequirePackage{notomath}
-\setmonofont{NotoMono-Regular}[
-  Path = /Users/fenho/Library/Fonts/,
-  Extension =  .ttf,
-  Ligatures = TeX,
-  Scale=MatchLowercase,
-  Scale=0.95
-]
+%\RequirePackage[frac,rfrac]{mathfixs}
+\let\originaldfrac\dfrac
+\renewcommand*{\dfrac}[2]{\mathinner{\originaldfrac{#1}{#2}}}
 
 \RequirePackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
 \RequirePackage{csvsimple-l3}
@@ -162,21 +184,20 @@ graphs,graphdrawing,quotes}
 \ExplSyntaxOff
 
 %%% Raíz cerrada
-
-\LetLtxMacro{\OldSqrt}{\sqrt}
-\newcommand{\ClosedSqrt}[1][\hphantom{3}]{\def\DHLindex{#1}\mathpalette\DHLhksqrt}
-\makeatletter
-    \newcommand*\bold@name{bold}
-    \def\DHLhksqrt#1#2{%
-        \setbox0=\hbox{$#1\OldSqrt{#2\,}$}\dimen0=\ht0\relax%
-        % Modify this value to adjust the vertical position of the closing line
-        \advance\dimen0-0.4\ht0\relax% Changed from 0.4 to 0.2
-        %\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
-        \setbox2=\hbox{\vrule width 0.6pt height\ht0 depth -\dimen0}% Added width parameter
-        {\hbox{$#1\expandafter\OldSqrt\expandafter[\DHLindex]{#2\,}$}
-        % Adjust this vertical offset as needed
-        \lower\ifx\math@version\bold@name0.8pt\else0.56pt\fi\box2}% Changed from 0.6/0.4 to 0.8/0.6
-    }
-    % root index positioning and added space at the end
-    \renewcommand*{\sqrt}[2][\ ]{\ClosedSqrt[\leftroot{0}\uproot{1}#1]{#2}\kern0.1em}
-\makeatother
+%\LetLtxMacro{\OldSqrt}{\sqrt}
+%\newcommand{\ClosedSqrt}[1][\hphantom{3}]{\def\DHLindex{#1}\mathpalette\DHLhksqrt}
+%\makeatletter
+%    \newcommand*\bold@name{bold}
+%    \def\DHLhksqrt#1#2{%
+%        \setbox0=\hbox{$#1\OldSqrt{#2\,}$}\dimen0=\ht0\relax%
+%        % Modify this value to adjust the vertical position of the closing line
+%        \advance\dimen0-0.3\ht0\relax% Changed from 0.4 to 0.2 %%% ALTO DE LA RALLA
+%        %\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+%        \setbox2=\hbox{\vrule width 0.6pt height\ht0 depth -\dimen0}% ANCHO DE LA RALLA
+%        {\hbox{$#1\expandafter\OldSqrt\expandafter[\DHLindex]{#2\hspace{1pt}}$}
+%        % Adjust this vertical offset as needed
+%        \lower\ifx\math@version\bold@name0.8pt\else0.6pt\fi\box2}% CAMBIA EL INICIO DE LA LINEA
+%    }
+%    % root index positioning and added space at the end
+%    \renewcommand*{\sqrt}[2][\ ]{\ClosedSqrt[\leftroot{0}\uproot{1}#1]{#2}\kern0.1em}
+%\makeatother

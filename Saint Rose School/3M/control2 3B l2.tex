@@ -1,0 +1,141 @@
+\def\curso{Tercero medio B}
+\def\puntaje{7}
+\def\titulo{Control}
+\def\subtitulo{Trigonometría}
+\def\fecha{28 de abril, 2025}
+\documentclass[]{srs}
+
+\begin{document}
+
+\section*{Objetivo}
+Usar las propiedades geométricas del triángulo rectángulo para determinar el seno y coseno de un ángulo. Además de, usar la
+simetría de las funciones trigonométricas para determinar valores entre $90^{\circ}$ y
+$360^{\circ}$, y la periodicidad para calcular valores afuera del rango $0^{\circ}$ a
+$360^{\circ}$.
+
+\section*{Instrucciones}
+  Cuenta con 40 minutos para completar  la evaluación. Incluya desarrollo en todas
+  sus respuestas, y recuerde marcar o señalizar el resultado final en cada pregunta.
+
+\section*{Criterios de evaluación}
+  En la corrección, se asignará el puntaje a cada pregunta según los siguientes criterios.
+\begin{center}
+  \begin{tblr}{width=\linewidth,colspec={X[1,c]|X[6]}, hline{1,Z} = {1}{-}{}, hline{1,Z} = {2}{-}{},
+      hlines, cells={valign=m}, row{1} = {bg=black!15}}
+      Puntaje asignado & \SetCell{c} Criterios o indicadores \\
+      +50\% & Señala clara y correctamente cuál es la solución o el resultado de la pregunta hecha
+      en el enunciado.\\
+      +50\% & Incluye un desarrollo que relata de manera clara y ordenada los procedimientos
+      \mbox{necesarios} para solucionar la problemática. En caso de estar incompleto o con
+      errores el desarrollo, se asignará puntaje parcial si se muestra dominio de los
+       contenidos y conceptos involucrados.\\
+      0\% &  La respuesta es incorrecta. De haber desarrollo, este tiene errores conceptuales.\\
+  \end{tblr}
+\end{center}
+\separador[2mm]
+
+\begin{preguntas}(1)
+  \pregunta Utilice la geometría del triángulo rectángulo para determinar y demostrar
+  el valor de la función coseno para los ángulos de 30 y 60 grados. [2 puntos]
+  \begin{malla}[height=9cm]
+  \end{malla}
+  \pregunta Llene la tabla con las coordenadas de cada punto marcado en la gráfica
+  de la función coseno. \\\mbox{[3 puntos]}
+\tcbsidebyside[sidebyside adapt=left,blank]{%
+\begin{tikzpicture}
+  \begin{axis}[
+    title=Gráfica de la función coseno,
+    eje escolar,
+    x post scale=1.5,
+    y=3cm,
+    cycle list name=linestyles,
+    extra tick style={grid=major,yticklabel=\empty,xticklabel=\empty},
+    ytick=\empty,
+    xtick=\empty,
+    extra y ticks={-1,-0.86,-0.7,-0.5,0.5,0.7,0.86,1},
+    extra x ticks={pi/6,pi/4,pi/3,pi/2,4*pi/6,3*pi/4,5*pi/6,pi,7*pi/6,5*pi/4,
+    4*pi/3,3*pi/2,5*pi/3,7*pi/4,11*pi/6,2*pi},
+    %xticklabels={$\dfrac{\pi}{2}$,$\pi$,$\dfrac{3\pi}{2}$,$2\pi$},
+    smooth,
+    enlarge y limits=0.2,
+    trig format plots=rad,
+    legend style={
+      at={(0.95,0.95)},
+      anchor=north east,
+      cells={anchor=west},
+      nodes={
+        inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
+        inner ysep=0.1em,  % Reduce vertical spacing between legend entries
+      }
+    }
+    ]
+    \addplot[domain=0:2*pi,no marks] {cos(x)};
+    \addplot[nodes near coords,
+    nodes near coords style={yshift=10pt,fill=white,rounded corners,inner sep=2pt},
+    only marks,point meta=explicit symbolic,
+    only marks,mark=*,mark options={scale=1, fill=black}]
+      coordinates {
+        (0,1) [$A$]
+        (pi/6,0.86) [$B$]
+        (pi/4,0.7) [$C$]
+        (pi/3,0.5) [$D$]
+        (pi/2,0) [$E$]
+        (4*pi/6,-0.5) [$F$]
+        (3*pi/4,-0.7) [$G$]
+        (5*pi/6,-0.86) [$H$]
+        (pi,-1) [$I$]
+        (7*pi/6,-0.86) [$J$]
+        (5*pi/4,-0.7) [$K$]
+        (4*pi/3,-0.5) [$L$]
+        (3*pi/2,0) [$M$]
+        (5*pi/3,0.5) [$N$]
+        (7*pi/4,0.7) [$O$]
+        (11*pi/6,0.86) [$P$]
+        (2*pi,1) [$Q$]
+      };
+  \end{axis}
+\end{tikzpicture}%
+}{%
+\begin{tblr}{colspec={X[1,c]X[2,c]},
+  hlines,vlines, cells={valign=m}, row{1} = {bg=black!15}}
+  Punto & Coordenadas \\
+  $A$ & $\left(\;0^{\circ}\;,\;\; 1\;\right)$ \\
+  $B$ & \\
+  $C$ & \\
+  $D$ & \\
+  $E$ & $\left(\;90^{\circ}\;,\;\; 0\;\right)$ \\
+  $F$ & \\
+  $G$ & \\
+  $H$ & \\
+  $I$ & \\
+  $J$ & \\
+  $K$ & \\
+  $L$ & \\
+  $M$ & \\
+  $N$ & \\
+  $O$ & \\
+  $P$ & \\
+  $Q$ & \\
+\end{tblr}
+}
+\end{preguntas}
+
+Utilice la periodicidad de las funciones trigonométricas para determinar los siguientes
+valores. \\\mbox{[0.5 puntos C/U]}
+
+\begin{preguntas}(2)
+  \pregunta $\text{sen}\,(780^{\circ})$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $\text{cos}\,(-225^{\circ})$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $\text{sen}\,(1080^{\circ})$
+  \begin{malla}[height=3cm]
+  \end{malla}
+  \pregunta $\text{cos}\,(1140^{\circ})$
+  \begin{malla}[height=3cm]
+  \end{malla}
+\end{preguntas}
+
+\end{document}

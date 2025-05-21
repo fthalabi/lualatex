@@ -1,0 +1,194 @@
+\def\titulo{Funciones}
+\def\subtitulo{Traslación y reflexion}
+\def\colegio{Saint Rose School}
+
+\documentclass[]{presentacion}
+
+\begin{document}
+
+\begin{frame}
+\frametitle{Traslación}
+\begin{tikzpicture}
+\begin{axis}[
+    eje escolar,
+    % Declare the function f(x) as an option to the axis
+    declare function={
+        f(\x) = 6 + \x - 4*\x^2 + \x^3;
+    },
+    smooth
+]
+  % Plot f(x)
+
+  \addplot[restrict y to domain=-5:10] {f(x)};
+  %\addplot[restrict y to domain=-5:10] {f(x-2)};
+  \addplot[restrict y to domain=-5:10,dotted] {f(x+3)};
+  \legend{$f(x)$,$f(x+3)$};
+\end{axis}
+\end{tikzpicture}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Traslación horizontal}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    eje escolar,
+    % Declare the function f(x) as an option to the axis
+    declare function={
+        f(\x) = 6 + \x - 4*\x^2 + \x^3;
+    },
+    smooth,
+    no marks,
+    xmin=-6, xmax=8,
+    x post scale=1.4
+    ]
+  \addplot+[restrict y to domain=-5:10] {f(x)};
+  \addplot+[update limits=false,domain=-2:10] {f(x-2)};
+  \addplot+[update limits=false] {f(x+3)};
+
+  \legend{$f(x)$,$f(x-2)$,$f(x+3)$};
+\end{axis}
+\end{tikzpicture}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Traslación vertical}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    eje escolar,
+    % Declare the function f(x) as an option to the axis
+    declare function={
+        f(\x) = 6 + \x - 4*\x^2 + \x^3;
+    },
+    smooth,
+    no marks,
+    xmin=-2, xmax=4,
+    ymin=-8, ymax=8,
+    domain=-2:4,
+    x post scale=1.4,
+    ]
+  \addplot+[] {f(x)};
+  \addplot+[] {f(x)+2};
+  \addplot+[] {f(x)-3};
+  \legend{$f(x)$,$f(x)+2$,$f(x)-3$};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reflexión horizontal}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    eje escolar,
+    % Declare the function f(x) as an option to the axis
+    declare function={
+        f(\x) = 6 + \x - 4*\x^2 + \x^3;
+    },
+    smooth,
+    no marks,
+    xmin=-4, xmax=4,
+    ymin=-8, ymax=8,
+    domain=-4:4,
+    x post scale=1.4,
+    ]
+  \addplot+[] {f(x)};
+  \addplot+[update limits=false] {f(-x)};
+  \legend{$f(x)$,$f(-x)$};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Reflexión vertical}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    eje escolar,
+    % Declare the function f(x) as an option to the axis
+    declare function={
+        f(\x) = 6 + \x - 4*\x^2 + \x^3;
+    },
+    smooth,
+    no marks,
+    xmin=-2, xmax=4,
+    ymin=-8, ymax=8,
+    domain=-4:4,
+    x post scale=1.4,
+    ]
+  \addplot+[] {f(x)};
+  \addplot+[update limits=false] {-f(x)};
+  \legend{$f(x)$,$-f(x)$};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Reflexión asdasd}
+% --- Declare the function f(x) for TikZ ---
+% \tikzdeclarefunction{<name>}(<number of arguments>){<definition using #1, #2, ...>}
+\tikzdeclarefunction{f}(1){exp(-(#1)^2);} % f(#1) = e^(-(#1)^2)
+
+
+\begin{tikzpicture}
+  \datavisualization [
+    % --- General axis setup ---
+    scientific axes, % or cartesian axes
+    x axis={label={$x$}, min value=-6, max value=5, ticks={step=1}},
+    y axis={label={$y$}, min value=0, max value=1.2, ticks={step=0.2}},
+    all axes={grid}, % Add grid to all axes
+
+    % --- Legend setup ---
+    legend={
+        style={draw=gray, fill=white!90!gray, font=\small}, % Style the legend box
+        pos={north east}, % Position of the legend
+        gap=2pt % Space between legend entries
+    },
+
+    % --- Styling for all lines (can be overridden per plot) ---
+    visualize as line/.append style={thick} % Make all lines thick by default
+  ]
+  % --- Plot 1: f(x) ---
+  data [format=function, samples=100] {
+    var x : domain=-6:5; % Domain for this specific plot
+    func y = f(x);       % Use the declared function f
+  }
+  visualize as line={
+    style={blue}, % Color for this plot (and its legend marker)
+    label in legend={text={\(f(x)\)}}
+  }
+
+  % --- Plot 2: f(x-2) ---
+  data [format=function, samples=100] {
+    var x : domain=-4:7; % Adjusted domain: original_domain + 2
+    func y = f(x-2);     % Shifted function
+  }
+  visualize as line={
+    style={red},  % Color for this plot (and its legend marker)
+    label in legend={text={\(f(x-2)\)}}
+  }
+
+  % --- Plot 3: f(x+3) ---
+  data [format=function, samples=100] {
+    var x : domain=-9:2; % Adjusted domain: original_domain - 3
+    func y = f(x+3);     % Shifted function
+  }
+  visualize as line={
+    style={green!60!black}, % Color for this plot (and its legend marker)
+    label in legend={text={\(f(x+3)\)}}
+  }; % Semicolon after the last visualization in the datavisualization environment
+
+\end{tikzpicture}
+
+\end{frame}
+
+
+
+\end{document}

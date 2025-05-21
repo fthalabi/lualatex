@@ -1,0 +1,93 @@
+\def\curso{Tercero medio B}
+\def\puntaje{8}
+\def\titulo{Control}
+\def\subtitulo{Lógica proposicional y conjuntos}
+\def\fecha{28 de abril, 2025}
+\documentclass[]{srs}
+
+\begin{document}
+
+\section*{Objetivo}
+  Plantear una aseveración como una proposición lógica y describir
+  la aseveración como una operación entre conjuntos.
+
+\section*{Instrucciones}
+  Cuenta con 40 minutos para completar  la evaluación. Incluya desarrollo en todas
+  sus respuestas, y recuerde marcar o señalizar el resultado final en cada pregunta.
+
+\section*{Criterios de evaluación}
+  En la corrección, se asignará el puntaje a cada pregunta según los siguientes criterios.
+\begin{center}
+  \begin{tblr}{width=\linewidth,colspec={X[1,c]|X[6]}, hline{1,Z} = {1}{-}{}, hline{1,Z} = {2}{-}{},
+      hlines, cells={valign=m}, row{1} = {bg=black!15}}
+      Puntaje asignado & \SetCell{c} Criterios o indicadores \\
+      +50\% & Señala clara y correctamente cuál es la solución o el resultado de la pregunta hecha
+      en el enunciado.\\
+      +50\% & Incluye un desarrollo que relata de manera clara y ordenada los procedimientos
+      \mbox{necesarios} para solucionar la problemática. En caso de estar incompleto o con
+      errores el desarrollo, se asignará puntaje parcial si se muestra dominio de los
+       contenidos y conceptos involucrados.\\
+      0\% &  La respuesta es incorrecta. De haber desarrollo, este tiene errores conceptuales.\\
+  \end{tblr}
+\end{center}
+\separador[2mm]
+
+\begin{preguntas}(1)
+  \pregunta Rellene la siguiente tabla de verdad y determine el valor de verdad de la proposición. [2 puntos]
+  \begin{mcaja}
+    r \lor \neg\left(\neg p \lor q\right)
+  \end{mcaja}
+  \vspace*{5pt}
+  \begin{tblr}{colspec={X[1,c]X[1,c]X[1,c]X[2,c]X[2,c]X[2,c]X[3,c]},
+    hlines,vlines, cells={valign=m}, row{1} = {bg=black!15},cell{1}{4-6}={bg=white}}
+    $p$ & $q$ & $r$ &  &  &  & $r \lor \neg\left(\neg p \lor q\right)$ \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+  \end{tblr}
+  \pregunta Utilice la siguiente tabla de verdad para estudiar caso a caso la
+  aseveración: \q{Ocurre alguno de los tres eventos pero no todos juntos}, como una proposición lógica.
+  Finalmente, encuentre una fórmula lógica que represente los resultados obtenidos en la tabla, y
+  como dicha fórmula se puede describir como una operación entre los conjuntos $A$, $B$ y $C$.
+  [4 puntos] \\[10pt]
+  \begin{tblr}{colspec={X[1,c]X[1,c]X[1,c]X[2,c]X[2,c]X[2,c]X[3,c]},
+    hlines,vlines, cells={valign=m}, row{1} = {bg=black!15},cell{1}{4-7}={bg=white}}
+    $p$ & $q$ & $r$ &  &  &  &  \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+     &  &  &  &  &  & \\
+  \end{tblr}
+  \begin{respuesta}[height=4cm]
+
+  \end{respuesta}
+
+\end{preguntas}
+
+Considere que cada una de las siguientes aseveraciones involucra tres eventos, y
+describa cada aseveración utilizando álgebra de conjuntos. [0,5 puntos C/U]
+\begin{preguntas}(1)
+\pregunta \q{Ocurren todos los eventos}.
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+\pregunta \q{Ocurre por lo menos uno de los eventos}.
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+\pregunta \q{No ocurre más de uno de los eventos}.
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+\pregunta \q{Ocurren a lo más dos de los eventos}.
+\begin{respuesta}[height=2cm]
+\end{respuesta}
+
+\end{preguntas}
+\end{document}

@@ -1,0 +1,86 @@
+\def\curso{Tercero medio}
+\def\puntaje{11}
+\def\titulo{Tarea}
+\def\subtitulo{Regla de Laplace}
+\def\fecha{16 de mayo, 2025}
+\documentclass[]{srs}
+
+\begin{document}
+
+\section*{Objetivo}
+  Resolver problemas y calcular probabilidades utilizando la regla de Laplace.
+
+\section*{Instrucciones generales}
+  Entregue junto con este enunciado un informe detallando la solución a las
+  distintas problemáticas planteadas. La tarea se puede realizar en parejas
+  (con una mayor escala de dificultad en la corrección), tiene nota acumulativa
+  y debe entregarla en la clase el día 19 de mayo.
+
+\section*{Criterios de evaluación}
+  Para la corrección de esta tarea, se asignará el puntaje según los criterios que
+  se encuentran explicados en la siguiente rubrica.
+
+\begin{center}
+  \begin{tblr}{width=\linewidth,colspec={XXX}, hline{1,Z} = {1}{-}{}, hline{1,Z} = {2}{-}{},
+      hlines,row{3,5,7}={font={\small\raggedright}},row{2,4,6} = {bg=black!15,halign=c},
+      row{1}={halign=c},rows={rowsep=5pt}}
+      %%% CABEZERA
+      Logrado & Suficiente & Insuficiente \\
+      %%% PRESENTACION
+      \SetCell[c=3]{c} Presentación (puntaje por informe)& & \\
+      La tarea se presenta de forma impecable: letra clara y fácilmente
+      legible en todo el documento, sin errores de ortografía.
+      El papel está limpio, sin arrugas, dobleces ni manchas.\mbox{(5 puntos)}&
+      La tarea es legible en su mayor parte, aunque podría mejorar la claridad
+      de la letra en algunas secciones. Presenta errores ortográficos mínimos (1-2)
+      y/o pequeñas imperfecciones en el papel (manchas leves, arrugas menores) que no
+      dificultan significativamente la lectura. \mbox{(3 puntos)}&
+      La letra es difícil de entender en varias secciones, presenta múltiples
+      errores de ortografía (3 o más) y/o el papel está descuidado
+      (arrugado, manchado, doblado) dificultando la revisión y lectura. \mbox{(0 puntos)}\\
+      %%% PROCESOS Y JUSTICACACION
+      \SetCell[c=3]{c} Procesos y justificación (puntaje por pregunta) & & \\
+      Detalla cada paso del procedimiento de forma clara, ordenada y sistemática.
+      Justifica adecuadamente las operaciones, propiedades o estrategias matemáticas
+      utilizadas, demostrando una comprensión profunda del problema y cómo se alcanza
+      la solución. El razonamiento es fácil de seguir. \mbox{(3 puntos)}&
+      Presenta la mayoría de los pasos del procedimiento, aunque algunos podrían ser
+      más detallados o claros. La justificación es adecuada en general, pero puede
+      haber omisiones menores o falta de precisión en alguna explicación.
+      El proceso general es comprensible, aunque con algunas dificultades para
+      seguir el razonamiento en puntos específicos. \mbox{(2 puntos)}&
+      Los pasos del procedimiento son confusos, incompletos, desordenados o ausentes.
+      La justificación es escasa, ausente o incorrecta. No es posible seguir el
+      razonamiento para entender cómo se intentó llegar al resultado. \mbox{(0 puntos)}\\
+      %%% RESULTADOS
+      \SetCell[c=3]{c} Resultados (puntaje por pregunta)& & \\
+      El resultado alcanzado es correcto y está desarrollado completamente, es decir,
+      no se dejaron valores expresados y/o sin simplificar. \mbox{(3 puntos)} &
+      El resultado está casi correcto. El error es aritmético y no conceptual,
+      o simplemente falto desarrollar la respuesta. \mbox{(2 puntos)}&
+      El resultado no responde de ninguna manera al enunciado y/o hay errores que
+      son fundamentales. \mbox{(0 puntos)}\\
+  \end{tblr}
+\end{center}
+
+  Para verificar que la tarea se realizó de manera honesta, es posible que tenga
+  explicar sus procesos y/o resultados en una interrogación.
+
+\newpage
+
+\begin{aviso}[after skip=4em]
+  Debe responder solo dos de los tres problemas.
+\end{aviso}
+
+\begin{preguntas}[after-item-skip=20pt]
+  \pregunta Considere una baraja francesa de 52 cartas ¿Cuál es la probabilidad de que
+  al sacar 6 cartas, 3 sean rojas y 3 negras?
+  \pregunta Se colocan 6 bolas, aleatoriamente, en tres cajas inicialmente vacías.
+  ¿Cuál es la probabilidad que la primera caja contenga exactamente 2 bolas?
+  \pregunta Se colocan, aleatoriamente, 8 libros en un estante. Entre ellos hay
+  una obra en cuatro tomos y otra en tres tomos. ¿Cuál es la probabilidad de que los tomos
+  de cada obra estén juntos?
+
+\end{preguntas}
+
+\end{document}

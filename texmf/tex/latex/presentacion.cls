@@ -187,7 +187,7 @@
 \setbeamertemplate{itemize item}{\tikz[baseline=-.6ex]{\fill (0,0) circle (2pt);}}
 \setbeamertemplate{itemize subitem}{\tikz[baseline=-.6ex]{\draw (0,0) circle (2pt);}}
 \setbeamertemplate{frametitle}{
-  {\sffamily\bfseries\LARGE\insertframetitle}%
+  {\sffamily\bfseries\Large\insertframetitle}%
   \hfill\ifx\insertframesubtitle\@empty\else{\sffamily\large\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\fi
 }
 \setbeamertemplate{frametitle continuation}[from second][\insertcontinuationtext]
@@ -219,23 +219,29 @@
 }
 
 \AtBeginDocument{%
-\begin{frame}{}{}
-  \@ifundefined{curso}%
- {\ClassWarning{ppt}{\string\c urso no esta definido}}%
- {{\usebeamercolor[fg]{title}\bfseries\sffamily\Large\curso\\[-5pt]}}%
-  \@ifundefined{titulo}%
- {\ClassWarning{ppt}{\string\t itulo no esta definido}}%
- {{\usebeamercolor[fg]{title}\bfseries\sffamily\Huge\titulo\\[10pt]}}%
- \@ifundefined{subtitulo}%
- {\ClassWarning{ppt}{\string\s ubtitulo no esta definido}}%
- {{\usebeamercolor[fg]{subtitle}\bfseries\sffamily\LARGE\underline{\subtitulo}\\[70pt]}}
- \@ifundefined{nombre}%
- {\ClassWarning{ppt}{\string\n ombre no esta definido}}%
- {{\usebeamercolor[fg]{normal text}\nombre\\[5pt]}}
- \@ifundefined{colegio}%
- {\ClassWarning{ppt}{\string\c olegio no esta definido}}%
- {{\usebeamercolor[fg]{normal text}\bfseries\large\scshape\colegio\\}}
-\end{frame}
+  \begin{frame}[plain]
+    % --- Curso ---
+    \ifcsdef{curso}
+      {{\usebeamercolor[fg]{title}\bfseries\sffamily\small\curso\relax\\[-5pt]}}
+      {\ClassWarning{ppt}{Macro \string\curso\space is not defined}}%
+    % --- Titulo ---
+    \ifcsdef{titulo}
+      {{\usebeamercolor[fg]{title}\bfseries\sffamily\LARGE\titulo\relax\\[5pt]}}
+      {\ClassWarning{ppt}{Macro \string\titulo\space is not defined}}%
+    % --- Subtitulo ---
+    \ifcsdef{subtitulo}
+      {{\usebeamercolor[fg]{subtitle}\bfseries\sffamily\large\underline{\subtitulo}\relax\\}}
+      {\ClassWarning{ppt}{Macro \string\subtitulo\space is not defined}}%
+    \vspace*{50pt}
+    % --- Nombre ---
+    \ifcsdef{nombre}
+      {{\usebeamercolor[fg]{normal text}\small\nombre\relax\\[5pt]}}
+      {\ClassWarning{ppt}{Macro \string\nombre\space is not defined}}%
+    % --- Colegio ---
+    \ifcsdef{colegio}
+      {{\usebeamercolor[fg]{normal text}\bfseries\small\scshape\colegio\relax\\}}
+      {\ClassWarning{ppt}{Macro \string\colegio\space is not defined}}%
+  \end{frame}%
 }
 
 \pgfplotsset{
@@ -409,24 +415,36 @@ MonokaiYellow,mark=star\\
     },
     enlargelimits=0.01,  % Extends y-axis by 10% beyond ymax
     axis on top,
-    tick label style={
-      fill=ColorBackground,
-      fill opacity=1,
-      inner xsep=2pt,
-      inner ysep=2pt,
-    },
     trig format plots=rad,
     legend style={
       fill=none,
       draw=none,
-      at={(1.05,1)},
+      at={(1.1,1)},
       anchor=north west,
       cells={anchor=west,font=\large},
       nodes={
         inner xsep=0.1em,  % Reduce horizontal spacing between symbol and text
         inner ysep=0.3em,  % Reduce vertical spacing between legend entries
       }
-    }
+    },
+    %legend image post style={draw=ColorNormalText},
+  },
+  numeros con fondo/.style={
+    tick label style={
+      fill=ColorBackground,
+      fill opacity=1,
+      inner xsep=2pt,
+      inner ysep=2pt,
+    },
+  },
+    numeros con fondo redondeado/.style={
+    tick label style={
+      fill=ColorBackground,
+      fill opacity=1,
+      inner xsep=2pt,
+      inner ysep=2pt,
+      rounded corners,
+    },
   },
   leyenda abajo/.style={
     legend style={

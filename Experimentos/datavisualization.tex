@@ -1,0 +1,284 @@
+\documentclass{experimento}
+
+\begin{document}
+  hola
+
+\begin{tikzpicture}
+  \datavisualization [school book axes, visualize as smooth line]
+  data [format=function] {
+  var x : interval [0:2];
+  func y = \value x*\value x*\value x;
+  };
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \datavisualization [school book axes={standard labels},
+    visualize as smooth line,
+    clean ticks,
+    x axis={label=$x$},
+    y axis={label=$f(x)$}]
+    data [format=function] {
+    var x : interval [-1:1];
+    func y = \value x*\value x + 1;
+    };
+\end{tikzpicture}
+
+\tikz \datavisualization data group {function classes} = {
+  data [set=log, format=function] {
+    var x : interval [0.2:2.5];
+    func y = ln(\value x);
+  }
+  data [set=lin, format=function] {
+    var x : interval [-2:2.5];
+    func y = 0.5*\value x;
+  }
+  data [set=squared, format=function] {
+    var x : interval [-1.5:1.5];
+    func y = \value x*\value x;
+  }
+  data [set=exp, format=function] {
+    var x : interval [-2.5:1];
+    func y = exp(\value x);
+  }
+};
+
+\tikz \datavisualization [
+school book axes, all axes={unit length=7.5mm},
+visualize as smooth line/.list={log, lin, squared, exp},
+style sheet=vary dashing]
+data group {function classes};
+
+\tikz \datavisualization [
+  school book axes, all axes={unit length=7.5mm},
+  x axis={label=$x$},
+  y axis={label=$y$},
+  visualize as smooth line/.list={log, lin, squared, exp},
+  log= {label in legend={text=$\log x$}},
+  lin= {label in legend={text=$x/2$}},
+  squared={label in legend={text=$x^2$}},
+  exp= {label in legend={text=$e^x$}},
+  style sheet=vary dashing]
+data group {function classes};
+
+\tikz \datavisualization [
+  school book axes,all axes={unit length=5mm, ticks={step=2}},
+  visualize as smooth line]
+data [format=function] {
+  var t : interval [0:2*pi];
+  func x = \value t * cos(\value t r);
+  func y = \value t * sin(\value t r);
+};
+
+\tikz \datavisualization [
+  scientific axes=clean,
+  y axis={ticks={style={
+  /pgf/number format/fixed,
+  /pgf/number format/fixed zerofill,
+  /pgf/number format/precision=2}}},
+  x axis={ticks={tick suffix=${}^\circ$}},
+  visualize as smooth line/.list={1,2,3,4,5,6},
+  style sheet=vary hue]
+data [format=function] {
+var set : {1,...,6};
+var x : interval [0:50];
+func y = sin(\value x * (\value{set}+10))/(\value{set}+5);
+};
+
+\tikz \datavisualization
+[school book axes, visualize as smooth line/.list={seno,coseno},
+x axis={length=0.8\textwidth,ticks={tick suffix=${}^\circ$},label=$x$,
+  ticks and grid={major at={0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360}}},
+y axis={length=5cm,label=$y$,ticks and grid={major at={
+  -1,-0.86 as $-\sqrt{3}/2$,-0.7 as $-\sqrt{2}/2$,-0.5 as $-1/2$,0,0.5 as $1/2$,0.7 as $\sqrt{2}/2$,0.86 as $\sqrt{3}/2$,1
+  }}},
+  seno={pin in data={text=sen($\theta^\circ$),when=x is 155,pin angle=70,pin length=1cm}},
+  coseno={pin in data={text=cos($\theta^\circ$),when=x is 100,pin angle=225,pin length=2cm}},
+  ]
+data [format=function,set=seno] {
+  var x : interval [0:360];
+  func y = sin(\value x);
+}
+data [format=function,set=coseno] {
+  var x : interval [0:360];
+  func y = cos(\value x);
+};
+
+\tikz \datavisualization
+[school book axes, visualize as smooth line/.list={seno,coseno},
+  x axis={length=0.8\textwidth,ticks={tick suffix=${}^\circ$},label=$x$,
+  ticks and grid={major at={0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360}}},
+  y axis={length=5cm,label=$y$,ticks and grid={major at={
+  -1,-0.86 as $-\sqrt{3}/2$,-0.7 as $-\sqrt{2}/2$,-0.5 as $-1/2$,0,0.5 as $1/2$,0.7 as $\sqrt{2}/2$,0.86 as $\sqrt{3}/2$,1
+  }}},
+  legend=above,
+  clean ticks,
+  seno={label in legend={text=sen($\theta^\circ$)}},
+  coseno={label in legend={text=cos($\theta^\circ$)}},
+  style sheet=vary dashing
+  ]
+data [format=function,set=seno] {
+  var x : interval [0:360];
+  func y = sin(\value x);
+}
+data [format=function,set=coseno] {
+  var x : interval [0:360];
+  func y = cos(\value x);
+};
+
+
+\tikz \datavisualization [scientific axes,
+  x axis={attribute=people, length=2.5cm, ticks=few},
+  y axis={attribute=year},
+  visualize as scatter]
+data {
+year, people
+1900, 100
+1910, 200
+1950, 200
+1960, 250
+2000, 150
+};
+
+%\tikz \datavisualization [
+%  scientific axes=clean,
+%  x axis={attribute=time, ticks={tick unit=ms},
+%  label={elapsed time}},
+%  y axis={attribute=v, ticks={tick unit=m/s},
+%  label={speed of disc}},
+%  all axes=grid,
+%  visualize as line]
+%data {
+%  time, v
+%  0, 0
+%  1, 0.001
+%  2, 0.002
+%  3, 0.004
+%  4, 0.0035
+%  5, 0.0085
+%  6, 0.0135
+%};
+
+%\tikz \datavisualization [
+%  scientific axes={clean, end labels},
+%  visualize as smooth line,
+%  x axis={label=degree $d$,
+%  ticks={tick unit={}^\circ}},
+%  y axis={label=$\tan d$}]
+%data [format=function] {
+%  var x : interval [-80:80];
+%  func y = tan(\value x);
+%};
+
+\tikz \datavisualization [scientific axes,
+  all axes={length=2.5cm}, x axis={ticks=stack},
+  visualize as smooth line]
+data [format=function] {
+  var y : interval[-100:100];
+  func x = \value y*\value y;
+};
+
+\tikz \datavisualization data group {sin functions} = {
+data [format=function] {
+var set : {1,...,8};
+var x : interval [0:50];
+func y = sin(\value x * (\value{set}+10))/(\value{set}+5);
+}
+};
+
+\tikzdatavisualizationset {
+example visualization/.style={
+scientific axes=clean,
+y axis={ticks={style={
+/pgf/number format/fixed,
+/pgf/number format/fixed zerofill,
+/pgf/number format/precision=2}}},
+x axis={ticks={tick suffix=${}^\circ$}},
+1={label in legend={text=$\frac{1}{6}\sin 11x$}},
+2={label in legend={text=$\frac{1}{7}\sin 12x$}},
+3={label in legend={text=$\frac{1}{8}\sin 13x$}},
+4={label in legend={text=$\frac{1}{9}\sin 14x$}},
+5={label in legend={text=$\frac{1}{10}\sin 15x$}},
+6={label in legend={text=$\frac{1}{11}\sin 16x$}},
+7={label in legend={text=$\frac{1}{12}\sin 17x$}},
+8={label in legend={text=$\frac{1}{13}\sin 18x$}}
+}
+}
+
+\tikz \datavisualization [
+  visualize as smooth line/.list=
+  {1,2,3,4,5,6,7,8},
+  example visualization,
+  style sheet=vary dashing]
+data group {sin functions};
+
+\begin{tikzpicture}[baseline]
+  \datavisualization [ school book axes, visualize as smooth line ]
+  data [format=function] {
+  var x : interval [-0.1*pi:4];
+  func y = sin(\value x r);
+  }
+  info' {
+  \fill [red] (visualization cs: x={(.5*pi)}, y=1) circle [radius=2mm];
+    %\draw (visualization cs: x=1,y=-.5) -- (visualization cs: x=2,y=-.5);
+  \draw [decorate,decoration={brace,mirror}]
+    (visualization cs: x=1,y=-.5) -- (visualization cs: x=2,y=-.5)
+    node [midway,xshift=0pt,yshift=-7pt,font=\tiny] {50\%};
+  };
+
+\end{tikzpicture}
+
+\tikz[
+  declare function={
+    f(\x) = sin(\x r)/\x;
+  }
+] \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=8cm,ticks=few}]
+  data [format=function] {
+  var x : interval [0.01:8*pi] samples 1000;
+  func y = f(\value x);
+};
+
+\begin{equation*}
+  \lim_{x \to \infty} \dfrac{\sin(x)}{x}
+\end{equation*}
+
+
+\tikz \datavisualization [
+  school book axes,
+  visualize as smooth line/.list={y11,y21,y31,y41,y51,y61},
+  x axis={length=.8\textwidth},
+  y axis={length=5cm},
+  y61={pin in data={text=$x^6\cdot(1-x)^1$,when=x is 0.88,pin angle=30,pin length=1cm}},
+  y51={pin in data={text=$x^5\cdot(1-x)^1$,when=x is 0.89,pin angle=30,pin length=1cm}},
+  y41={pin in data={text=$x^4\cdot(1-x)^1$,when=x is 0.90,pin angle=30,pin length=1.1cm}},
+  y31={pin in data={text=$x^3\cdot(1-x)^1$,when=x is 0.91,pin angle=30,pin length=1.3cm}},
+  y21={pin in data={text=$x^2\cdot(1-x)^1$,when=x is 0.93,pin angle=30,pin length=1.4cm}},
+  y11={pin in data={text=$x^1\cdot(1-x)^1$,when=x is 0.97,pin angle=30,pin length=1cm}},
+  ]
+data [format=function,set=y61] {
+  var x : interval [0:1] samples 200;
+  func y = 56*(\value x)^6*(1-\value x);
+}
+data [format=function,set=y51] {
+  var x : interval [0:1] samples 200;
+  func y = 42*(\value x)^5*(1-\value x);
+}
+data [format=function,set=y41] {
+  var x : interval [0:1] samples 200;
+  func y = 30*(\value x)^4*(1-\value x);
+}
+data [format=function,set=y31] {
+  var x : interval [0:1] samples 200;
+  func y = 20*(\value x)^3*(1-\value x);
+}
+data [format=function,set=y21] {
+  var x : interval [0:1] samples 200;
+  func y = 12*(\value x)^2*(1-\value x);
+}
+data [format=function,set=y11] {
+  var x : interval [0:1] samples 200;
+  func y = 6*(\value x)^1*(1-\value x);
+};
+
+\end{document}
+
