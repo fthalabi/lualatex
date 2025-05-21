@@ -228,13 +228,17 @@ before-skip=\mytopsep,after-skip=\mytopsep
 }
 
 \NewDocumentEnvironment{alternativasgraficas}{O{}+b}{%
+  \vspace*{\mytopsep}
   \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
   \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
-    leftupper=10pt,fonttitle=\itshape,valign=center,halign=center,
-    coltitle=black,title={\alphalph{\thetcbrasternum})},#1]
+    leftupper=10pt,
+    %fonttitle=\itshape,
+    valign=center,halign=center,
+    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}}\space)},#1]
       #2
 }{%
   \end{tcbitemize}
+  \vspace*{\mytopsep}
 }
 
 \AtBeginDocument{%
@@ -288,13 +292,37 @@ before-skip=\mytopsep,after-skip=\mytopsep
 \end{minipage}
 }{}
 
-\NewDocumentEnvironment{mcaja}{O{}+b}{\newline%
-  \tcboxmath[borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,center,
-  before skip=-2pt,after skip=3pt,#1]%
-  {#2}
-}{}
+%\NewDocumentEnvironment{mcaja}{O{}+b}{\newline%
+%  \tcboxmath[borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,center,
+%  before skip=-2pt,after skip=3pt,#1]%
+%  {#2}
+%}{}
 
 \newcommand{\q}[1]{``#1''}
+
+%\newtcolorbox{doteado}[1][]{enhanced,
+%  borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,center,
+%  before skip=-2pt,after skip=3pt,hbox,#1
+%}
+
+\NewDocumentEnvironment{doteado}{b}{%
+\newline\noindent\hspace*{-4em}\begin{minipage}{\textwidth}
+  \begin{tcolorbox}[enhanced,
+    borderline={1pt}{0pt}{black,dashed},colframe=white,colback=white,center,
+    before skip=-2pt,after skip=3pt,hbox]
+      #1
+  \end{tcolorbox}
+\end{minipage}
+}{}
+
+\NewDocumentEnvironment{centrado}{b}{%
+\newline\noindent\hspace*{-4em}\begin{minipage}{\textwidth}
+  \begin{tcolorbox}[enhanced,blank,center,
+    before skip=-2pt,after skip=3pt,hbox,top=7pt,bottom=7pt]
+      #1
+  \end{tcolorbox}
+\end{minipage}
+}{}
 
 \newtcolorbox{aviso}[1][]{enhanced,
   boxrule=0.4pt,left=5mm,right=2mm,top=2mm,bottom=2mm,
