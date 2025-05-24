@@ -1,13 +1,50 @@
 \usepackage{fontspec} % For loading OpenType fonts
 \usepackage{unicode-math} % For modern math font handling
-%% Set the main fonts (Libertinus family)
-\setmainfont{Libertinus Serif}
-\setsansfont{Libertinus Sans}
-\setmonofont{Libertinus Mono} % For code listings
-%% Set the math font
-\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
-\usepackage{setspace}
-\setstretch{0.9}
+%%% Set the main fonts (Libertinus family)
+%\setmainfont{Libertinus Serif}
+%\setsansfont{Libertinus Sans}
+%\setmonofont{Libertinus Mono} % For code listings
+%%% Set the math font
+%\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
+%\usepackage{setspace}
+%\setstretch{0.9}
+
+%%% letra más alta
+%\setmainfont{Erewhon}
+%\setmathfont{Erewhon Math}
+%%%% You might pair it with a sans-serif like Lato or Fira Sans.
+%\setsansfont{Lato}
+
+%%% Me gusta esta combinacion
+\setmainfont{STIX Two Text}
+\setmathfont{STIX Two Math}
+%% For a matching sans-serif, you might consider something like Fira Sans or a TeX Gyre sans font
+\setsansfont{Fira Sans}[
+  UprightFont = *-Regular,  % For regular text
+  ItalicFont = *-Italic, % For italic text in light weight
+  BoldFont = *-Medium, % Or *-Medium, *-Bold, if you want bold to be a different weight
+  BoldItalicFont = *-MediumItalic % Or *-MediumItalic, *-BoldItalic
+]
+
+%% Meeh
+%\setmainfont{TeX Gyre Pagella}
+%\setmathfont{TeX Gyre Pagella Math}
+%\setsansfont{TeX Gyre Heros} % A Helvetica-like sans-serif
+%\setmonofont{TeX Gyre Cursor} % A Courier-like monospace
+
+%% piola
+%\setmainfont{Erewhon}
+%\setmathfont{Erewhon Math}
+%% You might pair it with a sans-serif like Lato or Fira Sans.
+%\setsansfont{Lato}
+
+%% tiny
+%\setmainfont{Crimson Pro} % Or Crimson Text
+%\setmathfont{STIX Two Math} % Or another suitable math font
+
+%\setmainfont{Noto Sans}
+%\setmathfont{Noto Sans Math} % Or another math font for Noto Serif
+
 
 %%% visual debug
 %%%\usepackage{lua-visual-debug}
@@ -59,6 +96,7 @@ datavisualization.formats.functions}
 \usegdlibrary{circular}
 \usegdlibrary {layered}
 \RequirePackage{pgfornament}
+\RequirePackage{pgf-pie}
 
 \pgfkeys{/pgf/number format/.cd,
   set decimal separator={,},set thousands separator={\,}}
@@ -182,6 +220,16 @@ datavisualization.formats.functions}
 }
 
 \ExplSyntaxOff
+
+%%% PARA MOVER EL RADICAL DE LA RAIZ
+\LetLtxMacro\originalsqrt\sqrt
+\RenewDocumentCommand{\sqrt}{om}{%
+  \IfValueTF{#1}{%
+    \originalsqrt[\leftroot{-2}\uproot{2}#1]{#2}% TRY ADJUSTING 1 and 0
+  }{%
+    \originalsqrt{#2}%
+  }%
+}
 
 %%% Raíz cerrada
 %\LetLtxMacro{\OldSqrt}{\sqrt}

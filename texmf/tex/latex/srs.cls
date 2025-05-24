@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{srs}[2025/03/03 v1.0 Plantilla para SRS]
 
-\PassOptionsToClass{11pt,oneside}{article}
+\PassOptionsToClass{12pt,oneside}{article}
 \LoadClass{article}
 
 \providecommand{\colegio}{School Rose School}
@@ -36,9 +36,8 @@
 \titleformat{\section}{\sffamily\bfseries\Large}{\thesection.}{1.5em}{}
 \titlespacing*{\section}{0pt}{*10}{*5}
 
-\titleformat{\subsection}{\sffamily\bfseries\large}{\thesection.}{1.5em}{}
+\titleformat{\subsection}{\sffamily\bfseries\large}{\thesubsection}{1.5em}{}
 \titlespacing*{\subsection}{0pt}{*4}{*1.5}
-
 
 \geometry{
   paperheight=33cm,
@@ -140,7 +139,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
   on line,boxsep=0pt, left=1pt, right=1pt, top=1pt, bottom=1pt,%
   width=1cm]{#1}}}
 
-\NewTasksEnvironment[label=\superbox{\sffamily\bfseries\arabic*},
+\NewTasksEnvironment[label=\superbox{\sffamily\small\bfseries\arabic*},
 label-width=3em,item-indent=4em,resume=true,
 label-offset=1em,column-sep=10pt,counter=mytaskcounter]{preguntas}[\pregunta](1)
 
@@ -165,10 +164,10 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \newcommand{\alternativa}{\item}
     \begin{minipage}{\linewidth}
       \vspace*{\mytopsep}
-      \begin{enumerate}[label={{\itshape\alph*}\space)},
-        labelsep=10pt,leftmargin=2pt,labelwidth={\widthof{{\itshape a}\space)}},
-        itemindent={\widthof{{\itshape a})}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
-        listparindent=0pt,#1]
+      \begin{enumerate}[label={{\itshape\alph*})},
+        labelsep=1em,leftmargin=2em,labelwidth=2em,
+        labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,before=\raggedright,#1]
           #2      
 }{%
     \end{enumerate}
@@ -183,9 +182,9 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \begin{minipage}{\linewidth}
       \vspace*{\mytopsep}
       \begin{enumerate}[label={{\Roman*.}},
-        labelsep=10pt,leftmargin=25pt,labelwidth={\widthof{{IV.}}},
-        itemindent={\widthof{{IV.}}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
-        listparindent=0pt,#1]
+        labelsep=1em,leftmargin=5em,labelwidth=2em,
+        labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,before=\raggedright,#1]
           #2      
 }{%
     \end{enumerate}
@@ -200,9 +199,9 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \begin{minipage}{\linewidth}
       \vspace*{\mytopsep}
       \begin{enumerate}[label={(\arabic*)},
-        labelsep=10pt,leftmargin=25pt,labelwidth={\widthof{{(8)}}},
-        itemindent={\widthof{(8)}}+10pt,labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
-        listparindent=0pt,#1]
+        labelsep=1em,leftmargin=5em,labelwidth=2em,
+        labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,before=\raggedright,#1]
           #2      
 }{%
     \end{enumerate}
@@ -232,9 +231,9 @@ before-skip=\mytopsep,after-skip=\mytopsep
   \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
   \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
     leftupper=10pt,
-    %fonttitle=\itshape,
-    valign=center,halign=center,
-    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}}\space)},#1]
+    %fonttitle=\itshape, halign=center,
+    valign=center,leftupper=2em,
+    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})},#1]
       #2
 }{%
   \end{tcbitemize}
@@ -315,14 +314,26 @@ before-skip=\mytopsep,after-skip=\mytopsep
 \end{minipage}
 }{}
 
-\NewDocumentEnvironment{centrado}{b}{%
-\newline\noindent\hspace*{-4em}\begin{minipage}{\textwidth}
-  \begin{tcolorbox}[enhanced,blank,center,
-    before skip=-2pt,after skip=3pt,hbox,top=7pt,bottom=7pt]
-      #1
-  \end{tcolorbox}
-\end{minipage}
-}{}
+%\NewDocumentEnvironment{centrado}{b}{%
+%\newline\noindent\hspace*{-4em}\begin{minipage}{\textwidth}
+%  \begin{tcolorbox}[enhanced,blank,center,
+%    before skip=-2pt,after skip=3pt,hbox,top=7pt,bottom=7pt]
+%      #1
+%  \end{tcolorbox}
+%\end{minipage}
+%}{}
+
+\newtcolorbox{centrado}{enhanced,blank,nobeforeafter,halign=center,
+top=7pt,bottom=7pt,breakable=false,before={\newline},left skip=-4em}
+
+%\NewDocumentEnvironment{centrado}{b}{%
+%\newline\begin{minipage}{\textwidth}
+%    #1
+%\end{minipage}
+%}{}
+
+
+
 
 \newtcolorbox{aviso}[1][]{enhanced,
   boxrule=0.4pt,left=5mm,right=2mm,top=2mm,bottom=2mm,
@@ -340,10 +351,31 @@ before-skip=\mytopsep,after-skip=\mytopsep
     },
   drop fuzzy shadow,#1}
 
-  % --- Store the original \maketitle command ---
-\let\OriginalMakeTitle\maketitle
+% 2. Redefine \@maketitle to include \sffamily
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 2em%
+  \begin{center}%
+  \let \footnote \thanks % Important for \thanks command functionality
+  \sffamily % Apply sans-serif to the entire title block
+    {\LARGE \@title \par}%
+    \vskip 1.5em%
+    {\large
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1.5em}
+\makeatother
 
 % --- Redefine \maketitle ---
+\let\OriginalMakeTitle\maketitle
 \renewcommand{\maketitle}{%
   \OriginalMakeTitle% Call the original \maketitle command
   \thispagestyle{empty}% Add this command immediately after
