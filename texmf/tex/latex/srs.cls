@@ -58,19 +58,22 @@
 \setlength{\marginparwidth}{0pt}
 \setlength{\marginparsep}{0pt}
 
-\ifthenelse{\not\boolean{optionone}}{
-\pagestyle{fancy}
-\fancyhfoffset[H]{0pt} 
-\fancyhead[C]{\ifthenelse{\thepage=1}{
-  \begin{tikzpicture}[baseline=-0.2cm]
-    \node (A) {\includegraphics[width=1cm]{srs_logo.pdf}};
-  \end{tikzpicture}
-}{\vspace*{10pt}\normalsize\sffamily{\bfseries\titulo} - \subtitulo}}
-\fancyhead[L]{\ifthenelse{\thepage=1}{\textit{Saint\space Rose\space School\\Departamento\space de\space Matemática}{}}}
-\fancyhead[R]{\ifthenelse{\thepage=1}{\textit{Sir:\space \nombre\\Curso:\space \curso}}{}}
+\ifthenelse{\boolean{optionone}}{\pagestyle{empty}}{\pagestyle{fancy}}
+
+\fancyhfoffset[H]{0pt}
+\fancyhead[C]{%
+\ifnum\value{page}=1
+\begin{tikzpicture}[baseline=-0.2cm]
+  \node (A) {\includegraphics[width=1cm]{srs_logo.pdf}};
+\end{tikzpicture}
+\else
+{\vspace*{10pt}\normalsize\sffamily{\bfseries\titulo} - \subtitulo}
+\fi%
+}
+\fancyhead[L]{\ifnum\value{page}=1 \textit{Saint Rose School\\Departamento de Matemática}\fi}
+\fancyhead[R]{\ifnum\value{page}=1 \textit{Sir: \nombre\\Curso: \curso}\fi}
 \fancyfoot[L,C]{}
-\fancyfoot[R]{\footnotesize{Página {\thepage} de {\pageref*{LastPage}}}}
-}{\pagestyle{empty}}
+\fancyfoot[R]{\footnotesize{Página~\thepage~de~\pageref{LastPage}}}
 
 
 \newtcolorbox{caja}[1][]{enhanced,colback=white,colframe=black,boxrule=1pt,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
@@ -140,7 +143,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
   width=1cm]{#1}}}
 
 \NewTasksEnvironment[label=\superbox{\sffamily\small\bfseries\arabic*},
-label-width=3em,item-indent=4em,resume=true,
+label-width=3em,item-indent=4em,resume=true,item-format={\raggedright},
 label-offset=1em,column-sep=10pt,counter=mytaskcounter]{preguntas}[\pregunta](1)
 
 
@@ -230,17 +233,30 @@ before-skip=\mytopsep,after-skip=\mytopsep
   \vspace*{\mytopsep}
   \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
   \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
-    leftupper=10pt,
     %fonttitle=\itshape, halign=center,
-    valign=center,leftupper=2em,
+    valign=center,leftupper=2em,top=-10pt,boxsep=0pt,
+    breakable=false,nobeforeafter,
     coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})},#1]
       #2
 }{%
-  \end{tcbitemize}
+  \end{tcbitemize}\phantom{.}\vspace*{\mytopsep}
+}
+
+\NewDocumentEnvironment{alternativasgraficasi}{O{}+b}{%
   \vspace*{\mytopsep}
+  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}%
+  \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
+    %fonttitle=\itshape, halign=center,
+    valign=center,leftupper=2em,top=-10pt,boxsep=0pt,
+    breakable=false,nobeforeafter,enhanced,before={\newline},after={hola\newline},
+    coltitle=black,title={{\Romannum{\thetcbrasternum}}.},#1]
+      #2
+}{%
+  \end{tcbitemize}\phantom{.}
 }
 
 \AtBeginDocument{%
+  \pagenumbering{arabic}%
 	\hypersetup{%
 		pdftitle = {\titulo - \subtitulo},%
     pdfauthor = {\nombre},%
@@ -323,8 +339,10 @@ before-skip=\mytopsep,after-skip=\mytopsep
 %\end{minipage}
 %}{}
 
-\newtcolorbox{centrado}{enhanced,blank,nobeforeafter,halign=center,
-top=7pt,bottom=7pt,breakable=false,before={\newline},left skip=-4em}
+\newtcolorbox{centrado}[1][]{enhanced,blank,nobeforeafter,halign=center,valign=center,
+top=7pt,bottom=7pt,breakable=false,before={\newline},left skip=-4em,
+before upper={\tikzset{baseline=(current bounding box.center)}},
+after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
 
 %\NewDocumentEnvironment{centrado}{b}{%
 %\newline\begin{minipage}{\textwidth}
@@ -380,4 +398,27 @@ top=7pt,bottom=7pt,breakable=false,before={\newline},left skip=-4em}
   \OriginalMakeTitle% Call the original \maketitle command
   \thispagestyle{empty}% Add this command immediately after
   \pagestyle{empty}
+}
+
+%%%% CONTERS FOR FIGURES AND TABLES
+
+\newcounter{myfigurecounter}
+\newcommand{\fignueva}{%
+    \refstepcounter{myfigurecounter}%
+    \themyfigurecounter\xspace%
+}
+
+% 3. Define a command to just output the current counter value
+\newcommand{\figactual}{%
+    \themyfigurecounter\xspace%
+}
+\newcounter{mytablecounter}
+\newcommand{\tabnueva}{%
+    \refstepcounter{mytablecounter}%
+    \themytablecounter\xspace%
+}
+
+% 3. Define a command to just output the current counter value
+\newcommand{\tabactual}{%
+    \themytablecounter\xspace%
 }

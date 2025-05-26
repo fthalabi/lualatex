@@ -2,6 +2,22 @@
 
 \begin{document}
   hola
+  \begin{tikzpicture}
+  \datavisualization [school book axes, visualize as smooth line/.list={f1,f2},
+  all axes={length=4cm},
+  x axis={label=$x$,ticks={major at={2,5}}},
+  y axis={label=$y$,ticks={major at={4}}},
+  f1={label in data={text=$L_1$, when=x is 5}},
+  f2={label in data={text=$L_2$, when=x is 1}}]
+  data [format=function,set=f2] {
+  var x : interval [0:6];
+  func y = -4*(\value x)/5 + 4;
+  }
+  data [format=function,set=f1] {
+  var x : interval [0.5:6];
+  func y = 5*(\value x - 2)/4;
+  };
+\end{tikzpicture}
 
 \begin{tikzpicture}
   \datavisualization [school book axes, visualize as smooth line]
