@@ -1,0 +1,301 @@
+\def\titulo{Guía}
+\def\subtitulo{Función cuadrática}
+\def\curso{Segundo medio A}
+\documentclass[sin nombre]{srs}
+\begin{document}
+
+\separador
+\begin{preguntas}[after-item-skip=2cm]
+\pregunta Las soluciones de la ecuación $2\left(x - 1\right)^{2} = 5$, están representadas en:
+\begin{vertical}
+\alternativa $1 \pm \dfrac{\sqrt{5}}{2}$
+\alternativa $-1 \pm \dfrac{\sqrt{5}}{2}$
+\alternativa $1 \pm \sqrt{\dfrac{5}{2}}$
+\alternativa $-1 \pm \sqrt{\dfrac{5}{2}}$
+\alternativa $\dfrac{1 \pm \sqrt{5}}{2}$
+\end{vertical}
+
+\pregunta ¿En cuál de las siguientes ecuaciones cuadráticas, las soluciones son reales e iguales?
+\begin{vertical}
+\alternativa $x^{2} - 4x = -1$
+\alternativa $x^{2} - 2x = -4$
+\alternativa $2x^{2}-9=0$
+\alternativa $2x^{2} + x = 1$
+\alternativa $4x^{2} + 4x =-1$
+\end{vertical}
+
+\pregunta ¿En cuál de las siguientes ecuaciones cuadráticas, las soluciones no son reales?
+\begin{vertical}
+\alternativa $x^{2} + x = 1$
+\alternativa $x^{2} - 2x = 4$
+\alternativa $2x^{2} - 5x = -2$
+\alternativa $x^{2} + x = 2$
+\alternativa $x^{2} + 4x = -8$
+\end{vertical}
+
+\pregunta ¿Cuál(es) de las siguientes ecuaciones no tienen soluciones en los números reales?
+\begin{verticali}
+\alternativa $2\left(x - 2\right)^{2} + 3 = 0$
+\alternativa $-\dfrac{3}{2}\left(x - 1\right)^{2} + 1 = 0$
+\alternativa $2\left(x + \dfrac{1}{2}\right)^{2} + 5 = 0$
+\end{verticali}
+\begin{vertical}
+\alternativa Solo I
+\alternativa Solo II
+\alternativa Solo I y II
+\alternativa Solo I y III
+\alternativa I, II y III
+\end{vertical}
+
+\pregunta ¿Cuál de las siguientes ecuaciones tiene como raíces (o soluciones) a $\left(2 + \sqrt{5}\right)$ y $\left(2 - \sqrt{5}\right)$?
+\begin{vertical}
+\alternativa $x^{2} - 4x + 9=0$
+\alternativa $x^{2} + 4x + 9 =0$
+\alternativa $x^{2} - 4x + 1 =0$
+\alternativa $x^{2} - 4x - 1 = 0$
+\alternativa $x^{2}-2x-1=0$
+\end{vertical}
+
+\pregunta Con respecto a la parábola de ecuación: $y = -x^{2} + 4x - 3$, se afirma que:
+\begin{verticali}
+\alternativa Intercepta al eje y en $\left(0,-3\right)$.
+\alternativa Intercepta al eje x en dos puntos.
+\alternativa Su vértice es el punto $\left(-2,-7\right)$.
+\end{verticali}
+¿Cuál(es) de las afirmaciones anteriores es (son) verdadera(s)?
+\begin{vertical}
+\alternativa Solo I
+\alternativa Solo II
+\alternativa Solo I y II
+\alternativa Solo II y III
+\alternativa I, II y III
+\end{vertical}
+
+\pregunta ¿Cuál de los siguientes gráficos representa mejor a la función cuadrática: $y = x^{2} - 6x + 9$?
+\begin{alternativasgraficas}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-2.5:0.5];
+  func y = f(\value x + 1) + 0.5;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-0.5:2.5];
+  func y = f(\value x - 1) + 0.5;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-2.5:0.5];
+  func y = f(\value x + 1);
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-0.5:2.5];
+  func y = f(\value x - 1);
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-2:1];
+  func y = -f(\value x + 0.5)+2;
+  };
+\end{tikzpicture}
+\end{alternativasgraficas}
+
+\pregunta Sea la función f definida en los reales, mediante $f\left(x\right) = -2\left(x - 3\right)\left(x - 5\right)$, entonces las coordenadas del vértice de la parábola asociada a su gráfica son:
+\begin{vertical}
+\alternativa $\left(4,-2\right)$
+\alternativa $\left(4, 2\right)$
+\alternativa $\left(4,-1\right)$
+\alternativa $\left(4, 1\right)$
+\alternativa $\left(2,-6\right)$
+\end{vertical}
+
+\pregunta ¿Cuál de los siguientes gráficos representa mejor a la función: $f\left(x\right) = \left(x + 2\right)^{2} + 1$?
+\begin{alternativasgraficas}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-0.5:2.5];
+  func y = f(\value x - 1) + 0.5;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-0.5,max value=3},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-2.5:0.5];
+  func y = f(\value x + 1) + 0.5;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-3,max value=0.5},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-1.5:1.5];
+  func y = -f(\value x) -0.5;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-1,max value=2.5},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-1.5:1.5];
+  func y = f(\value x) -0.8;
+  };
+\end{tikzpicture}
+\alternativa%
+ \begin{tikzpicture}[declare function={f(\x)=(\x)^2;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=3cm,ticks={major at={0}}},
+  x axis={label=$x$,min value=-3,max value=3},
+  y axis={label=$y$,min value=-3,max value=0.5},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-0.5:2.5];
+  func y = -f(\value x - 1);
+  };
+\end{tikzpicture}
+\end{alternativasgraficas}
+
+\pregunta ¿Cuál de las siguientes afirmaciones es FALSA con respecto a la función $f\left(x\right) = -\left(x^{2} + 4\right)$ si el dominio son todos los números reales?
+\begin{vertical}
+\alternativa La gráfica no intersecta al eje x.
+\alternativa El vértice de la parábola asociada a esta función está en el eje y.
+\alternativa El vértice de la parábola asociada a esta función está en el eje x.
+\alternativa Su gráfica tiene al eje y como eje de simetría.
+\alternativa El valor de x donde alcanza su máximo es $x = 0$.
+\end{vertical}
+
+\pregunta ¿Cuál de las siguientes funciones definidas en los reales, tiene como gráfico la parábola de la figura?
+\begin{centrado}
+ \begin{tikzpicture}[declare function={f(\x)=(\x^2)/2 -3*\x +4;}]
+  \datavisualization [school book axes, visualize as smooth line,
+  all axes={length=4cm},
+  x axis={label=$x$,min value=-1,max value=7,ticks={major at={2,4}}},
+  y axis={label=$y$,min value=-1,max value=6,ticks={major at={4}}},
+  %f1={label in data={text=$L_1$, when=x is 5}},
+  %f2={label in data={text=$L_2$, when=x is 1}}
+  ]
+  data [format=function] {
+  var x : interval [-0.5:6.4];
+  func y = f(\value x);
+  };
+\end{tikzpicture}
+\end{centrado}
+\begin{vertical}
+\alternativa $g\left(x\right) = \left(x - 3\right)^{2} + 1$
+\alternativa $h\left(x\right) = -\left(x - 3\right)^{2} - 1$
+\alternativa $j\left(x\right) = \left(x - 3\right)^{2} + 2$
+\alternativa $k\left(x\right) = 2\left(x - 2\right)\left(x - 4\right)$
+\alternativa $m\left(x\right)=\dfrac{1}{2}\left(x-2\right)\left(x - 4\right)$
+\end{vertical}
+
+\pregunta Sea f una función definida en los reales mediante $f\left(x\right) = x^{2} - ax + 6$, con $a \neq 0$. Si el valor de $x$ donde la función alcanza su valor mínimo es $-2$, entonces $a =$
+\begin{vertical}
+\alternativa $4$
+\alternativa $-8$
+\alternativa $-4$
+\alternativa $4~ \text{ ó }~ -4$
+\alternativa $-\sqrt{32} ~\text{ ó }~ \sqrt{32}$.
+\end{vertical}
+
+\pregunta La función $h\left(t\right) = pt - 5t^{2}$, modela la altura (en metros) que alcanza un proyectil al ser lanzado verticalmente hacia arriba a los $t$ segundos. Se puede determinar esta función si se sabe que:
+\begin{verticaln}
+\alternativa A los 2 segundos alcanza una altura de 30 metros.
+\alternativa La altura máxima la alcanza a los 2,5 segundos.
+\end{verticaln}
+\begin{vertical}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{vertical}
+
+\pregunta La altura $h\left(t\right)$ alcanzada, medida en metros, de un proyectil se modela mediante la función $h\left(t\right) = 20t - 5t^{2}$, donde t es la cantidad de segundos que transcurren hasta que alcanza dicha altura. ¿Cuál(es) de las siguientes afirmaciones es (son) verdadera(s)?
+\begin{verticali}
+\alternativa A los 4 segundos llega al suelo.
+\alternativa A los 2 segundos alcanza su altura máxima.
+\alternativa Al primer y tercer segundo después de ser lanzado alcanza la misma altura.
+\end{verticali}
+\begin{vertical}
+\alternativa Solo I
+\alternativa Solo II
+\alternativa Solo I y II
+\alternativa Solo II y III
+\alternativa I, II y III
+\end{vertical}
+
+\end{preguntas}
+\end{document}

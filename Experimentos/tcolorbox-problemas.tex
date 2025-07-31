@@ -1,0 +1,336 @@
+\documentclass{experimento}
+
+\newcounter{nproblema}
+\setcounter{nproblema}{1}
+
+\NewDocumentCommand{\superbox}{m}{%
+\ifthenelse{\value{nproblema} < 100}{%
+\tcbox[colback=black!60, colframe=black!60, coltext=white,%
+  on line,boxsep=0pt, left=1pt, right=1pt, top=1pt, bottom=1pt,%
+  width=1cm]{\makebox[\widthof{22}][c]{\sffamily\small\bfseries #1}}}{%
+\tcbox[colback=black!60, colframe=black!60, coltext=white,%
+  on line,boxsep=0pt, left=1pt, right=1pt, top=1pt, bottom=1pt,%
+  width=1cm]{\sffamily\small\bfseries #1}}}
+
+\NewDocumentEnvironment{preguntas}{O{}+b}{%
+  \NewDocumentCommand{\pregunta}{O{}}{\tcbitem[##1,blankest]%
+    \superbox{\thenproblema}\stepcounter{nproblema} \hspace{1em}}
+  \begin{tcbitemize}[raster columns=1,lefttitle=0pt,blankest,
+    %fonttitle=\itshape, halign=center,
+    valign=center,leftupper=2em,top=0pt,boxsep=0pt,
+    breakable=false,nobeforeafter,#1]
+      #2
+}{%
+  \end{tcbitemize}
+}
+
+\newtcolorbox{malla}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay={\begin{tcbclipinterior}
+  \draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},
+  height=#1cm}
+
+\newtcolorbox{respuesta}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay boxed title={\begin{tcbclipinterior}
+  \draw[help lines,step=5mm] (interior.south west) grid[xstep=0] (interior.north east);\end{tcbclipinterior}},title=Respuesta,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
+  boxed title style={colback=white},coltitle=black,height=#1cm}
+
+\newtcolorbox{centrado}[1][]{enhanced,blank,nobeforeafter,halign=center,valign=center,
+top=7pt,bottom=7pt,breakable=false,before={\newline},
+before upper={\tikzset{baseline=(current bounding box.center)}},
+after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
+
+%% Setting values
+\newlength{\myitemsep}
+\setlength{\myitemsep}{5pt}
+\newlength{\mytopsep}
+\setlength{\mytopsep}{10pt}
+
+\NewDocumentEnvironment{alternativas}{O{}+b}%
+{%
+    \newline
+    \newcommand{\alternativa}{\item}
+    \begin{minipage}{\linewidth}
+      \vspace*{\mytopsep}
+      \begin{enumerate}[label={{\itshape\alph*})},
+        labelsep=1em,leftmargin=2em,labelwidth=2em,
+        labelindent=0pt,itemsep=\myitemsep,topsep=\mytopsep,
+        listparindent=0pt,before=\raggedright,#1]
+          #2
+}{%
+    \end{enumerate}
+    \vspace*{\mytopsep}
+  \end{minipage}
+}
+
+\NewDocumentEnvironment{alternativasgraficas}{O{}+b}{%
+  \vspace*{\mytopsep}
+  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
+  \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
+    %fonttitle=\itshape, halign=center,
+    valign=center,leftupper=2em,top=-10pt,boxsep=0pt,
+    breakable=false,nobeforeafter,
+    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})},#1]
+      #2
+}{%
+  \end{tcbitemize}\phantom{.}\vspace*{\mytopsep}
+}
+
+% We define a command that does nothing, just acts as a marker.
+% This is what we will split the environment's content on.
+\newcommand{\siguiente}{}
+
+\ExplSyntaxOn % Activate LaTeX3 programming syntax
+
+% --- Variable Declarations ---
+% A sequence to hold the parts of the body after splitting.
+\seq_new:N \l_myenv_body_parts_seq
+% A token list to hold the first part of the content.
+\tl_new:N \l_myenv_part_one_tl
+% A token list to hold the second part of the content.
+\tl_new:N \l_myenv_part_two_tl
+
+% --- Internal Processing Function ---
+% This function takes the body of the environment (#1) and splits it.
+\cs_new_protected:Npn \myenv_process_body:n #1
+  {
+    % Split the input (#1) by the \siguiente command and store the parts in our sequence.
+    \seq_set_split:Nnn \l_myenv_body_parts_seq { \siguiente } { #1 }
+
+    % Take the first item from the sequence and store it in \l_myenv_part_one_tl
+    \seq_pop_left:NN \l_myenv_body_parts_seq \l_myenv_part_one_tl
+
+    % Take all remaining items in the sequence, join them together,
+    % and store the result in \l_myenv_part_two_tl.
+    % This correctly handles cases with no \siguiente or multiple \siguiente's.
+    \tl_set:Nx \l_myenv_part_two_tl { \seq_use:Nn \l_myenv_body_parts_seq { } }
+  }
+
+% --- The Environment Definition ---
+\NewDocumentEnvironment{columnas}{ O{0.5} +b }
+  {
+    % 1. Process the entire body (#1) of the environment using our helper function.
+    \myenv_process_body:n { #2 }
+
+    % 2. Now you can use the processed parts.
+    % We use \tl_use:N to output the content stored in our token list variables.
+    % For this example, we'll format them directly.
+    \begin{tcolorbox}[sidebyside,sidebyside~adapt=right,blankest,lefthand~ratio=#1]
+    \tl_use:N \l_myenv_part_one_tl
+    \tcblower
+    \tl_use:N \l_myenv_part_two_tl
+    \end{tcolorbox}
+  }
+  {
+    % The "end" part of the environment is empty in this case.
+  }
+
+\ExplSyntaxOff % Deactivate LaTeX3 syntax
+
+\NewTasksEnvironment[label={{\itshape\alph*})},%
+label-width=2em,item-indent=3em,item-format={\raggedright},%
+label-offset=1em]{talternativas}[\alternativa](1)
+
+\NewTasksEnvironment[label={{\Roman*.}},
+label-width=2em,item-indent=6em,item-format={\raggedright},%
+label-offset=1em]{topciones}[\opcion](1)
+
+\NewTasksEnvironment[label={(\arabic*)},
+label-width=2em,item-indent=6em,item-format={\raggedright},%
+label-offset=1em]{topcionesn}[\opcion](1)
+
+\DeclareTotalTColorBox{\doscolumnas}{ O{0.5} +m +m }{%
+  sidebyside,sidebyside adapt=right,blankest,lefthand ratio=#1}%
+  {#2\tcblower #3}
+
+
+
+\begin{document}
+
+\doscolumnas[0.7]{%
+  \begin{topciones}%
+  \opcion asdasd hola hola hola hola hola hola hola hola hola hola hola
+  \opcion asdasd hola hola hola hola hola
+  \opcion asdasd hola hola
+  \end{topciones}%
+  \begin{talternativas}
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \end{talternativas}
+}{
+  \begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1.5,0) node [below] {$-6$} -- (0,1) node [right] {1};
+  \end{tikzpicture}
+}
+
+\begin{columnas}[0.7]
+  \begin{topciones}
+  \opcion asdasd hola hola hola hola hola hola hola hola hola hola hola
+  \opcion asdasd hola hola hola hola hola
+  \opcion asdasd hola hola
+  \end{topciones}
+  \begin{talternativas}
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \end{talternativas}
+\siguiente
+  \begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1.5,0) node [below] {$-6$} -- (0,1) node [right] {1};
+  \end{tikzpicture}
+\end{columnas}
+
+\begin{talternativas}
+\alternativa as asdasdasd
+\alternativa as asdasdasd
+\alternativa as asdasdasd
+\alternativa as asdasdasd
+\alternativa as asdasdasd
+\end{talternativas}
+
+\begin{topciones}
+\opcion asdasd
+\opcion asdasd
+\opcion asdasd
+\opcion asdasd
+\end{topciones}
+
+\begin{topcionesn}
+\opcion asdasd
+\opcion asdasd
+\opcion asdasd
+\opcion asdasd
+\end{topcionesn}
+
+%\begin{myenv}
+%Here is the first part of the text, which will become argument \#1.
+%\siguiente
+%And this is all the text that comes after the mybreak command. It will become argument \#2.
+%\end{myenv}
+%
+%\section*{Case with no mybreak}
+%\begin{myenv}
+%This entire block of text contains no mybreak command. The whole content goes to the first part.
+%\end{myenv}
+%
+%\section*{Case with multiple breaks}
+%\begin{myenv}
+%This is the first part.
+%\siguiente
+%This is the second part.
+%\siguiente
+%This part is also included in the second part. Everything after the first \texttt{\string\siguiente} is grouped together.
+%\end{myenv}
+%
+
+hola \superbox{1}
+
+\begin{preguntas}
+\pregunta \lipsum[1]
+\begin{malla}[2]
+\end{malla}
+\pregunta \lipsum[1-2]
+\pregunta \lipsum[3]
+\begin{respuesta}[2]
+\end{respuesta}
+\pregunta hola como estas?
+\begin{centrado}[Holas :)]
+  \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-2,0) -- (3,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,2) node [above] {$y$};
+  %%% punto destacado
+  %\coordinate (P) at ($(A)!.5!(B)$);
+  %\draw[dashed] (P) -- (P -| 0,0) node [left] {$-3$};
+  %\draw[dashed] (P) -- (P |- 0,0) node [above] {$2$};
+  %\fill (P) circle[radius=2pt];
+  %% curva
+  \coordinate (A) at (-1,-1);
+  \coordinate (B) at (2,-1);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,2) (B);
+  \node[name intersections={of=EjeX and Parabola,name=I},above left] at (I-1) {$-2$};
+  \node[name intersections={of=EjeX and Parabola,name=I},above right] at (I-2) {$5$};
+  \end{tikzpicture}
+\end{centrado}
+\begin{alternativas}
+  \alternativa aasdk
+  \alternativa aasdk
+  \alternativa aasdk
+  \alternativa aasdk
+\end{alternativas}
+\pregunta \lipsum[4-7]
+\end{preguntas}
+
+hoaskdasok s
+
+\begin{preguntas}
+\pregunta \lipsum[1]
+\begin{alternativas}
+  \alternativa aasdk
+  \alternativa aasdk
+  \alternativa aasdk
+  \alternativa aasdk
+\end{alternativas}
+\pregunta \lipsum[1-2]
+\pregunta \lipsum[3]
+\begin{tasks}(2)
+\task \\
+\begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1.5,0) node [below] {$-6$} -- (0,1) node [right] {1};
+\end{tikzpicture}
+\task \\
+\begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1,0) node [below] {$-1$} -- (0,1.5) node [right] {6};
+\end{tikzpicture}
+\task \\
+\begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (0,-1) node [left] {$-1$} -- (1.5,0) node [below] {6};
+\end{tikzpicture}
+\task \\
+\begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (0,1) node [left] {$1$} -- (1.5,0) node [below] {6};
+\end{tikzpicture}
+\task \\
+\begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (0,1.5) node [left] {6} -- (0.7,0) node [below] {1};
+\end{tikzpicture}
+\end{tasks}
+\pregunta \lipsum[4-5]
+\begin{columnas}[0.7]
+  \begin{topciones}
+  \opcion asdasd hola hola hola hola hola hola hola hola hola hola hola
+  \opcion asdasd hola hola hola hola hola
+  \opcion asdasd hola hola
+  \end{topciones}
+  \begin{talternativas}
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \alternativa as asdasdasd
+  \end{talternativas}
+\siguiente
+  \begin{tikzpicture}[scale=0.75]
+  \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1.5,0) node [below] {$-6$} -- (0,1) node [right] {1};
+  \end{tikzpicture}
+\end{columnas}
+\pregunta \lipsum[4-7]
+
+\end{preguntas}
+
+
+\end{document}

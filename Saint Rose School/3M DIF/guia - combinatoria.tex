@@ -1,0 +1,414 @@
+\def\titulo{Guía}
+\def\subtitulo{Combinatoria y probabilidades}
+\def\curso{Tercero medio}
+\documentclass[sin nombre]{srs}
+\begin{document}
+
+\separador
+
+\begin{preguntas}[after-item-skip=2cm]
+\pregunta Una línea de buses llega a 20 ciudades de todo el país. Si se requieren hacer carteles que se pondrán en cada bus, indicando la ciudad de origen y de llegada del trayecto. ¿Cuántos carteles distintos habrá que confeccionar?
+\begin{vertical}
+\alternativa $20^2$
+\alternativa $\binom{20}{2}$
+\alternativa $\binom{19}{2}$
+\alternativa $20 \cdot 19$
+\alternativa $40$
+\end{vertical}
+
+\pregunta Un grupo de 6 alumnos han realizado un trabajo de investigación, si se van a elegir dos al azar para que realicen la presentación, ¿de cuántas maneras se puede hacer esta elección?
+\begin{vertical}
+\alternativa $30$
+\alternativa $36$
+\alternativa $15$
+\alternativa $20$
+\alternativa $12$
+\end{vertical}
+
+\pregunta En una caja hay seis bolitas numeradas del 1 al 6, si se eligen 3 sin reposición para formar un número de 3 cifras, ¿cuántos de estos números se pueden formar?
+\begin{vertical}
+\alternativa $15$
+\alternativa $20$
+\alternativa $60$
+\alternativa $120$
+\alternativa $216$
+\end{vertical}
+
+\pregunta Una clave de internet está compuesta por 4 dígitos los cuales no pueden ser los cuatro iguales, ¿cuántas claves distintas se pueden formar?
+\begin{vertical}
+\alternativa $10 \cdot 9 \cdot 8 \cdot 7$
+\alternativa $\binom{10}{4} \cdot 4!$
+\alternativa $\binom{10}{4} \cdot 4! - 10$
+\alternativa $10^4 - 10$
+\alternativa $9 \cdot 10^3 - 9$
+\end{vertical}
+
+\pregunta En una fila de 5 sillas se sientan dos hombres y tres mujeres, ¿de cuántas maneras se pueden sentar, si los del mismo género deben quedar juntos?
+\begin{vertical}
+\alternativa $2$
+\alternativa $2 \cdot 3$
+\alternativa $2! \cdot 3!$
+\alternativa $2! \cdot 3! \cdot 2$
+\alternativa $2 \cdot 3 \cdot 2$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿de cuántas maneras se pueden sentar de modo que queden alternados por género?
+\begin{vertical}
+\alternativa $2$
+\alternativa $2 \cdot 3$
+\alternativa $2! \cdot 3!$
+\alternativa $2! \cdot 3! \cdot 2$
+\alternativa $2 \cdot 3 \cdot 2$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿de cuántas maneras se pueden sentar de modo que los hombres queden juntos?
+\begin{vertical}
+\alternativa $2$
+\alternativa $2 \cdot 3$
+\alternativa $2! \cdot 3!$
+\alternativa $2! \cdot 3! \cdot 2$
+\alternativa $4! \cdot 2!$
+\end{vertical}
+
+\pregunta Una persona tiene 6 pantalones y 4 camisas, si elige 5 prendas, ¿de cuántas maneras puede elegir 3 pantalones y 2 camisas?
+\begin{vertical}
+\alternativa $26$
+\alternativa $120$
+\alternativa $132$
+\alternativa $240$
+\alternativa $1\,440$
+\end{vertical}
+
+\pregunta Se ordenan 6 libros distintos en un librero, uno al lado de otro, ¿de cuántas maneras se pueden ordenar de modo que dos en específico deben quedar al centro?
+\begin{vertical}
+\alternativa $4!$
+\alternativa $5!$
+\alternativa $4! \cdot 2!$
+\alternativa $4 \cdot 2$
+\alternativa $5! \cdot 2!$
+\end{vertical}
+
+\pregunta ¿De cuántas maneras se pueden ordenar en una fila 5 fichas rojas y 4 verdes?
+\begin{vertical}
+\alternativa $9$
+\alternativa $9!$
+\alternativa $9 \cdot 8$
+\alternativa $63$
+\alternativa $126$
+\end{vertical}
+
+\pregunta ¿De cuántas maneras se pueden ordenar en fila las 7 letras de la palabra CARACAS?
+\begin{vertical}
+\alternativa $7!$
+\alternativa $7 \cdot 6$
+\alternativa $420$
+\alternativa $120$
+\alternativa $60$
+\end{vertical}
+
+\pregunta Francisco, Leonardo, Eduardo, Sebastián y Carlos se presentan a una interrogación oral para un examen final de un curso. Si el profesor debe elegir solo tres y entre ellos debe estar Carlos, ¿de cuántas maneras puede hacer esta elección?
+\begin{vertical}
+\alternativa $6$
+\alternativa $8$
+\alternativa $10$
+\alternativa $12$
+\alternativa $20$
+\end{vertical}
+
+\pregunta En un restaurante, el menú está compuesto por un plato de fondo, un acompañamiento y un postre, se puede determinar la cantidad de postres distintos que existen sabiendo que:
+\begin{verticaln}
+\alternativa La cantidad de menús distintos que se pueden armar son $12$.
+\alternativa Entre el plato de fondo y el acompañamiento existen $6$ posibilidades.
+\end{verticaln}
+\begin{vertical}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{vertical}
+
+\pregunta A una conferencia, asisten 20 científicos, si se van a formar comisiones integradas por tres o cuatro miembros, ¿cuántas comisiones se pueden formar?
+\begin{vertical}
+\alternativa $\binom{20}{3} \cdot \binom{20}{4}$
+\alternativa $\binom{20}{3} + \binom{20}{4}$
+\alternativa $\binom{20}{3} \cdot 3! + \binom{20}{4} \cdot 4!$
+\alternativa $\binom{20}{3} \cdot \binom{20}{4} \cdot 3! \cdot 4!$
+\alternativa $\binom{20}{3} \cdot \binom{20}{4} \cdot 7!$
+\end{vertical}
+
+\pregunta De los 50 asistentes a una presentación de un nuevo producto, se sortearán tres regalos iguales. Si una misma persona no puede ganar más de un premio, ¿de cuantas maneras posibles se pueden repartir los obsequios?
+\begin{vertical}
+\alternativa $50 \cdot 49 \cdot 48$
+\alternativa $50^3$
+\alternativa $\binom{50}{3}$
+\alternativa $\binom{52}{3}$
+\alternativa $\dfrac{50!}{3!}$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, si una misma persona puede ganar más de un premio, ¿de cuantas maneras posibles se pueden repartir los obsequios?
+\begin{vertical}
+\alternativa $50 \cdot 49 \cdot 48$
+\alternativa $50^3$
+\alternativa $\binom{50}{3}$
+\alternativa $\binom{52}{3}$
+\alternativa $\dfrac{50!}{3!}$
+\end{vertical}
+
+\pregunta Con los dígitos del 1 al 5, se forman todos los números posibles de tres cifras, pudiéndose repetir las cifras, ¿cuántos números de estos son pares?
+\begin{vertical}
+\alternativa $12$
+\alternativa $20$
+\alternativa $25$
+\alternativa $40$
+\alternativa $50$
+\end{vertical}
+
+\pregunta En una carrera automovilística compiten 5 autos, de colores verde, rojo, amarillo, azul y blanco. Suponiendo que no puede haber empates entre ellos, ¿de cuántas maneras pueden llegar a la meta si se sabe que los vehículos de colores rojo y verde llegaron en los primeros lugares?
+\begin{vertical}
+\alternativa $3!$
+\alternativa $4!$
+\alternativa $2! \cdot 3!$
+\alternativa $2! \cdot 3$
+\alternativa $4! \cdot 2$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿de cuantas maneras pueden llegar a la meta si se sabe que el amarillo o el blanco ganó la competencia?
+\begin{vertical}
+\alternativa $3!$
+\alternativa $4!$
+\alternativa $2! \cdot 3!$
+\alternativa $2! \cdot 3$
+\alternativa $4! \cdot 2$
+\end{vertical}
+
+\pregunta Las patentes en un cierto país están formadas por tres letras, las cuales son elegidas de un alfabeto de 25 letras, seguidas por tres dígitos. Si las letras no se pueden repetir y los dígitos si, ¿cuántas patentes distintas se pueden formar?
+\begin{vertical}
+\alternativa $\binom{25}{3} \cdot 10^3$
+\alternativa $\binom{25}{3} \cdot 3! \cdot 10^3$
+\alternativa $\binom{25}{3} \cdot 3! \cdot 10 \cdot 9 \cdot 8$
+\alternativa $\binom{25}{3} \cdot 10 \cdot 9 \cdot 8$
+\alternativa $\binom{25}{3} \cdot 9 \cdot 10^2$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿cuántas patentes se pueden formar si no se pueden repetir ni las letras ni los dígitos?
+\begin{vertical}
+\alternativa $\binom{25}{3} \cdot 10^3$
+\alternativa $\binom{25}{3} \cdot 3! \cdot 10^3$
+\alternativa $\binom{25}{3} \cdot 3! \cdot 10 \cdot 9 \cdot 8$
+\alternativa $\binom{25}{3} \cdot 10 \cdot 9 \cdot 8$
+\alternativa $\binom{25}{3} \cdot 9 \cdot 10^2$
+\end{vertical}
+
+\pregunta En un restaurante, se ofrece un menú de almuerzo que consiste en entrada, plato de fondo con ensalada y postre. Si hay tres tipos de entrada, el plato de fondo puede ser carne o pollo, para la ensalada hay tres posibilidades y el postre puede ser fruta o helado. ¿Cuántos menús existen que contengan pollo?
+\begin{vertical}
+\alternativa $6$
+\alternativa $8$
+\alternativa $9$
+\alternativa $12$
+\alternativa $18$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿cuántos menús no tienen carne como plato de fondo y helado como postre?
+\begin{vertical}
+\alternativa $6$
+\alternativa $8$
+\alternativa $9$
+\alternativa $12$
+\alternativa $18$
+\end{vertical}
+
+\pregunta Se tienen una cierta cantidad de personas, se puede determinar cuántas son, sabiendo que:
+\begin{verticaln}
+\alternativa Existen $7!$ formas de ordenarlas en línea.
+\alternativa Se pueden formar $21$ parejas.
+\end{verticaln}
+\begin{vertical}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{vertical}
+
+\pregunta ¿Cuántos números de 4 cifras, se pueden formar si terminan en una cifra mayor que 6?
+\begin{vertical}
+\alternativa $1\,512$
+\alternativa $2\,700$
+\alternativa $3\,600$
+\alternativa $3\,000$
+\alternativa $4\,000$
+\end{vertical}
+
+\pregunta Los códigos de los productos de una industria están formados por cuatro dígitos y cuatro letras, en cualquier orden. Si las letras son elegidas de un alfabeto de 25 letras y tanto los dígitos y las letras no se pueden repetir, ¿cuántos códigos distintos se pueden formar?
+\begin{vertical}
+\alternativa $\binom{25}{4} \cdot \binom{10}{4}$
+\alternativa $\binom{25}{4} \cdot \binom{10}{4} \cdot 4! \cdot 4!$
+\alternativa $\binom{25}{4} \cdot \binom{10}{4} \cdot 8!$
+\alternativa $\binom{25}{4} \cdot \binom{10}{4} \cdot 8$
+\alternativa $\binom{25}{4} \cdot 4! + \binom{10}{4} \cdot 4!$
+\end{vertical}
+
+\pregunta Se forman todos los números mayores que $1\,000$ y menores que $10\,000$, si las cifras no se pueden repetir y no pueden ser ceros, ¿cuántos de estos números tienen tantas cifras pares como impares?
+\begin{vertical}
+\alternativa $\binom{4}{2} \cdot \binom{5}{2}$
+\alternativa $\binom{4}{2} \cdot \binom{5}{2} \cdot 2$
+\alternativa $\binom{4}{2} \cdot \binom{5}{2} \cdot 4$
+\alternativa $\binom{4}{2} \cdot \binom{5}{2} \cdot 4!$
+\alternativa $\binom{5}{2} \cdot \binom{5}{2} \cdot 4!$
+\end{vertical}
+
+\pregunta ¿Cuántas diagonales se pueden trazar en un polígono de n lados?
+\begin{vertical}
+\alternativa $n$
+\alternativa $\binom{n}{2}$
+\alternativa $\binom{n}{2} \cdot 2!$
+\alternativa $\binom{n}{2} - n$
+\alternativa $\binom{n - 2}{2}$
+\end{vertical}
+
+\pregunta Un papá va a comprar un barquillo simple para él y para cada uno de sus tres hijos. Si hay 12 sabores de helados, ¿cuántas posibles elecciones existen?
+\begin{vertical}
+\alternativa $\binom{12}{3}$
+\alternativa $\binom{12}{4}$
+\alternativa $\binom{12}{4} \cdot 4!$
+\alternativa $\binom{15}{4}$
+\alternativa $12^4$
+\end{vertical}
+
+\pregunta Seis amigos se ordenan en una fila al azar, entre los cuales hay dos hermanos. ¿Cuál es la probabilidad de que los dos hermanos queden juntos?
+\begin{vertical}
+\alternativa $\dfrac{1}{5}$
+\alternativa $\dfrac{2}{5}$
+\alternativa $\dfrac{1}{3}$
+\alternativa $\dfrac{2}{3}$
+\alternativa $\dfrac{1}{4}$
+\end{vertical}
+
+\pregunta En una final de 100 metros planos, se sabe que los atletas no pueden empatar entre ellos. Se puede determinar cuántos competidores son, sabiendo que:
+\begin{verticaln}
+\alternativa Existen $120$ ordenaciones distintas de llegar a la meta.
+\alternativa Todos los atletas tienen la misma probabilidad de ganar.
+\end{verticaln}
+\begin{vertical}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{vertical}
+
+\pregunta Se ordenan aleatoriamente en una fila cuatro bolitas de colores verde, rojo, blanco y azul, ¿cuál es la probabilidad de que las fichas de colores rojo y blanco queden al centro?
+\begin{vertical}
+\alternativa $\dfrac{1}{4}$
+\alternativa $\dfrac{1}{3}$
+\alternativa $\dfrac{1}{2}$
+\alternativa $\dfrac{1}{6}$
+\alternativa $\dfrac{3}{4}$
+\end{vertical}
+
+\pregunta En un librero hay cinco libros, uno de historia, uno de física, uno de biología, uno de matemática y uno de química. Si se ordenan al azar uno al lado del otro, ¿cuál es la probabilidad de que el de química quede al lado del de física?
+\begin{vertical}
+\alternativa $\dfrac{1}{3}$
+\alternativa $\dfrac{1}{4}$
+\alternativa $\dfrac{1}{5}$
+\alternativa $\dfrac{1}{10}$
+\alternativa $\dfrac{2}{5}$
+\end{vertical}
+
+\pregunta En el ejercicio anterior, ¿cuál es la probabilidad de que el de matemática no esté al lado del de química?
+\begin{vertical}
+\alternativa $\dfrac{2}{3}$
+\alternativa $\dfrac{3}{4}$
+\alternativa $\dfrac{4}{5}$
+\alternativa $\dfrac{9}{10}$
+\alternativa $\dfrac{3}{5}$
+\end{vertical}
+
+\pregunta Se forman todos los números de 4 cifras con los dígitos 1, 2, 3, y 6 pudiéndose repetir las cifras. ¿Cuál es la probabilidad que al elegir uno de estos números, este NO tenga dígitos repetidos?
+\begin{vertical}
+\alternativa $\dfrac{3}{32}$
+\alternativa $\dfrac{1}{256}$
+\alternativa $\dfrac{1}{24}$
+\alternativa $\dfrac{1}{6}$
+\alternativa $\dfrac{1}{12}$
+\end{vertical}
+
+\pregunta Se tienen seis bolitas marcadas con las letras A, A, A, C, C y S. Si estas bolitas se sacan una A una sin reposición para ir formando una palabra, ¿cuál es la probabilidad de que se forme la palabra “CASACA”?
+\begin{vertical}
+\alternativa $\dfrac{1}{6}$
+\alternativa $\dfrac{1}{12}$
+\alternativa $\dfrac{1}{60}$
+\alternativa $\dfrac{1}{240}$
+\alternativa $\dfrac{1}{120}$
+\end{vertical}
+
+\pregunta En una heladería, los sabores de helados son chocolate, vainilla, frutilla, maracuyá, moka y menta. Si una persona solicita al mozo un cono doble y este al llegar a la vitrina no recuerda los sabores que debería servir. Si el mozo recuerda que los sabores no eran iguales y arma el cono aleatoriamente, ¿cuál es la probabilidad de que elija justamente los sabores pedidos por el cliente?
+\begin{vertical}
+\alternativa $\dfrac{1}{12}$
+\alternativa $\dfrac{1}{15}$
+\alternativa $\dfrac{2}{15}$
+\alternativa $\dfrac{1}{30}$
+\alternativa $\dfrac{1}{25}$
+\end{vertical}
+
+\pregunta Antiguamente las patentes de vehículos de nuestro país están formada por dos letras seguidas de cuatro dígitos. Si las letras eran elegidas de un alfabeto de 25 letras y tanto las letras como los dígitos se podían repetir. Si entre todas las patentes construidas de esta forma, se elige una al azar, ¿cuál es la probabilidad que empiece con F y termine en un 3 o un 7?
+\begin{vertical}
+\alternativa $\dfrac{1}{25}$
+\alternativa $\dfrac{2}{25}$
+\alternativa $\dfrac{1}{125}$
+\alternativa $\dfrac{1}{250}$
+\alternativa $\dfrac{1}{500}$
+\end{vertical}
+
+\pregunta En una caja hay cinco bolitas numeradas del 1 al 5, si se toman muestras de tamaño 2 sin orden y sin repetición. Si se elige al azar una de estas muestras, ¿cuál es la probabilidad de que no tenga el número 3?
+\begin{vertical}
+\alternativa $\dfrac{1}{5}$
+\alternativa $\dfrac{3}{5}$
+\alternativa $\dfrac{4}{5}$
+\alternativa $\dfrac{3}{10}$
+\alternativa $\dfrac{2}{3}$
+\end{vertical}
+
+\pregunta En el hexágono de la figura, se eligen 2 de sus vértices al azar.
+\begin{centrado}
+\begin{tikzpicture}
+\node[draw,regular polygon, regular polygon sides=6,minimum size=3cm,name=s] at (0,0) {};
+\node [above right] at (s.corner 1) {$a$};
+\node [above left] at (s.corner 2) {$b$};
+\node [left] at (s.corner 3) {$c$};
+\node [below left] at (s.corner 4) {$d$};
+\node [below right] at (s.corner 5) {$e$};
+\node [right] at (s.corner 6) {$f$};
+\end{tikzpicture}
+\end{centrado}
+¿Cuál es la probabilidad que al unir estos dos vértices por un segmento, este coincida con uno de los lados del hexágono?
+\begin{vertical}
+\alternativa $\dfrac{1}{5}$
+\alternativa $\dfrac{2}{5}$
+\alternativa $\dfrac{3}{10}$
+\alternativa $\dfrac{2}{3}$
+\alternativa $\dfrac{1}{6}$
+\end{vertical}
+
+\pregunta En una caja hay 5 bolitas numeradas con los números 2, 3, 5, 7 y 8. Si se sacan muestras de tamaño 2 sin orden ni repetición, ¿cuál es la probabilidad de que la suma de los números de la muestra sea mayor a 10?
+\begin{vertical}
+\alternativa $\dfrac{1}{3}$
+\alternativa $\dfrac{4}{5}$
+\alternativa $\dfrac{2}{5}$
+\alternativa $\dfrac{1}{2}$
+\alternativa $\dfrac{3}{10}$
+\end{vertical}
+
+\pregunta Con las letras A, B, C, D y E se forman todas las palabras con o sin sentido de 2 o 3 letras. Si las letras no se pueden repetir y se elige una de estas palabras al azar, ¿cuál es la probabilidad de que no tenga la letra A?
+\begin{vertical}
+\alternativa $\dfrac{4}{5}$
+\alternativa $\dfrac{3}{5}$
+\alternativa $\dfrac{1}{2}$
+\alternativa $\dfrac{9}{20}$
+\alternativa $\dfrac{3}{10}$
+\end{vertical}
+\end{preguntas}
+
+
+\end{document}

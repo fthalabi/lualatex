@@ -1,7 +1,41 @@
 \documentclass{experimento}
 
 \begin{document}
-  hola
+
+  \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-2,0) -- (3,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,2) node [above] {$y$};
+  %%% punto destacado
+  %\coordinate (P) at ($(A)!.5!(B)$);
+  %\draw[dashed] (P) -- (P -| 0,0) node [left] {$-3$};
+  %\draw[dashed] (P) -- (P |- 0,0) node [above] {$2$};
+  %\fill (P) circle[radius=2pt];
+  %% curva
+  \coordinate (A) at (-1,-1);
+  \coordinate (B) at (2,-1);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,2) (B);
+  \node[name intersections={of=EjeX and Parabola,name=I},above left] at (I-1) {$-2$};
+  \node[name intersections={of=EjeX and Parabola,name=I},above right] at (I-2) {$5$};
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[scale=1]
+  \draw [->] (-0.5,0) -- (2,0) node [right] {$x$};
+  \draw [->] (0,-2) -- (0,2) node [above] {$y$};
+  \coordinate (A) at (0,-1.3);
+  \coordinate (B) at (1.3,0);
+  \draw[shorten >=-30pt, shorten <=-30pt] (A) node [left] {$-6$} -- (B) node [above] {4};
+  %% cuadrado
+  %%%\draw (0,0) --  ++(-7pt,0) -- ([turn]-90:7pt) -- ([turn]-90:7pt);
+  %% punto destacado
+  \coordinate (P) at ($(A)!.5!(B)$);
+  \draw[dashed] (P) -- (P -| 0,0) node [left] {$-3$};
+  \draw[dashed] (P) -- (P |- 0,0) node [above] {$2$};
+  \fill (P) circle[radius=2pt];
+  %% segunda recta
+  \coordinate (C) at (0,1);
+  \draw[shorten >=-30pt, shorten <=-20pt] (C) node [left] {$5$} -- (P);
+  \end{tikzpicture}
+
   \begin{tikzpicture}
   \datavisualization [school book axes, visualize as smooth line/.list={f1,f2},
   all axes={length=4cm},

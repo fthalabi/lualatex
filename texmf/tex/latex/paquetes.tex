@@ -6,7 +6,7 @@
 %\setmonofont{Libertinus Mono} % For code listings
 %%% Set the math font
 %\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
-%\usepackage{setspace}
+\usepackage{setspace}
 %\setstretch{0.9}
 
 %%% letra más alta
@@ -25,6 +25,7 @@
   BoldFont = *-Medium, % Or *-Medium, *-Bold, if you want bold to be a different weight
   BoldItalicFont = *-MediumItalic % Or *-MediumItalic, *-BoldItalic
 ]
+\addfontfeatures{RawFeature=+frac}
 
 %% Meeh
 %\setmainfont{TeX Gyre Pagella}
@@ -58,12 +59,15 @@
 %%\usepackage[fontsize=9pt]{fontsize}
 \RequirePackage{letltxmacro}
 \RequirePackage[]{amsmath}
+\RequirePackage{amsthm}
 \RequirePackage{icomma}
 \RequirePackage{xspace}
 \RequirePackage{calc}
 \RequirePackage{ifthen}
 \RequirePackage{xparse}
 \RequirePackage{hyperref}
+\RequirePackage{bookmark}
+\RequirePackage{tocloft}
 \hypersetup{
     colorlinks=true,          % true: colored links, false: boxes
     linkcolor=darkblue,       % internal links
@@ -73,6 +77,8 @@
     breaklinks=true,          % allow links to break across lines
     hidelinks,                % remove colored boxes AND colored text
     breaklinks=true,          % Enable breaking of links
+    bookmarksopen=true,
+    pdfpagemode=UseOutlines,
 }
 \urlstyle{same}
 %%%% Define where URLs can break
@@ -91,7 +97,7 @@ shapes.symbols,shapes.geometric,shapes.misc,shapes.callouts,%
 decorations.pathreplacing,calligraphy,arrows.meta,%
 cd,intersections,patterns,patterns.meta,angles,through,
 graphs,graphdrawing,quotes,datavisualization,
-datavisualization.formats.functions}
+datavisualization.formats.functions,3d}
 \usegdlibrary {force}
 \usegdlibrary{trees}
 \usegdlibrary{circular}
@@ -200,6 +206,8 @@ datavisualization.formats.functions}
 %\RequirePackage[frac,rfrac]{mathfixs}
 \let\originaldfrac\dfrac
 \renewcommand*{\dfrac}[2]{\mathinner{\originaldfrac{#1}{#2}}}
+\let\originalfrac\frac
+\renewcommand*{\frac}[2]{\mathinner{\originalfrac{#1}{#2}}}
 
 \RequirePackage[executable=/Users/fenho/.mipython/bin/python]{pyluatex}
 \RequirePackage{csvsimple-l3}

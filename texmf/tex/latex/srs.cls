@@ -19,14 +19,17 @@
 \newboolean{optionone}
 \newboolean{optiontwo}
 \newboolean{optionthree}
+\newboolean{optionfour}
 % Set default values
 \setboolean{optionone}{false}
 \setboolean{optiontwo}{false}
 \setboolean{optionthree}{false}
+\setboolean{optionfour}{false}
 % Declare options
 \DeclareOption{paginavacia}{\setboolean{optionone}{true}}
 \DeclareOption{sinnombre}{\setboolean{optiontwo}{true}}
-\DeclareOption{conautor}{\setboolean{optionthree}{true}}
+\DeclareOption{sinfecha}{\setboolean{optionthree}{true}}
+\DeclareOption{revolver}{\setboolean{optionfour}{true}}
 % Handle unknown options
 \DeclareOption*{\PackageWarning{yourclassname}{Unknown option '\CurrentOption'}}
 % Process the options
@@ -58,6 +61,15 @@
 \setlength{\marginparwidth}{0pt}
 \setlength{\marginparsep}{0pt}
 
+\setlength{\cftbeforesecskip}{2.0ex}
+\setlength{\cftbeforesubsecskip}{1.0ex}
+\renewcommand{\cfttoctitlefont}{\sffamily\Large\bfseries}
+\renewcommand{\cftsecfont}{\sffamily\large}
+\renewcommand{\cftsubsecfont}{\sffamily}
+\renewcommand{\cftsecpagefont}{\sffamily}
+\renewcommand{\cftsubsecpagefont}{\sffamily}
+\tocloftpagestyle{empty}
+
 \ifthenelse{\boolean{optionone}}{\pagestyle{empty}}{\pagestyle{fancy}}
 
 \fancyhfoffset[H]{0pt}
@@ -80,7 +92,13 @@
 boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
 \newtcolorbox{malla}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay={\begin{tcbclipinterior}
-  \draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},#1}
+  \draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},
+  width=\linewidth+4em,enlarge left by=-4em,height=#1cm}
+
+\newtcolorbox{cuadricula}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay={\begin{tcbclipinterior}
+\draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},
+title=Desarrollo,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
+boxed title style={colback=white},coltitle=black,width=\linewidth+4em,enlarge left by=-4em,#1}
 
 \newtcolorbox{respuesta}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay boxed title={\begin{tcbclipinterior}
   \draw[help lines,step=5mm] (interior.south west) grid[xstep=0] (interior.north east);\end{tcbclipinterior}},title=Respuesta,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
@@ -155,13 +173,7 @@ label-offset=1em,column-sep=10pt,counter=mytaskcounter]{preguntas}[\pregunta](1)
 \newlength{\mytopsep}
 \setlength{\mytopsep}{10pt}
 
-\NewTasksEnvironment[
-  label={{\itshape\alph*})},
-label-width=10pt,item-indent=20pt,label-offset=10pt,after-item-skip=\myitemsep,
-before-skip=\mytopsep,after-skip=\mytopsep
-]{alternativas}[\alternativa](1)
-
-\NewDocumentEnvironment{vertical}{O{}+b}%
+\NewDocumentEnvironment{alternativas}{O{}+b}%
 {%  
     \newline
     \newcommand{\alternativa}{\item}
@@ -176,6 +188,46 @@ before-skip=\mytopsep,after-skip=\mytopsep
     \end{enumerate}
     \vspace*{\mytopsep}
   \end{minipage}
+}
+
+\ExplSyntaxOn
+\seq_new:N \l_randomlist_seq
+\int_new:N \l_random_items_int
+\NewDocumentEnvironment{alternativasrevueltas}{ O{}  +b }
+{
+    % use a regular expression to split the environment
+    % around the \item commands
+    \regex_split:nnN { \s*\c{alternativa}\s* } { #2 } \l_randomlist_seq
+    \seq_pop_left:NN \l_randomlist_seq \l_items_tl % pop empty first item
+    \seq_if_empty:NF \l_randomlist_seq {
+        \seq_shuffle:N \l_randomlist_seq %% randonly shuffle items
+        % the number of items to print is given by the optional #1
+        % defaulting to the full list of items
+        \int_set:Nn \l_random_items_int { \seq_count:N \l_randomlist_seq}
+        % finally, insert the itemize environment
+        \begin{alternativas}
+          \int_do_while:nNnn \l_random_items_int > 0 {
+            \seq_pop:NN \l_randomlist_seq \l_tmpa_tl
+            \alternativa \tl_use:N \l_tmpa_tl
+            \int_decr:N \l_random_items_int% one less item to go
+          }
+        \end{alternativas}
+    }
+}{}
+\ExplSyntaxOff
+
+\ifthenelse{\boolean{optionfour}}{%
+\NewDocumentEnvironment{vertical}{O{}+b}{%
+\begin{alternativasrevueltas}[#1]%
+#2%
+\end{alternativasrevueltas}%
+}{}%
+}{%
+\NewDocumentEnvironment{vertical}{O{}+b}{%
+\begin{alternativas}[#1]%
+#2%
+\end{alternativas}%
+}{}%
 }
 
 \NewDocumentEnvironment{verticali}{O{}+b}%
@@ -278,7 +330,7 @@ before-skip=\mytopsep,after-skip=\mytopsep
       \begin{caja}[title={\sffamily\bfseries Nota},height=35pt,add to width=-2cm]%
       \end{caja}%
     \end{tcbraster}%
-    \hfill\textbf{\sffamily Fecha:} \fecha\hspace*{10pt}\\\vspace*{-30pt}%
+    \ifthenelse{\boolean{optionthree}}{}{\hfill\textbf{\sffamily Fecha:} \fecha\hspace*{10pt}\\\vspace*{-30pt}}%
   }%
 }
 

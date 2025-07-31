@@ -1,0 +1,123 @@
+\def\curso{Segundo medio B}
+\def\puntaje{23}
+\def\titulo{Prueba}
+\def\subtitulo{Función cuadrática (parte 1)}
+\def\fecha{24 de julio, 2025}
+\documentclass[]{srs}
+
+\newsavebox{\rubricaUno}
+\begin{lrbox}{\rubricaUno}
+\def\stop{{\FA\char"E204}\space}
+\begin{centrado}
+\begin{tblr}{width=176mm,colspec={X[6]X[1,c]X[1,c]}, hline{2,Z} = {1}{-}{}, hline{2,Z} = {2}{-}{},
+    hlines, cells={valign=m}, row{2} = {bg=black!15},vlines,cell{3-Z}{1} = {font=\raggedright}}
+    \SetCell[c=3]{c} \stop No rayar la tabla, es solo para uso del docente \stop &  &\\
+    \SetCell{c} Criterios para la corrección & Puntaje & Asignación \\
+    Factoriza correctamente la expresión y encuentra las soluciones & $2$ & \\
+    Señala claramente los resultados, e incluye ordenadamente los procedimientos
+    necesarios para solucionar la problemática. & $1$ & \\
+\end{tblr}
+\end{centrado}
+\end{lrbox}
+
+\newsavebox{\rubricaDos}
+\begin{lrbox}{\rubricaDos}
+\def\stop{{\FA\char"E204}\space\normalfont}
+\begin{centrado}
+\begin{tblr}{width=176mm,colspec={X[6]X[1,c]X[1,c]}, hline{2,Z} = {1}{-}{}, hline{2,Z} = {2}{-}{},
+    hlines, cells={valign=m}, row{2} = {bg=black!15},vlines,cell{3-Z}{1} = {font={\raggedright}}}
+    \SetCell[c=3]{c} \stop No rayar la tabla, es solo para uso del docente \stop &  &\\
+    \SetCell{c} Criterios para la corrección & Puntaje & Asignación \\
+    Encuentra las raíces o soluciones de la ecuación cuadrática. & $2$ & \\
+    Determina la intersección con el eje $y$. & $1$ & \\
+    Determina si la función tiene máximo o mínimo y donde se encuentra. & $1$ & \\
+    Utiliza los datos anteriores para representar correctamente la
+    gráfica de la función. & $1$ & \\
+    Señala claramente los resultados, e incluye ordenadamente los procedimientos
+    necesarios para solucionar la problemática. & $2$ & \\
+\end{tblr}
+\end{centrado}
+\end{lrbox}
+
+\begin{document}
+
+\subsection*{Objetivo}
+  Describir todas las parte de la función cuadrática y encontrar sus soluciones, ya sea
+  factorizando o utilizando la formula general.
+
+\subsection*{Instrucciones generales}
+  Cuenta con 40 minutos para completar la evaluación. Esta es individual y debe usar solo
+  sus materiales personales para trabajar durante este periodo, no los solicite a un compañero
+  durante la evaluación.
+
+  Lea atentamente cada enunciado, siga las instrucciones, y responda cada
+  pregunta siguiendo los criterios descritos en su correspondiente rubrica. Cumplir
+  con todos estos criterios, es necesario para obtener el puntaje completo de cada pregunta.
+  En algunos casos, se puede asignar puntaje parcial por un criterio medianamente logrado.
+
+\separador[2mm]
+
+Factorice cada una de las siguientes ecuaciones, y encuentre las soluciones o raíces
+en cada uno de los casos.
+
+\begin{preguntas}
+  \pregunta $x^2 -13x+30$
+  \begin{malla}[7]
+
+  \end{malla}
+  \usebox{\rubricaUno}
+  \pregunta $x^2-7x-18$
+  \begin{malla}[7]
+
+  \end{malla}
+  \usebox{\rubricaUno}
+  \pregunta $20x^2+x-1$
+  \begin{malla}[7]
+
+  \end{malla}
+  \usebox{\rubricaUno}
+
+\end{preguntas}
+
+\newpage
+Describa completamente cada una de las siguientes funciones cuadráticas y grafique
+en los espacios señalizados.
+
+\begin{preguntas}
+  \pregunta $y=-x^2+3x+4$
+  \begin{centrado}
+  \begin{tikzpicture}
+  \datavisualization [school book axes={standard labels},
+    visualize as smooth line,
+    clean ticks,
+    all axes={length=6cm,ticks=none},
+    x axis={label=$x$},
+    y axis={label=$f(x)$}]
+     data {};
+  \end{tikzpicture}
+  \end{centrado}
+  \begin{malla}[10]
+
+  \end{malla}
+  \usebox{\rubricaDos}
+
+  \pregunta $y=-\left(x-2\right)^2 - 3$
+  \begin{centrado}
+  \begin{tikzpicture}
+  \datavisualization [school book axes={standard labels},
+    visualize as smooth line,
+    clean ticks,
+    all axes={length=6cm,ticks=none},
+    x axis={label=$x$},
+    y axis={label=$f(x)$}]
+     data {};
+  \end{tikzpicture}
+  \end{centrado}
+  \begin{malla}[11]
+
+  \end{malla}
+  \usebox{\rubricaDos}
+
+\end{preguntas}
+
+\end{document}
