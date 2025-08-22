@@ -1,0 +1,134 @@
+\documentclass[pagina vacia]{srs2}
+
+\begin{python}
+import numpy as np
+import polars as pl
+
+np.random.seed()
+aleatorio_n99 = np.random.default_rng().normal(10,3,size=99)
+muestras_n99 = np.floor(aleatorio_n99).astype(int)
+
+def frecuencia(datos, x):
+  valores,_,_,conteo = np.unique_all(datos)
+  indice = np.where(valores == x)
+  return conteo[indice].item(0)
+
+def frecuencia_acumulada(datos, x):
+  valores,_,_,conteo = np.unique_all(datos)
+  conteo_acumulado = np.cumsum(conteo)
+  indice = np.where(valores == x)
+  return conteo_acumulado[indice].item(0)
+
+def probabilidad(datos, x):
+  return frecuencia(datos, x)*100/(datos.size)
+
+def probabilidad_acumulada(datos, x):
+  return frecuencia_acumulada(datos, x)*100/(datos.size)
+
+def cuantil(datos, q):
+  valores,_,_,conteo = np.unique_all(datos)
+  p_acumulada = np.cumsum(conteo)/(datos.size)
+  indices = np.where(p_acumulada >= q)
+  return valores[indices[0].item(0)]
+
+def puntos_grafico_barras(datos):
+  valores,_,_,conteo = np.unique_all(datos)
+  lista_puntos = [f"({x}, {y})" for x,y in zip(valores,conteo)]
+  return " ".join(lista_puntos)
+
+def histograma(muestras,ancho=3):
+  minimo = np.min(muestras)
+  rango = np.max(muestras) - np.min(muestras)
+  n_barras = np.ceil(rango/ancho).astype(int)
+  maximo = (minimo + ancho*n_barras).astype(int)
+  frecuencias, cortes = np.histogram(muestras, bins=n_barras, range=(minimo,maximo))
+  intervalos = [f"$\\left[{int(a)}-{int(b)}\\right[$" for a,b in zip(cortes[0:-1],cortes[1:])]
+  puntos = [f"({int(a)},{int(b)})" for a,b in enumerate(frecuencias)]
+  return [", ".join(intervalos), " ".join(puntos), n_barras]
+
+def generar_tabla(archivo,datos):
+  tabla = pl.DataFrame({'valores': datos})
+  tabla = tabla.group_by('valores').len().sort('valores')
+  tabla = tabla.rename({'len':'frecuencia'})
+  tabla = tabla.with_columns(
+    pl.col('frecuencia').cum_sum().alias('f_cumulativa'),
+    (pl.col('frecuencia')*100/pl.col('frecuencia').sum()).alias('probabilidad'),
+  )
+  tabla = tabla.with_columns(
+    pl.col('probabilidad').cum_sum().alias('p_acumulada')
+  )
+  tabla.write_csv(archivo,include_header=False)
+generar_tabla(archivo='tabla.csv', datos=muestras_n99)
+
+\end{python}
+
+\begin{document}
+
+%\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=2,verbatim,use comma}
+\csvreader[no head,
+  centered tabularray={
+  cells={valign=m},
+  %cell{1}{2,4} = {r=1,c=2}{c},
+  %cell{1}{1-Z}={font=\bfseries},
+  %colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
+  colspec={cccQ[si={table-format=3.2},c]Q[si={table-format=3.2},c]},
+  width=0.7\linewidth,
+  hlines,
+  hline{1,2,Z}={black,1pt},
+  rows={rowsep+=2pt},
+  %vline{1,2,4,6} = {1pt,solid},
+  %hline{1,2,Z} = {1pt,solid},
+  % hline{2}={1}{-}{solid},
+  % hline{2}={2}{-}{solid},
+},
+  table head={Datos & {Frecuencia\\absoluta} & {F. absoluta\\acumulada} & {Frecuencia\\relativa} & {F. relativa\\acumulada} \\}
+]{tabla.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
+{\a & \b & \c & \d \%  & \e \%}
+
+
+El cuantil del 25\% es \py{cuantil(muestras_n99,0.25)}.\\
+El cuantil del 50\% es \py{cuantil(muestras_n99,0.5)}.\\
+El cuantil del 75\% es \py{cuantil(muestras_n99,0.75)}.\\
+El cuantil del 100\% es \py{cuantil(muestras_n99,1)}.\\
+
+
+\begin{columnas}[0.5][t]
+\begin{tikzpicture}[baseline=(current axis.north)]
+  \begin{axis}[
+      ybar,
+      title={Gráfico de barras},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      %xtick=data,
+      %nodes~near~coords,
+      %nodes~near~coords~align={vertical},
+      ]
+    \addplot[ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+      coordinates {\py{puntos_grafico_barras(muestras_n99)}};
+  \end{axis}
+\end{tikzpicture}
+\siguiente
+\begin{tikzpicture}[baseline=(current axis.north)]
+  \begin{axis}[
+      ybar,
+      title={Histograma},
+      ylabel={Frecuencia},
+      xlabel={Datos},
+      ymin=0,
+      xtick=data,
+      xticklabels/.expanded={\py{histograma(muestras_n99)[0]}},
+      x tick label style={rotate=45,anchor=north east,yshift=2pt,xshift=2pt},
+      nodes near coords,
+      nodes near coords align={vertical},
+      xmin=-1,
+      xmax/.expanded={\py{histograma(muestras_n99)[2]}},
+      ]
+    \addplot[ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+      coordinates {\py{histograma(muestras_n99)[1]}};
+  \end{axis}
+\end{tikzpicture}
+\end{columnas}
+
+
+\end{document}

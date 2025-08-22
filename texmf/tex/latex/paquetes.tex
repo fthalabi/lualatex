@@ -6,7 +6,7 @@
 %\setmonofont{Libertinus Mono} % For code listings
 %%% Set the math font
 %\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
-\usepackage{setspace}
+\usepackage[nodisplayskipstretch]{setspace}
 %\setstretch{0.9}
 
 %%% letra más alta
@@ -25,7 +25,7 @@
   BoldFont = *-Medium, % Or *-Medium, *-Bold, if you want bold to be a different weight
   BoldItalicFont = *-MediumItalic % Or *-MediumItalic, *-BoldItalic
 ]
-\addfontfeatures{RawFeature=+frac}
+%\addfontfeatures{RawFeature=+frac}
 
 %% Meeh
 %\setmainfont{TeX Gyre Pagella}
@@ -60,7 +60,7 @@
 \RequirePackage{letltxmacro}
 \RequirePackage[]{amsmath}
 \RequirePackage{amsthm}
-\RequirePackage{icomma}
+%\RequirePackage{icomma}
 \RequirePackage{xspace}
 \RequirePackage{calc}
 \RequirePackage{ifthen}
@@ -178,7 +178,7 @@ datavisualization.formats.functions,3d}
 \RequirePackage{varwidth}
 \UseTblrLibrary{amsmath}
 \UseTblrLibrary{siunitx,varwidth,diagbox,functional}
-\sisetup{round-precision=3,round-mode=places,output-decimal-marker={,},
+\sisetup{round-precision=2,round-mode=places,output-decimal-marker={,},
   mode = text, text-font-command = \normalsize}
 \RequirePackage[inline]{enumitem}
 \RequirePackage{tasks}

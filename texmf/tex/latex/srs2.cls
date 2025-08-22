@@ -42,6 +42,10 @@
 \titleformat{\subsection}{\sffamily\bfseries\large}{\thesubsection}{1.5em}{}
 \titlespacing*{\subsection}{0pt}{*4}{*1.5}
 
+%\titleformat{\subsubsection}[block]{\sffamily\bfseries}{\thesubsubsection}{1.5em}{\filcenter\addtolength{\titlewidth}{2pc}}
+\titleformat{\subsubsection}{\sffamily\bfseries}{\thesubsubsection}{1.5em}{}
+\titlespacing*{\subsubsection}{1cm}{*2}{*1}
+
 \geometry{
   paperheight=33cm,
   paperwidth=21.6cm,
@@ -88,6 +92,13 @@
 \fancyfoot[R]{\footnotesize{Página~\thepage~de~\pageref{LastPage}}}
 
 %%% EMPIEZA PARTE EXPERIMENTAL
+% #1 left and right pad  
+% #2 top and bottom pad  
+% #3 character
+\NewDocumentCommand{\contorno}{O{1pt}O{1pt}m}{%
+\tcbox[colframe=black!60,on line,boxsep=0pt,colback=white,
+  left=#1, right=#1, top=#2, bottom=#2]{#3}}
+
 \newcounter{nproblema}
 \setcounter{nproblema}{1}
 
@@ -107,14 +118,15 @@
   \begin{tcbitemize}[raster columns=1,lefttitle=0pt,blankest,
     halign=flush left,
     valign=center,leftupper=2em,top=0pt,boxsep=0pt,
-    breakable=false,#1]
+    breakable=false,raster before skip=10pt,raster after skip=30pt,
+    #1]
       #2
 }{%
   \end{tcbitemize}
 }
 
 \newtcolorbox{malla}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay={\begin{tcbclipinterior}
-  \draw[help lines,black!20,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},
+  \draw[help lines,black!25,step=5mm,yshift=0pt] (interior.south west) grid (interior.north east);\end{tcbclipinterior}},
   height=#1cm}
 
 \newtcolorbox{respuesta}[1][]{enhanced,inherit height,colback=white,colframe=black,boxrule=1pt,underlay boxed title={\begin{tcbclipinterior}
@@ -136,14 +148,14 @@ after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
 label-width=2em,item-indent=3em,item-format={\raggedright},%
 label-offset=1em]{alternativas}[\alternativa](1)
 
-\NewDocumentEnvironment{alternativasgraficas}{O{}+b}{%
+\NewDocumentEnvironment{alternativas*}{O{3}+b}{%
   \vspace*{\mytopsep}
   \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
-  \begin{tcbitemize}[raster columns=2,raster equal height=rows,blank,lefttitle=0pt,
+  \begin{tcbitemize}[raster columns=#1,raster equal height=rows,blank,lefttitle=0pt,
     %fonttitle=\itshape, halign=center,
     valign=center,leftupper=2em,top=-10pt,boxsep=0pt,
     breakable=false,nobeforeafter, raster row skip=10pt,
-    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})},#1]
+    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})}]
       #2
 }{%
   \end{tcbitemize}
@@ -157,10 +169,14 @@ label-offset=1em]{opciones}[\opcion](1)
 label-width=2em,item-indent=6em,item-format={\raggedright},%
 label-offset=1em]{opciones*}[\opcion](1)
 
+\NewTasksEnvironment[label={$\ast$},
+label-width=0.5em,item-indent=1em,item-format={\raggedright},%
+label-offset=0.5em,before-skip=0pt,after-skip=0pt]{lista}[*](1)
+
 \newtcolorbox{caja}[1][]{enhanced,colback=white,colframe=black,boxrule=1pt,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
 boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
-\DeclareTotalTColorBox{\doscolumnas}{ O{0.5} +m +m }{
+\DeclareTotalTColorBox{\doscolumnas}{ O{0.7} +m +m }{
   sidebyside,sidebyside adapt=right,blankest}%
   {#2\tcblower #3}
 
@@ -195,7 +211,51 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
   }
 
 % --- The Environment Definition ---
-\NewDocumentEnvironment{columnas}{ O{0.5} +b }
+\NewDocumentEnvironment{columnas}{ O{0.7} O{c} +b }
+  {
+    % 1. Process the entire body (#1) of the environment using our helper function.
+    \myenv_process_body:n { #3 }
+  
+    % 2. Now you can use the processed parts.
+    % We use \tl_use:N to output the content stored in our token list variables.
+    % For this example, we'll format them directly.
+    %% helpers
+    \tl_new:N \l__columnas_case_tl
+    \str_case:nnF { #2 }
+    {
+      { t } { \tl_set:Nn \l__columnas_case_tl { top~seam } }
+      { c } { \tl_set:Nn \l__columnas_case_tl { center~seam } }
+      { b } { \tl_set:Nn \l__columnas_case_tl { bottom~seam } }
+    }
+    % The default case if no match is found.
+    { \tl_set:Nn \l__columnas_case_tl { center~seam } }
+    
+    %%
+    \begin{tcolorbox}[sidebyside,sidebyside~adapt=right,blankest,lefthand~ratio=#1,
+      fontupper=\raggedright,parbox=false,sidebyside~align={\tl_use:N \l__columnas_case_tl},
+      before~upper={\bgroup
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+      },after~upper={\egroup},
+      before~lower={\bgroup
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+      },after~lower={\egroup}
+      ]
+    \tl_use:N \l_myenv_part_one_tl
+    \tcblower
+    \tl_use:N \l_myenv_part_two_tl
+    \end{tcolorbox}
+  }
+  {
+    % The "end" part of the environment is empty in this case.
+  }
+% --- The Environment Definition ---
+\NewDocumentEnvironment{columnast}{ O{0.5} +b }
   {
     % 1. Process the entire body (#1) of the environment using our helper function.
     \myenv_process_body:n { #2 }
@@ -203,7 +263,21 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
     % 2. Now you can use the processed parts.
     % We use \tl_use:N to output the content stored in our token list variables.
     % For this example, we'll format them directly.
-    \begin{tcolorbox}[sidebyside,sidebyside~adapt=right,blankest,lefthand~ratio=#1]
+    \begin{tcolorbox}[sidebyside,sidebyside~adapt=right,blankest,lefthand~ratio=#1,
+      fontupper=\raggedright,parbox=false,sidebyside~align=top,
+      before~upper={\bgroup
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+      },after~upper={\egroup},
+      before~lower={\bgroup
+        \setlength{\abovedisplayskip}{0pt}
+        \setlength{\belowdisplayskip}{0pt}
+        \setlength{\abovedisplayshortskip}{0pt}
+        \setlength{\belowdisplayshortskip}{0pt}
+      },after~lower={\egroup}
+      ]
     \tl_use:N \l_myenv_part_one_tl
     \tcblower
     \tl_use:N \l_myenv_part_two_tl

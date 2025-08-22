@@ -3,8 +3,6 @@
 \def\subtitulo{Unidad de álgebra y funciones}
 \documentclass[sin nombre]{srs2}
 
-\usepackage{multicol}
-
 \tcbset{raster row skip=2cm}
 
 \begin{document}
@@ -38,7 +36,7 @@
 \end{alternativas}
 
 \pregunta ¿Cuál de las siguientes rectas tiene pendiente 6?
-\begin{alternativasgraficas}[raster columns=3]
+\begin{alternativas*}[3]
 \alternativa \begin{tikzpicture}[scale=0.75]
   \draw [->] (-2.5,0) -- (2.5,0) node [right] {$x$};
   \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
@@ -64,8 +62,7 @@
   \draw [->] (0,-2.5) -- (0,2.5) node [above] {$y$};
   \draw[shorten >=-20pt, shorten <=-20pt] (0,1.5) node [left] {6} -- (0.7,0) node [below] {1};
 \end{tikzpicture}
-
-\end{alternativasgraficas}
+\end{alternativas*}
 
 \pregunta ¿Cuál es el valor del parámetro $k$ en la recta $\left(k - 2\right)x + 2ky - 5 = 0$ para que sea paralela a la recta $3x + 2y - 7 = 0$?
 \begin{alternativas}
@@ -108,10 +105,10 @@
 \alternativa $5x + 4y + 38 = 0$
 \end{alternativas}
 
-\pregunta Las rectas $L_1$ y $L_2$ son perpendiculares, $L_1$ tiene pendiente -2 y pasa por el punto $\left(4, -3\right)$ y $L_2$ pasa por el punto $\left(2,1\right)$. ¿Cuál es la abscisa del punto de intersección?
+\pregunta Las rectas $L_1$ y $L_2$ son perpendiculares, $L_1$ tiene pendiente $-2$ y pasa por el punto $\left(4, -3\right)$ y $L_2$ pasa por el punto $\left(2,\,1\right)$. ¿Cuál es la abscisa del punto de intersección?
 \begin{alternativas}
-\alternativa -2
-\alternativa -1
+\alternativa $-2$
+\alternativa $-1$
 \alternativa 0
 \alternativa 1
 \alternativa 2
@@ -193,7 +190,7 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
 \end{alternativas}
 
 \pregunta La solución gráfica del sistema $\begin{+cases} 3x - 2y = 12 \\ 3x + y = 3 \end{+cases}$ es
-\begin{alternativasgraficas}[raster columns=3]
+\begin{alternativas*}[3]
 \alternativa \begin{tikzpicture}[scale=1]
   \draw [->] (-0.5,0) -- (2,0) node [right] {$x$};
   \draw [->] (0,-2) -- (0,2) node [above] {$y$};
@@ -281,7 +278,7 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
   \draw[shorten >=-30pt, shorten <=-20pt] (C) node [left] {$1$} -- (P);
 \end{tikzpicture}
 
-\end{alternativasgraficas}
+\end{alternativas*}
 
 \pregunta ¿Cuál de los siguientes sistemas tiene solución única?
 \begin{alternativas}
@@ -366,7 +363,7 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
 \end{alternativas}
 \end{preguntas}
 
-\section{Función cuadratica}
+\section{Función cuadrática}
 
 \begin{preguntas}
 \pregunta ¿Cuál es la suma de las soluciones (o raíces) de la ecuación $7x^2 - 5x - 1 = 0$?
@@ -507,7 +504,7 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
 \end{alternativas}
 
 \pregunta Si $f\left(x\right) = \left(x - 3\right)^2 + 2$, su gráfico corresponde a
-\begin{alternativasgraficas}
+\begin{alternativas*}
 \alternativa
 \begin{tikzpicture}[scale=1]
   \draw [->,name path=EjeX] (-2,0) -- (3,0) node [right] {$x$};
@@ -593,7 +590,7 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
   \draw[dashed] (V) -- (V |- 0,0) node [below] {$3$};
 
 \end{tikzpicture}
-\end{alternativasgraficas}
+\end{alternativas*}
 
 \pregunta La altura $h\left(t\right)$ alcanzada, medida en metros, de un proyectil se modela mediante la función $h\left(t\right) = 20t - 5t^{2}$, donde t es la cantidad de segundos que transcurren hasta que alcanza dicha altura. ¿Cuál(es) de las siguientes afirmaciones es (son) verdadera(s)?
 \begin{opciones}
@@ -608,10 +605,6 @@ III) $\begin{+cases} x + 2y = 0 \\ y = \dfrac{6-x}{5}\end{+cases}$ \\
 \alternativa Solo II y III
 \alternativa I, II y III
 \end{alternativas}
-
-\pregunta asdksa kasdkask
-\begin{malla}[4]
-\end{malla}
 
 \end{preguntas}
 

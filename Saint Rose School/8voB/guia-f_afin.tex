@@ -1,0 +1,172 @@
+\def\titulo{Guía}
+\def\subtitulo{Función afín}
+\def\curso{Octavo básico B}
+\documentclass[sin nombre]{srs2}
+\usepackage{xfrac}
+
+\tcbset{raster before skip=10pt,raster after skip=30pt}
+
+\begin{document}
+\vspace*{0.5cm}
+Encuentre la ecuación de la recta en cada uno de los siguientes casos.
+\begin{preguntas}
+\pregunta La pendiente de la recta es igual a $-3$ y pasa por
+el punto $\left(2,\,3\right)$.
+\begin{malla}[3]
+\end{malla}
+\pregunta La recta pasa por los puntos $\left(-1,\,2\right)$ y
+$\left(-3,\,10\right)$.
+\begin{malla}[4]
+\end{malla}
+\end{preguntas}
+
+\begin{aviso}
+  \underline{Recordatorio}:
+  \begin{itemize}
+  \item La intersección con el eje $x$ es en $\left(?,\,0\right)$.
+  \item La intersección con el eje $y$ es en $\left(0,\,?\right)$.
+  \end{itemize}
+\end{aviso}
+Encuentre la intersección con el eje $x$ e $y$ en cada caso.
+\begin{preguntas}
+\pregunta La ecuación de la recta es $y=-2x+4$.
+\begin{malla}[4]
+\end{malla}
+\pregunta La recta pasa por los puntos $\left(-10,\,3\right)$ y
+$\left(5,\,-6\right)$.
+\begin{malla}[5]
+\end{malla}
+\end{preguntas}
+
+Represente gráficamente cada recta en su respectivo plano cartesiano. %
+\def\largo{2.5}
+\begin{preguntas}[raster columns=2]
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-2,2) [anchor=east] {$y=-\dfrac{3}{2}x+3$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-2,2) [anchor=east] {$y=\dfrac{3}{4}x+3$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-2,2) [anchor=east] {$y=-\dfrac{2}{3}x-2$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-2,2) [anchor=east] {$y=\dfrac{2}{3}x-2$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+\end{tikzpicture}
+
+\end{preguntas}
+
+Determine cuál es la ecuación de la recta a partir de
+la gráfica en cada caso. \def\espacio{\contorno[4pt][7pt]{\phantom{22}}}
+\begin{preguntas}[raster columns=2]
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-1,2) [anchor=east] {$y=\espacio\cdot x+\espacio$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1,0) node [above left] {$-2$} -- (0,2) node [right] {$4$};
+
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-1,2) [anchor=east] {$y=\espacio\cdot x+\espacio$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+    \draw[shorten >=-20pt, shorten <=-20pt] (1,0) node [above right] {$2$} -- (0,2) node [right] {$4$};
+
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-1,2) [anchor=east] {$y=\espacio\cdot x+\espacio$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt] (-1,0) node [below left] {$-2$} -- (0,-2) node [right] {$-4$};
+
+\end{tikzpicture}
+\pregunta \newline
+\begin{tikzpicture}
+  \node at (-1,2) [anchor=east] {$y=\espacio\cdot x+\espacio$};
+  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+  \coordinate (A) at (0,-1.3);
+  \coordinate (B) at (1.5,0.8);
+  \draw[shorten >=-30pt, shorten <=-30pt] (A) node [left] {$-3$} -- (B);
+  \draw[dashed] (B) -- (B -| 0,0) node [left] {$1$};
+  \draw[dashed] (B) -- (B |- 0,0) node [below] {$2$};
+  \fill (B) circle[radius=2pt];
+\end{tikzpicture}
+\end{preguntas}
+
+Encuentre la intersección de las rectas en cada caso.
+\begin{preguntas}[raster row skip=25pt]
+\pregunta \begin{columnas}[0.4]
+\begin{equation*}
+\begin{+array}{ll}
+\text{Recta 1} :& y=-2x+1 \\
+\text{Recta 2} :& y=3x-4
+\end{+array}
+\end{equation*}
+\siguiente
+\begin{malla}[5]
+\end{malla}
+\end{columnas}
+
+\pregunta \begin{columnas}[0.4]
+\begin{center}
+\begin{tikzpicture}
+  \draw[->,name path=X] (-2,0) -- (3,0) node [right] {$x$};
+  \draw[->] (0,-3) -- (0,3) node [above] {$y$};
+  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (0,-1) node [left] {$-2$} -- (1.5,1.5);
+  \draw[shorten >=-20pt, shorten <=-20pt,name path=B] (0,2) node [left] {$4$} -- (2,0) node [below] {$4$};
+  \fill[name intersections={of=A and B,by=P}] (P) circle[radius=2pt];
+  \node[name intersections={of=X and A,by=Q}] at (Q) [below] {$1$};
+\end{tikzpicture}
+\end{center} \siguiente
+\begin{malla}[7]
+\end{malla}
+\end{columnas}
+\pregunta La primera recta es la que pasa por los puntos
+$\left(1/2,\,1/8\right)$ y
+$\left(-2/5,\,4/5\right)$. Por otro lado, la segunda recta
+es la que pasa por los puntos $\left(-3/2,\,-3/4\right)$ y
+$\left(6/5,\,3/20\right)$.
+\begin{malla}[9]
+\end{malla}
+\end{preguntas}
+
+Utilice la función afín para describir cada situación y encontrar
+la solución de cada problema.
+
+\begin{preguntas}[raster row skip=10pt]
+\pregunta Jorge caminará hoy 3 km, y decide que cada vez que cumpla
+una semana, a partir de hoy, agregará a
+su recorrido 1,5 km. ¿En cuántas semanas más habrá caminado 22,5 km?
+\begin{malla}[5]
+\end{malla}
+\pregunta Se tiene una caja con bloques de madera, todos de igual masa. Si
+la caja con 16 bloques tiene una masa total de 15 kg, y la misma caja con
+21 bloques tiene una masa total de 19 kg, ¿cuál es la masa de 3 bloques?
+\begin{malla}[5]
+\end{malla}
+\pregunta En la escala Fahrenheit, el agua se congela a $32^{\circ}$ F y su
+temperatura de ebullición es de $212^{\circ}$ F. Escriba una fórmula para
+convertir de grados Celsius ($\text{C}^\circ$) a Fahrenheit ($\text{F}^\circ$);
+otra para convertir de Fahrenheit ($\text{F}^\circ$) a Celsius ($\text{C}^\circ$);
+y finalmente, encuentre a qué temperatura ambas escalas marcan los mismos grados.
+\begin{malla}[9]
+\end{malla}
+\end{preguntas}
+
+\end{document}
