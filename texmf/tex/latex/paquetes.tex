@@ -1,12 +1,12 @@
-\usepackage{fontspec} % For loading OpenType fonts
-\usepackage{unicode-math} % For modern math font handling
+\RequirePackage{fontspec} % For loading OpenType fonts
+\RequirePackage{unicode-math} % For modern math font handling
 %%% Set the main fonts (Libertinus family)
 %\setmainfont{Libertinus Serif}
 %\setsansfont{Libertinus Sans}
 %\setmonofont{Libertinus Mono} % For code listings
 %%% Set the math font
 %\setmathfont{Libertinus Math} % Excellent math font that pairs with Libertinus
-\usepackage[nodisplayskipstretch]{setspace}
+\RequirePackage[nodisplayskipstretch]{setspace}
 %\setstretch{0.9}
 
 %%% letra más alta
@@ -50,11 +50,13 @@
 %%% visual debug
 %%%\usepackage{lua-visual-debug}
 \RequirePackage{expl3}
+\RequirePackage{lualatex-math}
 \RequirePackage{luacode}
 %%\RequirePackage[spanish,es-noshorthands]{babel}
 %%\selectlanguage{spanish}
 \RequirePackage{polyglossia}
 \setmainlanguage[spanishoperators=all]{spanish}
+\RequirePackage[calc]{datetime2}
 
 %%\usepackage[fontsize=9pt]{fontsize}
 \RequirePackage{letltxmacro}
@@ -124,6 +126,7 @@ datavisualization.formats.functions,3d}
     edge={-{Triangle[round]}}
   },
   samples=200,
+  pattern/.default={Lines[angle=-45,distance=5pt]}
 }
 
 \pgfplotsset{

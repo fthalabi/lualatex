@@ -46,6 +46,14 @@ def histograma(muestras,ancho=3):
   puntos = [f"({int(a)},{int(b)})" for a,b in enumerate(frecuencias)]
   return [", ".join(intervalos), " ".join(puntos), n_barras]
 
+def diagrama_caja(muestras):
+  minimo = np.min(muestras)
+  q1 = int(cuantil(muestras,0.25))
+  q2 = int(cuantil(muestras,0.5))
+  q3 = int(cuantil(muestras,0.75))
+  maximo = np.max(muestras)
+  return {"minimo": minimo, "q1": q1, "q2": q2, "q3": q3, "maximo": maximo}
+
 def generar_tabla(archivo,datos):
   tabla = pl.DataFrame({'valores': datos})
   tabla = tabla.group_by('valores').len().sort('valores')
@@ -123,12 +131,42 @@ El cuantil del 100\% es \py{cuantil(muestras_n99,1)}.\\
       nodes near coords align={vertical},
       xmin=-1,
       xmax/.expanded={\py{histograma(muestras_n99)[2]}},
+      enlarge y limits={value=0.2,upper},
       ]
     \addplot[ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
       coordinates {\py{histograma(muestras_n99)[1]}};
   \end{axis}
 \end{tikzpicture}
 \end{columnas}
+
+\begin{tikzpicture}[baseline=(current axis.north)]
+  \begin{axis}[
+    ytickmin=0,
+    ylabel={Frecuencia},
+    %ylabel style={at={(axis cs: 0,\frecuenciaMaxima/2 -| yticklabel cs:0)}},
+    ylabel style={xshift=3mm},
+    xlabel={Datos},
+  ]
+  \addplot+ [boxplot prepared={
+    lower whisker=\py{diagrama_caja(muestras_n99)["minimo"]},
+    lower quartile=\py{diagrama_caja(muestras_n99)["q1"]},
+    median=\py{diagrama_caja(muestras_n99)["q2"]},
+    upper quartile=\py{diagrama_caja(muestras_n99)["q3"]},
+    upper whisker=\py{diagrama_caja(muestras_n99)["maximo"]},
+    draw position=-1,
+    box extend=1,
+  }] coordinates {};
+
+  \addplot [ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+   coordinates {\py{puntos_grafico_barras(muestras_n99)}};
+
+  \coordinate (M) at (axis cs: \py{np.mean(muestras_n99)},0);
+  \coordinate (B) at (rel axis cs: 0.5, 0);
+  \coordinate (T) at (rel axis cs: 0.5, 1);
+\end{axis}
+\draw[dashed,line width=1pt] (M |- B) -- (M |- T) node
+  [pin={[pjin distance=1mm,pin edge={>={Triangle[width=8pt]},<-}]above:{Media = \py{np.round(np.mean(muestras_n99),1)}}}] {};
+\end{tikzpicture}
 
 
 \end{document}

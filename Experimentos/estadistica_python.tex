@@ -46,6 +46,14 @@ def histograma(muestras,ancho=3):
   puntos = [f"({int(a)},{int(b)})" for a,b in enumerate(frecuencias)]
   return [", ".join(intervalos), " ".join(puntos), n_barras]
 
+def diagrama_caja(muestras):
+  minimo = np.min(muestras)
+  q1 = int(cuantil(muestras,0.25))
+  q2 = int(cuantil(muestras,0.5))
+  q3 = int(cuantil(muestras,0.75))
+  maximo = np.max(muestras)
+  return {"minimo": minimo, "q1": q1, "q2": q2, "q3": q3, "maximo": maximo}
+
 def generar_tabla(archivo,datos):
   tabla = pl.DataFrame({'valores': datos})
   tabla = tabla.group_by('valores').len().sort('valores')
@@ -64,33 +72,23 @@ generar_tabla(archivo='tabla.csv', datos=muestras_n99)
 
 \begin{document}
 
-%\pgfkeys{/pgf/number format/.cd,fixed,fixed zerofill,precision=2,verbatim,use comma}
 \csvreader[no head,
   centered tabularray={
   cells={valign=m},
-  %cell{1}{2,4} = {r=1,c=2}{c},
-  %cell{1}{1-Z}={font=\bfseries},
-  %colspec={X[1,c]X[2,c]X[2,c]X[2,c]X[2,c]},
   colspec={cccQ[si={table-format=3.2},c]Q[si={table-format=3.2},c]},
   width=0.7\linewidth,
   hlines,
   hline{1,2,Z}={black,1pt},
   rows={rowsep+=2pt},
-  %vline{1,2,4,6} = {1pt,solid},
-  %hline{1,2,Z} = {1pt,solid},
-  % hline{2}={1}{-}{solid},
-  % hline{2}={2}{-}{solid},
 },
   table head={Datos & {Frecuencia\\absoluta} & {F. absoluta\\acumulada} & {Frecuencia\\relativa} & {F. relativa\\acumulada} \\}
 ]{tabla.csv}{1=\a, 2=\b, 3=\c, 4=\d, 5=\e}%
 {\a & \b & \c & \d \%  & \e \%}
 
-
 El cuantil del 25\% es \py{cuantil(muestras_n99,0.25)}.\\
 El cuantil del 50\% es \py{cuantil(muestras_n99,0.5)}.\\
 El cuantil del 75\% es \py{cuantil(muestras_n99,0.75)}.\\
 El cuantil del 100\% es \py{cuantil(muestras_n99,1)}.\\
-
 
 \begin{columnas}[0.5][t]
 \begin{tikzpicture}[baseline=(current axis.north)]
@@ -104,7 +102,7 @@ El cuantil del 100\% es \py{cuantil(muestras_n99,1)}.\\
       %nodes~near~coords,
       %nodes~near~coords~align={vertical},
       ]
-    \addplot[ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+    \addplot[ybar,bar width=1,pattern]
       coordinates {\py{puntos_grafico_barras(muestras_n99)}};
   \end{axis}
 \end{tikzpicture}
@@ -123,12 +121,92 @@ El cuantil del 100\% es \py{cuantil(muestras_n99,1)}.\\
       nodes near coords align={vertical},
       xmin=-1,
       xmax/.expanded={\py{histograma(muestras_n99)[2]}},
+      enlarge y limits={value=0.2,upper},
       ]
-    \addplot[ybar,bar width=1,pattern={Lines[angle=-45,distance=5pt]}]
+    \addplot[ybar,bar width=1,pattern]
       coordinates {\py{histograma(muestras_n99)[1]}};
   \end{axis}
 \end{tikzpicture}
 \end{columnas}
 
+\begin{tikzpicture}[baseline=(current axis.north)]
+  \begin{axis}[
+    ytickmin=0,
+    ylabel={Frecuencia},
+    ylabel style={xshift=3mm},
+    xlabel={Datos},
+  ]
+  \addplot+ [boxplot prepared={
+    lower whisker=\py{diagrama_caja(muestras_n99)["minimo"]},
+    lower quartile=\py{diagrama_caja(muestras_n99)["q1"]},
+    median=\py{diagrama_caja(muestras_n99)["q2"]},
+    upper quartile=\py{diagrama_caja(muestras_n99)["q3"]},
+    upper whisker=\py{diagrama_caja(muestras_n99)["maximo"]},
+    draw position=-1,
+    box extend=1,
+  }] coordinates {};
+
+  \addplot [ybar,bar width=1,pattern]
+   coordinates {\py{puntos_grafico_barras(muestras_n99)}};
+
+  \coordinate (M) at (axis cs: \py{np.mean(muestras_n99)},0);
+  \coordinate (B) at (rel axis cs: 0.5, 0);
+  \coordinate (T) at (rel axis cs: 0.5, 1);
+\end{axis}
+\draw[dashed,line width=1pt] (M |- B) -- (M |- T) node
+  [pin={[pin distance=1mm,pin edge={>={Triangle[width=8pt]},<-}]above:{Media = \py{np.round(np.mean(muestras_n99),1)}}}] {};
+\end{tikzpicture}
+
+\begin{python}
+from scipy import stats
+dist = stats.ecdf(muestras_n99)
+dist_F_coords = [f"({a},{b})"  for a,b in zip(dist.cdf.quantiles,dist.cdf.probabilities)]
+dist_F_coords = " ".join(dist_F_coords)
+
+# PDF
+pdf = np.gradient(dist.cdf.probabilities, dist.cdf.quantiles)
+dist_p_coords = [f"({a},{b})"  for a,b in zip(dist.cdf.quantiles,pdf)]
+dist_p_coords = " ".join(dist_p_coords)
+\end{python}
+
+\begin{columnas}[0.5][t]
+\begin{tikzpicture}[baseline=(current axis.north)]
+\begin{axis}[title=ECDF]
+  \addplot+ [const plot] coordinates {\py{dist_F_coords}};
+\end{axis}
+\end{tikzpicture}
+\siguiente
+\begin{tikzpicture}[baseline=(current axis.north)]
+\begin{axis}[title=PDF]
+  \addplot+ [smooth] coordinates {\py{dist_p_coords}};
+\end{axis}
+\end{tikzpicture}
+\end{columnas}
+
+\begin{python}
+dist_n = stats.norm(loc=np.mean(muestras_n99),scale=np.std(muestras_n99))
+dist_n_cuantiles = dist_n.ppf(dist.cdf.probabilities)
+qq_coords = [f"({a},{b})"  for a,b in zip(dist.cdf.quantiles,dist_n_cuantiles)]
+qq_coords = " ".join(qq_coords)
+
+diff = np.abs(dist.cdf.quantiles-dist_n_cuantiles)
+diff = diff[np.isfinite(diff)]
+error = np.round(np.mean(diff),2)
+\end{python}
+
+\begin{tikzpicture}
+\begin{axis}[title={QQ plot (error = \py{error})},
+  unit rescale keep size=false, unit vector ratio=1 1 1,axis equal image,
+  xmin/.expanded={\py{np.min(dist.cdf.quantiles)}},
+  xmax/.expanded={\py{np.max(dist.cdf.quantiles)}},
+  ymin/.expanded={\py{np.min(dist.cdf.quantiles)}},
+  ymax/.expanded={\py{np.max(dist.cdf.quantiles)}},
+  enlarge x limits={value=0.2,lower},
+  enlarge y limits={value=0.2,lower},
+  ]
+  \addplot+ [] coordinates {\py{qq_coords}};
+  \draw[dashed] (rel axis cs: 0,0) -- (rel axis cs: 1,1);
+\end{axis}
+\end{tikzpicture}
 
 \end{document}
