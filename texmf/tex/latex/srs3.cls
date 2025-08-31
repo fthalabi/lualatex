@@ -333,33 +333,20 @@ after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
 %label-width=2em,item-indent=3em,item-format={\raggedright},%
 %label-offset=1em]{alternativas}[\alternativa](1)
 
-\NewDocumentEnvironment{alternativas}{ O{} +b}{
+\NewDocumentEnvironment{alternativas}{ O{1} O{} +b}{
   \srsIncrementarNAlternativas%
-  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1] {\itshape\alphalph{\thetcbrasternum}}) \hspace*{2em}\raggedright }
-    \begin{tcbitemize}[raster columns=1,raster equal height=rows,blank,lefttitle=0pt,
+  \NewDocumentCommand{\alternativa}{O{}}{%
+  \tcbitem[sidebyside,sidebyside align=center seam,
+      lefthand width=3em,sidebyside gap=0pt,##1]%
+   {\itshape\alphalph{\thetcbrasternum}}) \tcblower \raggedright }
+    \begin{tcbitemize}[raster columns=#1,raster equal height=rows,blank,lefttitle=0pt,
     %fonttitle=\itshape, halign=center,
     valign=center,
     breakable=false,nobeforeafter, raster row skip=10pt,
-    coltitle=black,#1]
-     #2
+    coltitle=black,#2]
+     #3
     \end{tcbitemize}
 }{}
-
-
-
-
-\NewDocumentEnvironment{alternativas*}{O{3}+b}{%
-  \vspace*{\mytopsep}
-  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1]}
-  \begin{tcbitemize}[raster columns=#1,raster equal height=rows,blank,lefttitle=0pt,
-    %fonttitle=\itshape, halign=center,
-    valign=center,leftupper=2em,top=-10pt,boxsep=0pt,
-    breakable=false,nobeforeafter, raster row skip=10pt,
-    coltitle=black,title={{\itshape\alphalph{\thetcbrasternum}})}]
-      #2
-}{%
-  \end{tcbitemize}
-}
 
 \NewTasksEnvironment[label={{\Roman*.}},
 label-width=2em,item-indent=6em,item-format={\raggedright},%
@@ -470,7 +457,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
 \NewDocumentEnvironment{pauta}{O{}+b}{%
   \begin{singlespace}
-  \begin{tblr}{width=176mm,colspec={X[6]X[1,c]X[1,c]}, hline{2,Z} = {1}{-}{}, hline{2,Z} = {2}{-}{},
+  \begin{tblr}{colspec={X[6]X[1,c]X[1,c]}, hline{2,Z} = {1}{-}{}, hline{2,Z} = {2}{-}{},
     hlines, cells={valign=m}, row{2} = {bg=black!15},vlines, cell{3-Z}{1}={cmd=\raggedright},
     process=\sumarPuntos,#1}
     \SetCell[c=3]{c} \stop No rayar la tabla, es solo para uso del docente \stop &  &\\
