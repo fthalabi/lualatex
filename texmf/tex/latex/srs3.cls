@@ -18,6 +18,7 @@
 \bool_new:N \l_srs_borrador_bool
 \bool_new:N \l_srs_connombre_bool
 \int_new:N \l_srs_puntaje_int
+\int_new:N \l_srs_puntaje_por_pregunta_int
 
 %% GLOBAL VARIABLES
 \tl_new:N \g_srs_fecha_formateada_tl
@@ -29,6 +30,10 @@
 \bool_new:N \g_srs_borrador_bool
 \bool_new:N \g_srs_connombre_bool
 \int_new:N \g_srs_puntaje_int
+\int_new:N \g_srs_puntaje_por_pregunta_int
+\int_new:N \g_srs_puntaje_persistente_int 
+\int_gzero_new:N \g_srs_puntaje_desarrollo_int
+\int_gzero_new:N \g_srs_numero_alternativas_int
 
 \keys_define:nn { srs }
 {
@@ -47,6 +52,8 @@
   con~nombre .bool_set:N = \l_srs_connombre_bool,
   puntaje .int_set:N = \l_srs_puntaje_int,
   puntaje .initial:n = {0},
+  ppp .int_set:N = \l_srs_puntaje_por_pregunta_int,
+  ppp .initial:n = {2},
 }
 
 \ProcessKeyOptions[srs]
@@ -60,6 +67,7 @@
 \bool_gset_eq:NN \g_srs_borrador_bool \l_srs_borrador_bool
 \bool_gset_eq:NN \g_srs_connombre_bool \l_srs_connombre_bool
 \int_gset_eq:NN \g_srs_puntaje_int \l_srs_puntaje_int
+\int_gset_eq:NN \g_srs_puntaje_por_pregunta_int \l_srs_puntaje_por_pregunta_int
 
 % Define your custom date format
 % Style name: 'dayofmonth'
@@ -152,8 +160,27 @@
 \NewDocumentCommand{\ifpuntajeTF}{ m m }{
   \int_if_zero:nTF \g_srs_puntaje_int { #2 } { #1 }
 }
-
-
+\NewDocumentCommand{\srsAgregarPuntosDesarrollo} { m } {
+  \int_gadd:Nn \g_srs_puntaje_desarrollo_int { #1 }
+}
+\NewDocumentCommand{\srsPuntosDesarrollo} {} {
+  \int_use:N \g_srs_puntaje_desarrollo_int
+}
+\NewDocumentCommand{\srsIncrementarNAlternativas} {} {
+  \int_gincr:N \g_srs_numero_alternativas_int
+}
+\NewDocumentCommand{\srsNAlternativas} {} {
+  \int_use:N \g_srs_numero_alternativas_int
+}
+\NewDocumentCommand{\srspuntajecalculado} {} {
+  \int_eval:n 
+  { \g_srs_puntaje_por_pregunta_int * \g_srs_numero_alternativas_int + 
+    \g_srs_puntaje_desarrollo_int
+  }
+}
+\NewDocumentCommand{\srspuntajepersistente} {} {
+  \int_use:N \g_srs_puntaje_persistente_int
+}
 %% TITLE EXPERIMENTAL
 \bool_new:N \g_srs_saltar_bool 
 \bool_gset_false:N \g_srs_saltar_bool
@@ -276,6 +303,7 @@
     halign=flush left,
     valign=center,leftupper=2em,top=0pt,boxsep=0pt,
     breakable=false,raster before skip=10pt,raster after skip=30pt,
+    raster row skip=20pt,
     #1]
       #2
 }{%
@@ -301,9 +329,24 @@ after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
 \newlength{\mytopsep}
 \setlength{\mytopsep}{10pt}
 
-\NewTasksEnvironment[label={{\itshape\alph*})},%
-label-width=2em,item-indent=3em,item-format={\raggedright},%
-label-offset=1em]{alternativas}[\alternativa](1)
+%\NewTasksEnvironment[label={{\itshape\alph*})},%
+%label-width=2em,item-indent=3em,item-format={\raggedright},%
+%label-offset=1em]{alternativas}[\alternativa](1)
+
+\NewDocumentEnvironment{alternativas}{ O{} +b}{
+  \srsIncrementarNAlternativas%
+  \NewDocumentCommand{\alternativa}{O{}}{\tcbitem[##1] {\itshape\alphalph{\thetcbrasternum}}) \hspace*{2em}\raggedright }
+    \begin{tcbitemize}[raster columns=1,raster equal height=rows,blank,lefttitle=0pt,
+    %fonttitle=\itshape, halign=center,
+    valign=center,
+    breakable=false,nobeforeafter, raster row skip=10pt,
+    coltitle=black,#1]
+     #2
+    \end{tcbitemize}
+}{}
+
+
+
 
 \NewDocumentEnvironment{alternativas*}{O{3}+b}{%
   \vspace*{\mytopsep}
@@ -414,10 +457,22 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 
 \ExplSyntaxOff % Deactivate LaTeX3 syntax
 
+\IgnoreSpacesOn
+\prgNewFunction \sumarPuntos {} {
+  \intZero \lTmpaInt
+  \intStepOneInline {3} {\arabic{rowcount}} {
+    \intAdd \lTmpaInt {\cellGetText {##1} {2} }
+  }
+  %\intShow\lTmpaInt
+  \srsAgregarPuntosDesarrollo{\lTmpaInt}
+}
+\IgnoreSpacesOff
+
 \NewDocumentEnvironment{pauta}{O{}+b}{%
   \begin{singlespace}
   \begin{tblr}{width=176mm,colspec={X[6]X[1,c]X[1,c]}, hline{2,Z} = {1}{-}{}, hline{2,Z} = {2}{-}{},
-    hlines, cells={valign=m}, row{2} = {bg=black!15},vlines, cell{3-Z}{1}={cmd=\raggedright},#1}
+    hlines, cells={valign=m}, row{2} = {bg=black!15},vlines, cell{3-Z}{1}={cmd=\raggedright},
+    process=\sumarPuntos,#1}
     \SetCell[c=3]{c} \stop No rayar la tabla, es solo para uso del docente \stop &  &\\
     \SetCell{c} Criterios para la corrección & Puntaje & Asignación \\
     #2
@@ -447,7 +502,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
     \begin{caja}[title={\sffamily\bfseries Nombre},height=35pt,add to width=4cm]%
     \end{caja}%
     \begin{caja}[title={\sffamily\bfseries Puntaje},height=35pt,add to width=-2cm,valign=bottom,halign=center]%
-      \ifpuntajeTF{\hspace*{30pt}/ \srspuntaje}{}%
+      \hspace*{30pt}/~\ifpuntajeTF{\srspuntaje}{\srspuntajepersistente}%
     \end{caja}%
     \begin{caja}[title={\sffamily\bfseries Nota},height=35pt,add to width=-2cm]%
     \end{caja}%
@@ -455,6 +510,21 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
   \hfill\textbf{\sffamily Fecha:} \srsfecha\hspace*{10pt}\cancelarsalto%
   }{}
 }
+
+\ExplSyntaxOn
+\AtEndDocument
+  {
+    \iow_now:cx { @auxout }
+      {
+        \token_to_str:N \ExplSyntaxOn
+        \exp_not:N \int_gset:Nn 
+        \exp_not:N \g_srs_puntaje_persistente_int 
+        { \int_eval:n {\g_srs_puntaje_por_pregunta_int * \g_srs_numero_alternativas_int + 
+          \g_srs_puntaje_desarrollo_int} }
+        \token_to_str:N \ExplSyntaxOff
+      }
+  }
+\ExplSyntaxOff
 
 \NewDocumentCommand{\negrita}{m}{{\sffamily\scshape\bfseries\large#1}}
 \NewDocumentCommand{\f}{m}{\pgfmathprintnumber[fixed,fixed zerofill,precision=3,verbatim,use comma]{#1}}
