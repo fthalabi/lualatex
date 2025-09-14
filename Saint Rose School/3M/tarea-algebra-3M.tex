@@ -1,0 +1,283 @@
+\documentclass[
+  titulo=Tarea,
+  subtitulo=Álgebra y funciones,
+  curso=Tercero medio,
+  con nombre,
+  %fecha=2025-9-26
+]{srs3}
+
+\begin{document}
+
+\subsection*{Objetivo}
+Reforzar los contenidos involucrados en la prueba \textbf{PAES}, específicamente:
+Expresiones algebraicas; ecuaciones de primer grado; sistemas de ecuaciones
+lineales; y las funciones de tipo lineal, afín y cuadráticas.
+
+\subsection*{Instrucciones generales}
+Esta tarea es para trabajarla individualmente y es completamente optativa. Si
+la entrega antes o al momento de evaluación, puede optar a que se promedie
+junto con nota de la próxima prueba.
+
+Para cada pregunta, lea con atención el enunciado y seleccione la
+alternativa que mejor lo responda. Solo hay una alternativa
+correcta para cada pregunta.
+
+\begin{preguntas}
+
+\pregunta Una urna contiene en total \(36\) bolitas de dos tipos, A y B. Cada bolita del tipo A tiene una masa de \(100\) g y cada bolita del tipo B \(150\) g. Si la masa total de las bolitas en la urna es de \(3.750\) g, ¿cuántas bolitas son del tipo B?
+\begin{alternativas}
+\alternativa \(3\)
+\alternativa \(12\)
+\alternativa \(15\)
+\alternativa \(18\)
+\alternativa \(33\)
+\end{alternativas}
+
+\pregunta La edad actual de Alicia (\(A\)) es \(5\) años más que la edad actual de Miguel (\(M\)). En \(2\) años más la suma de ambas edades será de \(59\) años. ¿Cuál de los siguientes sistemas de ecuaciones permite determinar la edad actual de Miguel?
+\begin{alternativas}[2]
+\alternativa \( \begin{+cases} A + M = -5 \\ A + M + 2 = 59 \end{+cases} \)
+\alternativa \( \begin{+cases} A - M = 5 \\ \left(A+2\right) + \left(M+2\right) = 59 \end{+cases} \)
+\alternativa \( \begin{+cases} M - 5 = A \\ \left(A+2\right) + \left(M+2\right) = 59 \end{+cases} \)
+\alternativa \( \begin{+cases} A - M = 5 \\ A + M = 59 \end{+cases} \)
+\alternativa \( \begin{+cases} A - M = 5 \\ A + M + 2 = 59 \end{+cases} \)
+\end{alternativas}
+
+\pregunta ¿Cuál es el valor de \(x\) en el sistema de ecuaciones \( \begin{+cases} \dfrac{x+3}{4} + \dfrac{3y}{2} = 6 \\ x+1,5y = 20 \end{+cases} \)?
+\begin{alternativas}
+\alternativa \( \dfrac{2}{9} \)
+\alternativa \( \dfrac{59}{5} \)
+\alternativa \( \dfrac{59}{3} \)
+\alternativa \( \dfrac{101}{5} \)
+\end{alternativas}
+%%
+
+\pregunta Las medidas de los lados de un rectángulo son números pares consecutivos. Si la superficie del rectángulo mide \(48\) m\(^2\), ¿cuánto mide el lado de menor medida?
+\begin{alternativas}
+\alternativa \(4\) m
+\alternativa \(6\) m
+\alternativa \(8\) m
+\alternativa \(12\) m
+\alternativa \(16\) m
+\end{alternativas}
+
+\pregunta Una persona debe instalar piso flotante en su departamento, el que se encuentra subdivido en 4 partes. Esta persona conoce algunas de las medidas del departamento, las cuales están representadas en la figura adjunta. Si se sabe que la superficie total del departamento es \(50\) m\(^2\), ¿cuál es la longitud de la medida \(x\) desconocida por el dueño?
+\begin{columnas}[0.4][t]
+\begin{alternativas}
+\alternativa \(2\) m
+\alternativa \(11\) m
+\alternativa \(13\) m
+\alternativa \(26\) m
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}
+\coordinate (A) at (-4,1.5);
+\coordinate (B) at (4,1.5);
+\coordinate (C) at (4,-1.5);
+\coordinate (D) at (-4,-1.5);
+\coordinate (E) at ($(B)!0.6!(C)$);
+\coordinate (F) at ($(A)!0.6!(D)$);
+\coordinate (G) at ($(A)!0.8!(B)$);
+\coordinate (H) at ($(D)!0.8!(C)$);
+\draw (A) -- (B) -- (C) -- (D) -- (A) (E) -- (F) (G) -- (H);
+\draw[decorate, decoration={calligraphic brace,raise=5pt,amplitude=10pt},yshift=10pt]
+  (A) -- (G)  node [midway,yshift=24pt] {8 m};
+\draw[decorate, decoration={calligraphic brace,raise=5pt,amplitude=10pt},yshift=10pt]
+  (G) -- (B)  node [midway,yshift=24pt] {$x$ m};
+\draw[decorate, decoration={calligraphic brace,raise=5pt,amplitude=10pt},yshift=10pt]
+  (B) -- (E)  node [midway,xshift=30pt] {3 m};
+\draw[decorate, decoration={calligraphic brace,raise=5pt,amplitude=10pt},yshift=10pt]
+  (E) -- (C)  node [midway,xshift=30pt] {$x$ m};
+\draw (C) -- ($(C)!8pt!(B)$) -- ([turn]90:8pt) -- ([turn]90:8pt);
+\draw (G) -- ($(G)!8pt!(H)$) -- ([turn]90:8pt) -- ([turn]90:8pt);
+\draw (F) -- ($(F)!8pt!(E)$) -- ([turn]90:8pt) -- ([turn]90:8pt);
+\end{tikzpicture}
+\end{columnas}
+%%
+
+\pregunta Una empresa de arriendo de autos cobra \$$70.000$ cuando su vehículo A recorre \(50\) km y \$$120.000$ cuando su vehículo A recorre \(100\) km. El cobro que realiza la empresa para el vehículo A, en términos de los kilómetros recorridos, se modela a través de una función de la forma \(f\left(x\right)=mx+n\). ¿Cuál será el cobro del vehículo A cuando recorra \(200\) km?
+\begin{alternativas}
+\alternativa \$$200.000$
+\alternativa \$$220.000$
+\alternativa \$$240.000$
+\alternativa \$$280.000$
+\end{alternativas}
+
+\pregunta La altura \(f\left(t\right)\) alcanzada, medida en metros, de un proyectil se modela mediante la función \(f\left(t\right)=20t-t^2\), donde \(t\) se mide en segundos desde que se lanza hasta que toca el suelo. ¿Cuál(es) de las siguientes afirmaciones se puede(n) deducir de esta información?
+\begin{opciones}
+\opcion El proyectil cae a \(20\) metros de distancia de donde fue lanzado.
+\opcion A los \(10\) segundos desde que el proyectil es lanzado, éste alcanza su altura máxima.
+\opcion La gráfica de \(f\) tiene un eje de simetría.
+\end{opciones}
+\begin{alternativas}
+\alternativa Solo I
+\alternativa Solo II
+\alternativa Solo I y II
+\alternativa Solo II y III
+\alternativa I, II y III
+\end{alternativas}
+
+\pregunta ¿Cuál de las siguientes funciones podría representar algebraicamente a la parábola de la figura adjunta?
+\begin{columnas}[0.6][c]
+\begin{alternativas}
+\alternativa \( f\left(x\right)=2x^2+12x-9 \)
+\alternativa \( g\left(x\right)=2x^2-12x+9 \)
+\alternativa \( m\left(x\right)=2x^2-12x-9 \)
+\alternativa \( n\left(x\right)=2x^2+12x+9 \)
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-1,0) -- (4,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,2) node [above] {$y$};
+  \coordinate (A) at (-0.1,1.5);
+  \coordinate (B) at (2.8,1.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-2.5cm] bend +(0,2) (B);
+  \node [name intersections={of=EjeY and Parabola,by=X},left] at (X) {9};
+  \path[name path=EjeSimetria] ($(A)!0.5!(B)$) -- +(0,-3cm);
+  \draw[dashed,name intersections={of=Parabola and EjeSimetria,by=v}] (v) -- (v |- 0,0) node [above] {3};
+  \draw[dashed,name intersections={of=Parabola and EjeSimetria,by=v}] (v) -- (v -| 0,0) node [left] {$-9$};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta Sea la función cuadrática \( f\left(x\right)=bx^2-5x+2 \), con dominio el conjunto de los números reales. ¿Cuál de las siguientes condiciones se debe cumplir para que la parábola que representa la gráfica de \(f\) NO intersecte al eje \(x\) en \(2\) puntos distintos?
+\begin{alternativas}
+\alternativa \( b \leq \dfrac{25}{8} \)
+\alternativa \( b < \dfrac{25}{8} \)
+\alternativa \( b > \dfrac{25}{8} \)
+\alternativa \( b \geq \dfrac{25}{8} \)
+\end{alternativas}
+
+\pregunta La parábola que representa a la gráfica de una función cuadrática, cuyo dominio es el conjunto de los números reales, intersecta al eje de las ordenadas en el punto \(A\left(0,\,2\right)\) y tiene su vértice en el punto \(B\left(2,\,-2\right)\). ¿Cuál de las siguientes funciones, con dominio el conjunto de los números reales, está asociada a esta parábola?
+\begin{alternativas}
+\alternativa \( g\left(x\right)=x^2-4x+2 \)
+\alternativa \( h\left(x\right)=x^2+4x+2 \)
+\alternativa \( p\left(x\right)=\dfrac{x^2}{2}-2x+2 \)
+\alternativa \( m\left(x\right)=x^2+4x+3 \)
+\alternativa No se puede determinar.
+\end{alternativas}
+
+\pregunta ¿Cuál de las siguientes funciones representa mejor a la gráfica dada?
+\begin{columnas}[0.5][t]
+\begin{alternativas}
+\alternativa \( y=\left(x-6\right)\left(x+2\right) \)
+\alternativa \( y=\left(x+6\right)\left(x-2\right) \)
+\alternativa \( y=-\left(x-6\right)\left(x+2\right) \)
+\alternativa \( y=-\left(x+6\right)\left(x-2\right) \)
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-3,0) -- (2,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,2) node [above] {$y$};
+  \coordinate (A) at (-2,-1.5);
+  \coordinate (B) at (1,-1.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,3) (B);
+  \path[name intersections={of=Parabola and EjeX,name=x}];
+  \node[above left] at (x-1) {$-6$};
+  \node[above right] at (x-2) {$2$};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta La gráfica adjunta muestra los resultados obtenidos en un estudio respecto al peso promedio de los recién nacidos en una ciudad, los que se pueden modelar a través de una función cuadrática durante su primera semana de vida. Según esta información, ¿cuál es el peso que se espera que tenga un recién nacido, en kilos, en su segundo día de vida?
+\begin{columnas}[0.5][t]
+\begin{alternativas}
+\alternativa \(2,6\)
+\alternativa \(2,7\)
+\alternativa \(2,8\)
+\alternativa \(3,0\)
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}[y=0.8cm]
+  \draw [->,name path=EjeX] (0,0) -- (4,0) node [right] {Días};
+  \draw [->,name path=EjeY] (0,0) -- (0,4) node [above] {Kilos};
+  \coordinate (A) at (0,3);
+  \coordinate (B) at (3.5,3.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.45] bend (1.5,2) (B);
+  \coordinate (v) at (1.5,2);
+  \draw[dashed] (v-|0,0) node [left] {$2,5$} -- (v) -- (v|-0,0) node [below] {3};
+  \path[name path=Horizontal] (A) -- (A-|4,0);
+  \draw[dashed,name intersections={of=Parabola and Horizontal,name=x}]
+    (A) node [left] {$3,4$} -- (x-2) -- (x-2 |- 0,0) node [below] {6};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta ¿Con cuál de las siguientes ecuaciones junto a la ecuación \(3x - y = p\) se forma un sistema que podría NO tener solución, dependiendo del valor de \(p\)?
+\begin{alternativas}
+\alternativa \( x = 0 \)
+\alternativa \( x - y = p \)
+\alternativa \( 6x - 2y = p \)
+\alternativa \( 2y - 6x = -2p \)
+\alternativa \( 3x + y = p \)
+\end{alternativas}
+
+\pregunta Andrés está analizando el comportamiento del sistema \( \begin{+cases} 4x + ky - 3y = 2 \\ \left(k+2\right)x+ky = 3 \end{+cases} \), en \(x\) e \(y\). Si se sabe que el sistema no tiene solución, ¿cuál(es) es (son) el(los) valor(es) de \(k\)?
+\begin{alternativas}
+\alternativa \(k=6\)
+\alternativa \(k=1\)
+\alternativa \(k=-1\)
+\alternativa \(k=-3\) y \(k=-2\)
+\alternativa \(k=6\) y \(k=-1\)
+\end{alternativas}
+
+\pregunta Una compañía distribuidora de energía eléctrica cobra mensualmente un cargo fijo de \$$1.100$ y \$$65$ por kWh de consumo, pero si en los meses de invierno se superan los \(200\) kWh, se aplica un recargo de \$$50$ por cada kWh de exceso. ¿Cuál de las siguientes funciones permite calcular el total que se debe pagar en un mes de invierno por \(x\) kWh si \(x\) es mayor que \(200\)?
+\begin{alternativas}
+\alternativa \( f\left(x\right)=1.100+\left(200\cdot65\right)+50x \)
+\alternativa \( p\left(x\right)=1.100+\left(200\cdot65\right)+115x \)
+\alternativa \( g\left(x\right)=1.100+115x \)
+\alternativa \( m\left(x\right)=1.100+\left(200\cdot65\right)+115\left(x-200\right) \)
+\end{alternativas}
+
+\pregunta Si \(f\) es una función afín tal que \(f\left(3\right) = 0\)~~y~~\(f\left(0\right) = -6\), ¿cuál es el valor de \(f\left(8\right) - f\left(2\right)\)?
+\begin{alternativas}
+\alternativa \(-5\)
+\alternativa 10
+\alternativa 12
+\alternativa 8
+\alternativa \(-2\)
+\end{alternativas}
+
+\pregunta En cierto video juego la superficie de terreno que abarca la explosión de una bomba lanzada, puede ser modelada por la función \(S\left(t\right) = 5t^2\), en la cual S corresponde a la superficie circular de la explosión de la bomba en unidades cuadradas y t al tiempo en segundos que dura la explosión. ¿Cuál de las siguientes afirmaciones es verdadera?
+\begin{alternativas}
+\alternativa Una explosión de una bomba que dura un segundo, abarca la mitad de terreno que si la explosión durase dos segundos.
+\alternativa Una bomba tardaría el doble de tiempo en abarcar 200 unidades cuadradas con su explosión que lo que tardaría en abarcar 800 unidades cuadradas.
+\alternativa Basta un segundo más de explosión para que una bomba cuadruplique la superficie que puede abarcar en cualquier momento.
+\alternativa Una bomba cuadruplica la superficie abarcada si se duplica el tiempo de explosión.
+\end{alternativas}
+
+\pregunta La cantidad de horas y el valor que se cobra por el arriendo de una herramienta presentan un comportamiento lineal. Si se arrienda por 3 horas, se cobra un total de \$20100, mientras que si se arrienda por un total de 6 horas, el cobro asciende a un total de \$29700. ¿Cuál es la cantidad de horas que se arrendó esta herramienta, si el monto total cobrado es \$42500?
+\begin{alternativas}
+\alternativa 7
+\alternativa 8
+\alternativa 9
+\alternativa 10
+\end{alternativas}
+
+\pregunta Se puede determinar que el vértice de la parábola asociada a la función \(f\left(x\right) = ax^2 + bx + c\), con dominio los números reales, es el punto mínimo de la función, si se sabe que:
+\begin{opciones*}
+\opcion \(b<0\)
+\opcion la abscisa del vértice es un número positivo.
+\end{opciones*}
+\begin{alternativas}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{alternativas}
+
+\pregunta Se puede determinar la expresión de una ecuación de segundo grado, si se sabe el valor de:
+\begin{opciones*}
+\opcion El producto de sus soluciones.
+\opcion La suma de sus soluciones.
+\end{opciones*}
+\begin{alternativas}
+\alternativa (1) por sí sola
+\alternativa (2) por sí sola
+\alternativa Ambas juntas, (1) y (2)
+\alternativa Cada una por sí sola, (1) ó (2)
+\alternativa Se requiere información adicional
+\end{alternativas}
+
+
+\end{preguntas}
+
+
+\end{document}

@@ -21,6 +21,7 @@
 \int_new:N \l_srs_puntaje_por_pregunta_int
 
 %% GLOBAL VARIABLES
+\tl_new:N \g_srs_fecha_option_tl
 \tl_new:N \g_srs_fecha_formateada_tl
 \tl_new:N \g_srs_titulo_tl
 \tl_new:N \g_srs_subtitulo_tl
@@ -45,7 +46,7 @@
   curso .tl_set:N = \l_srs_curso_tl,
   curso .initial:n = {CURSO},
   nombre .tl_set:N = \l_srs_nombre_tl,
-  nombre .initial:n = {NOMBRE},
+  nombre .initial:n = {Fernado~Halabi~A.},
   correo .tl_set:N = \l_srs_correo_tl,
   correo .initial:n = {CORREO},
   borrador .bool_set:N = \l_srs_borrador_bool,
@@ -64,6 +65,7 @@
 \tl_gset_eq:NN \g_srs_curso_tl \l_srs_curso_tl
 \tl_gset_eq:NN \g_srs_nombre_tl \l_srs_nombre_tl
 \tl_gset_eq:NN \g_srs_correo_tl \l_srs_correo_tl
+\tl_gset_eq:NN \g_srs_fecha_option_tl \l_srs_fecha_option_tl
 \bool_gset_eq:NN \g_srs_borrador_bool \l_srs_borrador_bool
 \bool_gset_eq:NN \g_srs_connombre_bool \l_srs_connombre_bool
 \int_gset_eq:NN \g_srs_puntaje_int \l_srs_puntaje_int
@@ -146,6 +148,10 @@
 \NewDocumentCommand{\srscorreo}{}{
   \tl_use:N \g_srs_correo_tl
 }
+\NewDocumentCommand{\iffechaTF}{ m m }
+{
+  \tl_if_empty:NTF \g_srs_fecha_option_tl { #2 } { #1 }
+}
 \NewDocumentCommand{\ifborradorTF}{ m m }
 {
   \bool_if:NTF \g_srs_borrador_bool { #1 } { #2 }
@@ -211,6 +217,7 @@
   \ifcancelarsaltoTF%
   {\titlespacing*{\section}{0pt}{0pt}{3ex + 1ex - 2ex}}%
   {\titlespacing*{\section}{0pt}{4ex + 4ex - 3ex}{3ex + 1ex - 2ex}}%
+  \iffechaTF{}{\vspace*{10pt}}%
   \oldsection % Now, typeset the section as normal
 }
 
@@ -223,6 +230,7 @@
   \ifcancelarsaltoTF%
   {\titlespacing*{\subsection}{0pt}{0pt}{*1.5}}%
   {\titlespacing*{\subsection}{0pt}{2ex + 1ex - 1ex}{1.5ex +0.5ex -0.5ex}}%
+  \iffechaTF{}{\vspace*{10pt}}%
   \oldsubsection % Now, typeset the section as normal
 }
 
@@ -336,11 +344,12 @@ after upper={\tikz[overlay] \node[xshift=3em] {#1};}}
 \NewDocumentEnvironment{alternativas}{ O{1} O{} +b}{
   \srsIncrementarNAlternativas%
   \NewDocumentCommand{\alternativa}{O{}}{%
-  \tcbitem[sidebyside,sidebyside align=center seam,
-      lefthand width=3em,sidebyside gap=0pt,##1]%
+  \tcbitem[sidebyside,sidebyside align=center seam,%
+      lefthand width=3em,sidebyside gap=0pt,blankest,##1]%
    {\itshape\alphalph{\thetcbrasternum}}) \tcblower \raggedright }
     \begin{tcbitemize}[raster columns=#1,raster equal height=rows,blank,lefttitle=0pt,
     %fonttitle=\itshape, halign=center,
+    blankest,
     valign=center,
     breakable=false,nobeforeafter, raster row skip=10pt,
     coltitle=black,#2]
@@ -357,7 +366,7 @@ label-width=2em,item-indent=6em,item-format={\raggedright},%
 label-offset=1em]{opciones*}[\opcion](1)
 
 \NewTasksEnvironment[label={$\ast$},
-label-width=0.5em,item-indent=1em,item-format={\raggedright},%
+label-width=0.6em,item-indent=1.1em,item-format={\raggedright},%
 label-offset=0.5em,before-skip=0pt,after-skip=0pt]{lista}[*](1)
 
 \newtcolorbox{caja}[1][]{enhanced,colback=white,colframe=black,boxrule=1pt,attach boxed title to top left={yshift=-\tcboxedtitleheight/2,xshift=10pt},
@@ -494,7 +503,7 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
     \begin{caja}[title={\sffamily\bfseries Nota},height=35pt,add to width=-2cm]%
     \end{caja}%
   \end{tcbraster}%
-  \hfill\textbf{\sffamily Fecha:} \srsfecha\hspace*{10pt}\cancelarsalto%
+  \iffechaTF{\hfill\textbf{\sffamily Fecha:} \srsfecha\hspace*{10pt}}{}\cancelarsalto%
   }{}
 }
 
@@ -623,3 +632,8 @@ boxed title style={colback=white},coltitle=black,height=30pt,#1}
 }
 
 \def\stop{{\FA\char"E204}\space}
+
+%let\oldbold\textbf
+%\renewcommand{\textbf}[1]{{\sffamily\bfseries#1}}
+%\RenewDocumentCommand{\textbf}{m}{{\sffamily\bfseries #1}}
+\DeclareTextFontCommand{\textbf}{\bfseries\sffamily}

@@ -1,0 +1,567 @@
+\documentclass[
+  titulo=Prueba,
+  subtitulo=Álgebra y funciones,
+  curso=Tercero medio A,
+  fecha=2025-09-23,
+  con nombre,
+  ppp=1
+]{srs3}
+
+\begin{document}
+\subsection*{Objetivo}
+Reforzar los contenidos involucrados en la prueba \textbf{PAES}, específicamente:
+Expresiones algebraicas; ecuaciones de primer grado; sistemas de ecuaciones
+lineales; y las funciones de tipo lineal, afín y cuadráticas.
+\subsection*{Instrucciones generales}
+Cuenta con 80 minutos para completar la evaluación. Esta es individual y debe usar solo sus materiales
+personales para trabajar durante este periodo, no los solicite a un compañero durante la evaluación. \par
+Para cada pregunta, lea con atención el enunciado y seleccione la
+alternativa que mejor lo responda. Solo hay una alternativa
+correcta en cada pregunta.
+\separador
+\begin{preguntas}
+\pregunta En la siguiente figura se representa la función lineal \(f\), con dominio el conjunto de los números reales mayores o iguales que cero.
+\begin{columnas}[0.6][t]
+¿Cuál de las siguientes expresiones es igual a \(f\left(3x-5\right)\)?
+\begin{alternativas}
+\alternativa \(\dfrac{12}{5}x-5\)
+\alternativa \(\dfrac{12}{5}x-4\)
+\alternativa \(\dfrac{15}{4}x-\dfrac{25}{4}\)
+\alternativa \(\dfrac{15}{4}x-5\)
+\alternativa \(\dfrac{12}{5}x^2 - 4x\)
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}[scale=1.3]
+  \draw[->,shorten <=-10pt,shorten >=-10pt] (0,0) -- (3,0) node [below] {$x$};
+  \draw[->,shorten <=-10pt,shorten >=-10pt] (0,0) -- (0,3) node [left] {$y$};
+  \draw[] (0,0) -- (2.5,2.5) node [above,pos=0.8] {$f$};
+  \coordinate[] (p) at (1.5,1.5);
+  \draw[dashed] (p-|0,0) node [left] {4} -- (p) -- (p|-0,0) node [below] {5};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta El día lunes un artesano vendió \(15\) aros y \(10\) collares, obteniendo \$$90.000$ de recaudación entre ellos. El martes el artesano vendió \(6\) aros y \(8\) collares, recaudando entre ellos \$$60.000$. Si el artesano no cambió los precios de los aros y collares de un día a otro, ¿a qué valor está vendiendo cada collar?
+\begin{alternativas}
+\alternativa \$$2.000$
+\alternativa \$$6.000$
+\alternativa \$$2.400$
+\alternativa \$$8.000$
+\alternativa \$$15.000$
+\end{alternativas}
+%\pregunta ¿Cuál de los siguientes puntos ubicados en el plano cartesiano representa mejor a la intersección de las rectas asociadas al sistema \( \begin{+cases} 2y - 3x = -4 \\ 3x - y = 0 \end{+cases} \)?
+%\begin{alternativas}[2]
+%\alternativa \begin{tikzpicture}[scale=0.8]
+%\def\largo{2}
+%  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+%  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+%  \fill (-0.3,-1) circle [radius=3pt];
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}[scale=0.8]
+%\def\largo{2}
+%  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+%  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+%  \fill (0.3,-1) circle [radius=3pt];
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}[scale=0.8]
+%\def\largo{2}
+%  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+%  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+%  \fill (-0.3,1) circle [radius=3pt];
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}[scale=0.8]
+%\def\largo{2}
+%  \draw[->] (-\largo,0) -- (\largo,0) node [right] {$x$};
+%  \draw[->] (0,-\largo) -- (0,\largo) node [above] {$y$};
+%  \fill (0.3,1) circle [radius=3pt];
+%\end{tikzpicture}
+%\end{alternativas}
+%
+%\pregunta La suma de dos números es \(42\), donde la tercera parte del número mayor (\(x\)) más la mitad del número menor (\(y\)) es igual al número menor. ¿Cuál de los siguientes sistemas de ecuaciones lineales permite determinar los números?
+%\begin{alternativas}[2]
+%\alternativa \( \begin{+cases} x + y = 42 \\ 3x + \dfrac{y}{2} = y \end{+cases} \)
+%\alternativa \( \begin{+cases} x = 42 - y \\ \dfrac{x}{3} + \dfrac{y}{2} = y \end{+cases} \)
+%\alternativa \( \begin{+cases} y = 42 + x \\ 3y + \dfrac{x}{2} = x \end{+cases} \)
+%\alternativa \( \begin{+cases} x = 42 + y \\ \dfrac{x}{3} + \dfrac{y}{2} = y \end{+cases} \)
+%\end{alternativas}
+%
+\pregunta Un agente bancario realiza una inversión en dos fondos: un fondo A que paga \(6\)\% y un fondo B que paga un \(10\)\%, los dos de manera anual. Él reparte su inversión en la razón \(3:4\), donde la menor cantidad la invierte en el fondo de menor interés. Si transcurrido un año obtiene una ganancia total de \$$290.000$ por concepto de interés, ¿cuál es el monto de la inversión inicial?
+\begin{alternativas}
+\alternativa \$$1.500.000$
+\alternativa \$$1.800.000$
+\alternativa \$$2.000.000$
+\alternativa \$$3.500.000$
+\end{alternativas}
+\pregunta Pedro está resolviendo el siguiente problema \q{La suma de los dígitos de un número de dos cifras es \(4\). Si se invierten las cifras, el nuevo número sería igual al doble del número anterior, más \(5\) unidades, ¿cuál es el número?}~Él planteó lo siguiente:\par
+\noindent Indica las incógnitas
+\par
+\noindent \(x\): Dígito de la decena
+\par
+\noindent \(y\): Dígito de la unidad
+\par
+\noindent Escribe el sistema de ecuaciones
+\[
+\begin{+cases}
+x+y=4 \\
+y+x=2\cdot\left(10x+y\right)+5
+\end{+cases}
+\]
+A partir de su desarrollo, es correcto afirmar que:
+\begin{alternativas}
+\alternativa Se equivoca al transcribir la frase ``La suma de los dígitos de un número de dos cifras es \(4\)", ya que debería plantear \(10x + y = 4\).
+\alternativa Se equivoca al transcribir la frase ``La suma de los dígitos de un número de dos cifras es \(4\)", ya que debería plantear \(x + 10y = 4\).
+\alternativa Se equivoca al transcribir la frase ``Si se invierten las cifras, el nuevo número sería igual al doble del número anterior, más \(5\) unidades”, ya que debería plantear \(y + x = 2\left(x+y\right)+5\).
+\alternativa Se equivoca al transcribir la frase ``Si se invierten las cifras, el nuevo número sería igual al doble del número anterior, más \(5\) unidades”, ya que debería plantear \(10y+x= 2\left(10x+y\right)+5\).
+\end{alternativas}
+
+\pregunta ¿Cuál de las siguientes ecuaciones NO tiene solución en el conjunto de los números reales?
+\begin{alternativas}
+\alternativa \( x^2-4=-1 \)
+\alternativa \( \left(x+3\right)^2+1=0 \)
+\alternativa \( \left(2x-1\right)^2-4=0 \)
+\alternativa \( \left(x+\dfrac{1}{2}\right)^2=5 \)
+\end{alternativas}
+
+\pregunta Considere el sistema de ecuaciones \( \begin{+cases} 2x+y=5 \\ -4x-2y=2 \end{+cases} \), ¿Cuál de las siguientes afirmaciones es verdadera?
+\begin{alternativas}
+\alternativa Tiene una única solución.
+\alternativa Tiene una incógnita el sistema de ecuaciones.
+\alternativa Tiene infinitas soluciones.
+\alternativa No tiene solución el sistema.
+\end{alternativas}
+%\pregunta Si el área de un rectángulo es \(75\) cm\(^2\) y el ancho del rectángulo mide \(10\) cm menos que su largo, ¿cuál es la medida de su largo?
+%\begin{alternativas}
+%\alternativa \(5\) cm
+%\alternativa \( \dfrac{55}{4} \) cm
+%\alternativa \(15\) cm
+%\alternativa \( \sqrt{85} \) cm
+%\alternativa No existe un rectángulo con esas dimensiones.
+%\end{alternativas}
+
+\pregunta Se tiene una piscina con forma rectangular de \(4\) m de ancho y \(10\) m de largo. Se desea colocar un borde de pasto de ancho \(x\) m como se representa en la figura adjunta.
+\begin{columnas}[0.6][t]
+Si el área de la superficie total que ocupa la piscina y el borde de pasto es de \(112\) m\(^2\), ¿cuál de las siguientes ecuaciones permite determinar el valor de \(x\)?
+\begin{alternativas}
+\alternativa \( x^2+40=112 \)
+\alternativa \( x^2+14x=72 \)
+\alternativa \( 2x^2+7x=18 \)
+\alternativa \( x^2+7x=18 \)
+\alternativa \( 4x^2+40=112 \)
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}
+\draw (-3,-2) rectangle (3,2);
+\draw[pattern] (-2,-1) rectangle (2,1);
+\draw[<->] (-3,0) -- (-2,0) node [above,pos=0.5] {$x$};
+\draw[<->] (0,1) -- (0,2) node [left,pos=0.5] {$x$};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta Se tiene una caja con bloques de madera, todos de igual masa. Si la caja con \(16\) bloques tiene una masa total de \(15\) kg, y la misma caja con \(21\) bloques tiene una masa total de \(19\) kg, ¿cuál es la masa de \(3\) bloques?
+\begin{alternativas}
+\alternativa \(2\) kg
+\alternativa \(2,4\) kg
+\alternativa \(2,7\) kg
+\alternativa \(2,8\) kg
+\end{alternativas}
+
+%\pregunta Considere la función \(f\) con dominio el conjunto de los números reales definida por \(f\left(x\right)=-20+15x+5x^2\). ¿Cuál(es) de las siguientes afirmaciones es (son) verdadera(s), con respecto a \(f\)?
+%\begin{opciones}
+%\opcion Su gráfico intersecta al eje \(x\) en los puntos \(\left(-4,\,0\right)\) y \(\left(1,\,0\right)\).
+%\opcion Su gráfico tiene como eje de simetría a la recta \( x = -\dfrac{3}{2} \).
+%\opcion Su valor máximo es \(-\dfrac{25}{4}\).
+%\end{opciones}
+%\begin{alternativas}
+%\alternativa Solo I
+%\alternativa Solo II
+%\alternativa Solo I y II
+%\alternativa Solo I y III
+%\alternativa I, II y III
+%\end{alternativas}
+%\pregunta En el paralelepípedo recto de la figura adjunta, el largo de la base es \(10\) cm mayor que el ancho de la misma y su altura es de \(60\) cm.
+%Si \(x\) representa el largo de la base, en cm, ¿cuál de las siguientes funciones, con dominio en el conjunto de los números reales mayores que \(10\), modela el volumen del paralelepípedo en término de su largo, en cm\(^3\)?
+%\begin{columnas}[0.5][t]
+%\begin{alternativas}
+%\alternativa \( f\left(x\right)=60x^2-600 \)
+%\alternativa \( g\left(x\right)=60x^2+600 \)
+%\alternativa \( h\left(x\right)=60x^2-600x \)
+%\alternativa \( j\left(x\right)=60x^2-10x \)
+%\alternativa \( t\left(x\right)=600x^2 \)
+%\end{alternativas}
+%\siguiente
+%\begin{tikzpicture}[scale=1.5,line width=1pt,x={(0:1cm)},z={(50:0.5cm)}]
+%  %%% El eje z es profundidad, esta hacia atras.
+%  \def\largo{3.5} %% x
+%  \def\ancho{1} %% y
+%  \def\alto{1} %% z
+%  %\begin{scope}[canvas is xz plane at y=0]
+%  %    \draw[] (0,0) -- (\largo,0) -- (\largo,\ancho)  -- (0,\ancho) -- (0,0);
+%  %\end{scope}
+%  %\begin{scope}[canvas is xy plane at z=\ancho]
+%  %    \draw[] (0,0) -- (\largo,0) -- (\largo,\alto) -- (0,\alto) -- (0,0);
+%  %\end{scope}
+%  \begin{scope}[canvas is yz plane at x=\largo]
+%      \draw[pattern] (0,0) -- (0,\ancho) -- (\alto,\ancho) -- (\alto,0) -- (0,0);
+%  \end{scope}
+%  \begin{scope}[canvas is xz plane at y=\alto]
+%      \draw[fill=white] (0,0) -- (\largo,0) -- (\largo,\ancho)  -- (0,\ancho) -- (0,0);
+%  \end{scope}
+%  \draw[fill=white] (0,0) -- (\largo,0) -- (\largo,\alto) -- (0,\alto) -- (0,0) node [midway,left] {60 cm};
+%\end{tikzpicture}
+%\end{columnas}
+
+\pregunta Considere la función \(f\) cuyo dominio es el conjunto de los números reales, definida por \(f\left(x\right)=ax^2+5x+3c\), con \(a>0\) y \(ac=-8\). ¿Cuál de los siguientes gráficos representa mejor a la gráfica de \(f\)?
+\begin{alternativas}[3]
+\alternativa \begin{tikzpicture}[scale=0.7]
+  \draw [->,name path=EjeX] (-3,0) -- (2,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-1.5) -- (0,1.5) node [above] {$y$};
+  \coordinate (A) at (-2.5,1);
+  \coordinate (B) at (1,1);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-2cm] bend +(0,2) (B);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=0.7]
+  \draw [->,name path=EjeX] (-3,0) -- (2,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-1) -- (0,2) node [above] {$y$};
+  \coordinate (A) at (-2,1.5);
+  \coordinate (B) at (0.2,1.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-2cm] bend +(0,2) (B);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=0.7]
+  \draw [->,name path=EjeX] (-1,0) -- (4,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-0.5) -- (0,2.5) node [above] {$y$};
+  \coordinate (A) at (-0.5,2.1);
+  \coordinate (B) at (2,2.1);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-1.9cm] bend +(0,2) (B);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=0.7]
+  \draw [->,name path=EjeX] (-2,0) -- (3,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,1) node [above] {$y$};
+  \coordinate (A) at (-0.8,0.5);
+  \coordinate (B) at (2.2,0.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-2cm] bend +(0,2) (B);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=0.7]
+  \draw [->,name path=EjeX] (-2,0) -- (3,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-1) -- (0,2) node [above] {$y$};
+  \coordinate (A) at (-0.2,1.5);
+  \coordinate (B) at (2,1.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5,parabola height=-2cm] bend +(0,2) (B);
+\end{tikzpicture}
+\end{alternativas}
+
+\pregunta Dadas las rectas \(L_1 : ax + 3y = b\)~~y~~\(L_2 : -5x+6y = 4\). Se puede determinar que las rectas \(L_1\) y \(L_2\) son paralelas si:
+\begin{opciones*}
+\opcion \( a = -\dfrac{5}{2} \)
+\opcion \( b = 3 \)
+\end{opciones*}
+\begin{alternativas}
+\alternativa (1) por si sola
+\alternativa (2) por si sola
+\alternativa Ambas juntas (1) y (2)
+\alternativa Cada una por si sola (1) o (2)
+\alternativa Se requiere información adicional
+\end{alternativas}
+
+\pregunta La tabla adjunta muestra ciertos valores de una función en \(x\), con dominio el conjunto de los números reales.
+\begin{columnas}[0.7][t]
+¿Cuál de las siguientes funciones corresponde a la representada en la tabla?
+\begin{alternativas}
+\alternativa \(k\left(x\right) = \dfrac{x-1}{3}\)
+\alternativa \(j\left(x\right) = \dfrac{x+1}{3}\)
+\alternativa \(g\left(x\right) = 2x-3\)
+\alternativa \(h\left(x\right) = \dfrac{1-x}{3}\)
+\end{alternativas}
+\siguiente
+\begin{tblr}{|c|c|c|c|c|c|}
+\hline
+$x$ & \(-2\) & 1 & 4 & 7 & 10 \\
+\hline
+$y$ & \(-1\) & 0 & 1 & 2 & 3 \\
+\hline
+\end{tblr}
+\end{columnas}
+
+\pregunta Sea \(h\left(t\right)=\dfrac{3}{2}+3t-\dfrac{t^2}{2}\) la función que modela la altura respecto al suelo, en metros, que alcanza una pelota durante los primeros 6 segundos desde que fue lanzada. Si \(t\) corresponde a la cantidad de segundos transcurridos desde su lanzamiento, ¿cuál de las siguientes afirmaciones es FALSA?
+\begin{alternativas}
+\alternativa La pelota es lanzada desde una altura de \(1,5\) metros.
+\alternativa La pelota alcanza su máxima altura a los \(6\) segundos de haber sido lanzada.
+\alternativa No es posible saber el instante en que la pelota cae al suelo.
+\alternativa La altura de la pelota a los \(2\) segundos de haber sido lanzada es \(5,5\) metros.
+\end{alternativas}
+
+\pregunta ¿Cuál de los siguientes sistemas de ecuaciones tiene infinitas soluciones?
+\begin{alternativas}[2]
+\alternativa \( \begin{+cases} 5x-3y=1 \\ 5x-3y=0 \end{+cases} \)
+\alternativa \( \begin{+cases} x+y+1=0 \\ 2x+2y=2 \end{+cases} \)
+\alternativa \( \begin{+cases} x=1 \\ y=1 \end{+cases} \)
+\alternativa \( \begin{+cases} x+y=0 \\ x-y=0 \end{+cases} \)
+\alternativa \( \begin{+cases} 15=-3y+7 \\ 30+6y-14=0 \end{+cases} \)
+\end{alternativas}
+
+\pregunta ¿Cuál de los siguientes gráficos representa mejor a la función \(f\) definida por \( f\left(x\right)=\left(x+3\right)^2 \), con dominio el conjunto de los números reales?
+\begin{alternativas}[2]
+\alternativa \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-0.5,0) -- (2.5,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-0.5) -- (0,2.5) node [above] {$y$};
+  \coordinate (A) at (-0.2,2);
+  \coordinate (B) at (2,2);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,-2) (B);
+  \path[name path=EjeSimetria] ($(A)!0.5!(B)$) -- +(0,-2.5cm);
+  \node[name intersections={of=Parabola and EjeSimetria,by=v},below] at (v) {3};
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-2.5,0) -- (0.5,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-0.5) -- (0,2.5) node [above] {$y$};
+  \coordinate (A) at (-2,2);
+  \coordinate (B) at (0.2,2);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,-2) (B);
+  \path[name path=EjeSimetria] ($(A)!0.5!(B)$) -- +(0,-2.5cm);
+  \node[name intersections={of=Parabola and EjeSimetria,by=v},below] at (v) {$-3$};
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-1.5,0) -- (1.5,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-0.5) -- (0,2.5) node [above] {$y$};
+  \coordinate (A) at (-1,2);
+  \coordinate (B) at (1,2);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,-1) (B);
+  \path[name path=EjeSimetria] ($(A)!0.5!(B)$) -- +(0,-2.5cm);
+  \node[name intersections={of=Parabola and EjeSimetria,by=v},below left] at (v) {$3$};
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}[scale=1]
+  \draw [->,name path=EjeX] (-1.5,0) -- (1.5,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-2) -- (0,1) node [above] {$y$};
+  \coordinate (A) at (-1,0.5);
+  \coordinate (B) at (1,0.5);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,-2) (B);
+  \path[name path=EjeSimetria] ($(A)!0.5!(B)$) -- +(0,-2.5cm);
+  \node[name intersections={of=Parabola and EjeSimetria,by=v},below right] at (v) {$-3$};
+\end{tikzpicture}
+\end{alternativas}
+
+\pregunta La figura adjunta representa la parábola asociada a la función cuadrática \(f\), cuyo dominio es el conjunto de los números reales.
+\begin{columnas}
+¿Cuál(es) de las siguientes afirmaciones es (son) verdadera(s)?
+\begin{opciones}
+\opcion El eje de simetría de la parábola es la recta de ecuación \( x=2 \).
+\opcion Si \(-2 < x < 6\), entonces \(f\left(x\right)<0\).
+\opcion \( f\left(7\right) = f\left(-3\right) \)
+\end{opciones}
+\begin{alternativas}
+\alternativa Solo I
+\alternativa Solo II
+\alternativa Solo III
+\alternativa Solo I y II
+\alternativa Solo I y III
+\end{alternativas}
+\siguiente
+\begin{tikzpicture}[scale=1.4]
+  \draw [->,name path=EjeX] (-1,0) -- (2,0) node [right] {$x$};
+  \draw [->,name path=EjeY] (0,-0.5) -- (0,2.5) node [above] {$y$};
+  \coordinate (A) at (-0.5,-0.2);
+  \coordinate (B) at (1,-0.2);
+  \draw[name path=Parabola] (A) parabola[bend pos=0.5] bend +(0,2) (B);
+  \path[name intersections={of=Parabola and EjeY,by=y}];
+  \node[left] at (y) {$12$};
+  \path[name intersections={of=Parabola and EjeX,name=x}];
+  \node[above left] at (x-1) {$-2$};
+  \node[above right] at (x-2) {$6$};
+\end{tikzpicture}
+\end{columnas}
+
+\pregunta Para el cobro de electricidad de un sector rural se ha establecido un modelo lineal de cálculo. En este cobro se debe pagar \$ \(a\) por un cargo fijo más un monto por kWh consumido. Si por un consumo de \(x\) kWh el cobro es de \$\(M\), ¿cuál de las siguientes expresiones corresponde al monto total, en pesos, a cobrar por un consumo de \(z\) kWh?
+\begin{alternativas}
+\alternativa \(a + \left(\dfrac{M}{x}\right)z\)
+\alternativa \(a + \left(\dfrac{M-a}{z}\right)x\)
+\alternativa \(a + \dfrac{M-az}{x}\)
+\alternativa \(a + \left(\dfrac{M-a}{x}\right)z\)
+\alternativa \(a + Mz\)
+\end{alternativas}
+
+\pregunta ¿Cuál de los siguientes gráficos representa mejor a la función \(f\left(x\right) = -3x^2 + 5 - 2x\), con dominio el conjunto de los números reales?
+\begin{alternativas}[2]
+\alternativa \begin{tikzpicture}
+\draw [->] (-1,0) -- (3,0) node [below] {$x$};
+\draw [->] (0,-1) -- (0,2) node [left] {$y$};
+\draw (-0.5,-0.5) parabola [bend pos=0.5] bend +(0,2) (2,-0.5);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}
+\draw [->] (-1,0) -- (3,0) node [below] {$x$};
+\draw [->] (0,-2) -- (0,1) node [left] {$y$};
+\draw (-0.5,-1.7) parabola [bend pos=0.5] bend +(0,2) (2,-1.7);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}
+\draw [->] (-3,0) -- (1,0) node [below] {$x$};
+\draw [->] (0,-1) -- (0,2) node [left] {$y$};
+\draw (-2,-0.5) parabola [bend pos=0.5] bend +(0,2) (0.5,-0.5);
+\end{tikzpicture}
+\alternativa \begin{tikzpicture}
+\draw [->] (-3,0) -- (1,0) node [below] {$x$};
+\draw [->] (0,-2) -- (0,1) node [left] {$y$};
+\draw (-2.2,-1.7) parabola [bend pos=0.5] bend +(0,2) (0.3,-1.7);
+\end{tikzpicture}
+\end{alternativas}
+
+\pregunta En un computador se simula el lanzamiento de un proyectil desde el nivel del suelo con una trayectoria parabólica que logra su máxima altura a los \(5\) segundos. Si se sabe que al segundo de ser lanzado alcanzó una altura de \(27\) m, ¿cuál de las siguientes funciones modela, en m, la altitud lograda por el proyectil, luego de \(t\) segundos?
+\begin{alternativas}
+\alternativa \( p\left(t\right)=28t-t^2 \)
+\alternativa \( f\left(t\right)=27t^2 \)
+\alternativa \( s\left(t\right)=30t-3t^2 \)
+\alternativa \( q\left(t\right)=5+27t-5t^2 \)
+\alternativa \( m\left(t\right)=-27+60t-6t^2 \)
+\end{alternativas}
+
+\pregunta ¿Cuál de las siguientes condiciones para \(m\) permite asegurar que las soluciones de la ecuación \( mx^2+mx+2=0 \), en \(x\), no sean números reales?
+\begin{alternativas}
+\alternativa \( m < 0 \)
+\alternativa \( m \leq \sqrt{8} \)
+\alternativa \( m \leq 8 \)
+\alternativa \( -8 < m < 0 \)
+\alternativa \( 0 < m < 8 \)
+\end{alternativas}
+
+\pregunta Considera la ecuación \( \left(x-3\right)\left(x-4\right)=2 \). ¿Cuál de los siguientes argumentos es válido?
+\begin{alternativas}
+\alternativa La ecuación posee dos soluciones, porque \(x=3\)~~y~~\(x=4\) satisfacen la igualdad.
+\alternativa Las soluciones de la ecuación son \(x=2\)~~y~~\(x=5\), porque \( \left(2-3\right)\left(2-4\right)=2 \)~~y~~\( \left(5-3\right)\left(5-4\right)=2 \).
+\alternativa Las soluciones son \(x=2\)~~y~~\(x=5\), porque ambos valores satisfacen la ecuación \( x^2-7x+12=0 \).
+\alternativa Las soluciones de la ecuación son ambas positivas, porque el discriminante asociado a la ecuación es positivo.
+\end{alternativas}
+
+%\pregunta Diego paga una compra de \$c con \(35\) monedas, algunas de \$a y el resto de \$b. Si M es la cantidad de monedas de \$a y N es la cantidad de monedas de \$b, ¿cuál de los siguientes sistemas de ecuaciones permite determinar la cantidad de monedas de \$a y de \$b que utilizó Diego en su compra?
+%\begin{alternativas}[2]
+%\alternativa \( \begin{+cases} M+N = a+b \\ aM+bN=c \end{+cases} \)
+%\alternativa \( \begin{+cases} M+N = c \\ aM+bN=35 \end{+cases} \)
+%\alternativa \( \begin{+cases} M+N = 35 \\ aM+bN=c \end{+cases} \)
+%\alternativa \( \begin{+cases} M+N = 35 \\ \left(a+b\right)\left(M+N\right)=c \end{+cases} \)
+%\end{alternativas}
+%
+%\pregunta Si \(a\), \(b\) y \(c\) son números reales distintos de cero, ¿cuál de los siguientes sistemas de ecuaciones NO tiene solución?
+%\begin{alternativas}[2]
+%\alternativa \( \begin{+cases} ax+by=c \\ 2ax+by=c \end{+cases} \)
+%\alternativa \( \begin{+cases} ax+by=c \\ ax+2by=2c \end{+cases} \)
+%\alternativa \( \begin{+cases} ax+by=c \\ 2ax+2by=2c \end{+cases} \)
+%\alternativa \( \begin{+cases} ax+by=c \\ ax+by=2c \end{+cases} \)
+%\alternativa \( \begin{+cases} ax+by=c \\ ax+2by=c \end{+cases} \)
+%\end{alternativas}
+%
+%\pregunta ¿Cuál de las siguientes opciones representa a las soluciones de la ecuación \( 3\left(x-3\right)^2 = 2 \)?
+%\begin{alternativas}
+%\alternativa \( x = -3 \pm \sqrt{\dfrac{2}{3}} \)
+%\alternativa \( x = 3 \pm \sqrt{\dfrac{3}{2}}  \)
+%\alternativa \( x = -3 \pm \sqrt{\dfrac{3}{2}}  \)
+%\alternativa \( x = 3 \pm \sqrt{\dfrac{2}{3}}  \)
+%\end{alternativas}
+%
+%\pregunta Matías y Javier jugaron una partida de cartas. El producto entre los puntajes obtenidos por ellos resulta \(110\), y además el total de puntos es \(21\). Si el puntaje de Javier se representa por \(x\), ¿cuál es la ecuación que permite calcular los puntajes obtenidos por ambos?
+%\begin{alternativas}
+%\alternativa \( x^2 - 21x + 110 = 0 \)
+%\alternativa \( x^2 + 21x + 110 = 0 \)
+%\alternativa \( x^2 - 110x - 21 = 0 \)
+%\alternativa \( x^2 - 110x + 21 = 0 \)
+%\end{alternativas}
+%
+%\pregunta ¿Cuál de los siguientes gráficos podría representar a la función \(f\left(x\right)=dx+d\), con dominio el conjunto de los números reales, si \(d\) es un número real distinto de cero y de uno?
+%\begin{alternativas}[3]
+%\alternativa \begin{tikzpicture}
+%  \draw[->,name path=X] (-1,0) -- (2,0) node [right] {$x$};
+%  \draw[->] (0,-0.5) -- (0,2.5) node [above] {$y$};
+%  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (0,1.5) node [left] {$d$} -- (1,0) node [below,xshift=-2pt] {1};
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}
+%  \draw[->,name path=X] (-2,0) -- (1,0) node [right] {$x$};
+%  \draw[->] (0,-0.5) -- (0,2.5) node [above] {$y$};
+%  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (-1.5,0) node [above,xshift=-6pt] {$-d$} -- (0,1.5) node [left] {$d$};
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}
+%  \draw[->,name path=X] (-1,0) -- (2,0) node [right] {$x$};
+%  \draw[->] (0,-0.5) -- (0,2.5) node [above] {$y$};
+%  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (0,1.5) node [left] {$d$} -- (1.5,0) node [below,xshift=-3pt] {$d$};
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}
+%  \draw[->,name path=X] (-2,0) -- (1,0) node [right] {$x$};
+%  \draw[->] (0,-2.5) -- (0,0.5) node [above] {$y$};
+%  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (-1.5,0) node [below,xshift=-4pt] {$-1$} -- (0,-1.5) node [right] {$d$};
+%\end{tikzpicture}
+%\alternativa \begin{tikzpicture}
+%  \draw[->,name path=X] (-2,0) -- (1,0) node [right] {$x$};
+%  \draw[->] (0,-2.5) -- (0,0.5) node [above] {$y$};
+%  \draw[shorten >=-20pt, shorten <=-20pt,name path=A] (-1.5,0) node [below,xshift=-4pt] {$-1$} -- (0,-1.5) node [right] {$-d$};
+%\end{tikzpicture}
+%\end{alternativas}
+%
+%\pregunta Un maestro tiene una cuerda de largo \(L\) cm y con la totalidad de ella construye los bordes de un rectángulo no cuadrado de área \(A\) cm². ¿Cuál de las siguientes expresiones representa la longitud del lado menor de dicho rectángulo, en cm?
+%\begin{alternativas}
+%\alternativa \(\dfrac{L - \sqrt{L^2 - 4A}}{2}\)
+%\alternativa \(\dfrac{L + \sqrt{L^2 - 4A}}{2}\)
+%\alternativa \(\dfrac{L - \sqrt{L^2 - 16A}}{4}\)
+%\alternativa \(\dfrac{L + \sqrt{L^2 - 16A}}{4}\)
+%\alternativa \(\dfrac{L - \sqrt{L^2 - 16A}}{2}\)
+%\end{alternativas}
+%
+%\pregunta Dada la ecuación \(4+\dfrac{4}{x}+\dfrac{1}{x^2} = 0\), ¿cuál(es) es (son) la(s) solución(es) para x?
+%\begin{alternativas}
+%\alternativa \(0\)
+%\alternativa \(\pm 1\)
+%\alternativa \(\pm \dfrac{1}{2}\)
+%\alternativa \(-\dfrac{1}{2}\)
+%\end{alternativas}
+%
+%\pregunta Si \(m\) y \(p\) son números reales y las raíces de la ecuación \(x^2 + mx + p = 0\) son \(\alpha\) y \(\beta\), ¿cuál de las siguientes opciones es FALSA?
+%\begin{alternativas}
+%\alternativa Si \(m = 0\)~~y~~\(p > 0\), entonces \(\alpha\)~~y~~\(\beta\) son números irracionales.
+%\alternativa \(\alpha + \beta = -m\)
+%\alternativa La ecuación también se puede escribir como \((x-\alpha)(x-\beta) = 0\).
+%\alternativa Si \(m^2 - 4p = 0\), entonces \(\alpha\) y \(\beta\) son números reales iguales.
+%\alternativa \(\alpha \cdot \beta = p\)
+%\end{alternativas}
+%
+%\pregunta La cantidad de calor que necesita absorber un litro de agua pura en estado líquido para aumentar su temperatura en 10°C es de 41860 joules. Si se sabe que la relación entre la cantidad de calor $Y$ requeridos para aumentar la temperatura del agua en $X$°C es lineal, y que al absorber 0 joules de calor, la variación de temperatura fue de 0°C, ¿cuál de las siguientes expresiones representa correctamente la relación entre $X$ e $Y$?
+%\begin{alternativas}
+%\alternativa \(Y = 4186 \cdot X + 10\)
+%\alternativa \(Y = 4186 \cdot X\)
+%\alternativa \(Y = \dfrac{X}{4186}\)
+%\alternativa \(Y = 41860 \cdot X\)
+%\end{alternativas}
+%
+%\pregunta En la figura se muestran dos parábolas de tal manera que una es la simétrica de la otra con respecto al eje x. ¿Cuál(es) de las siguientes afirmaciones es (son) verdadera(s)?
+%\begin{columnas}[0.5]
+%\begin{opciones}
+%\opcion \(p+c = 0\)
+%\opcion \(m > 0\)~~y~~\(a < 0\)
+%\opcion \(g\left(-1\right) = -f\left(-1\right)\)
+%\end{opciones}
+%\begin{alternativas}
+%\alternativa Solo III
+%\alternativa Solo I y II
+%\alternativa Solo I y III
+%\alternativa Solo II y III
+%\alternativa I, II y III
+%\end{alternativas}
+%\siguiente
+%\begin{tikzpicture}[y=0.8cm]
+%  \draw[->,shorten <=-10pt,shorten >=-10pt] (-2.5,0) -- (1,0) node [below] {$x$};
+%  \draw[->,shorten <=-10pt,shorten >=-10pt] (0,-3) -- (0,3) node [left] {$y$};
+%  \coordinate (A) at (-2.5,3);
+%  \coordinate (B) at (0.5,3);
+%  \draw[dashed] (A) parabola[bend pos=0.5] bend +(0,-3) (B)
+%    node [right] {$g\left(x\right)=ax^2 +bx + c$};
+%  \draw ($(A|-0,0)!1!180:(A)$) parabola[bend pos=0.5] bend +(0,3) ($(B|-0,0)!1!180:(B)$)
+%    node [right] {$f\left(x\right)=mx^2 +tx + p$};
+%\end{tikzpicture}
+%\end{columnas}
+%
+%\pregunta Se lanza un objeto hacia arriba y su altura, en metros, se modela mediante la función \(f\left(t\right) = -t^2+bt+c\), donde t es el tiempo transcurrido desde que es lanzado, en segundos, y \(f\left(t\right)\) su altura. Se puede determinar la altura máxima alcanzada por el objeto, si se sabe que:
+%\begin{opciones*}
+%\opcion El objeto es lanzado desde 10 metros de altura con respecto al suelo.
+%\opcion Toca el suelo por primera vez a los 10 segundos.
+%\end{opciones*}
+%\begin{alternativas}
+%\alternativa (1) por sí sola
+%\alternativa (2) por sí sola
+%\alternativa Ambas juntas, (1) y (2)
+%\alternativa Cada una por sí sola, (1) ó (2)
+%\alternativa Se requiere información adicional
+%\end{alternativas}
+%
+%
+\end{preguntas}
+\end{document}
